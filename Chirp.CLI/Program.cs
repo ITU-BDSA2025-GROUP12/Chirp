@@ -1,53 +1,74 @@
 using System;
+using System.Globalization;
 using System.Text.RegularExpressions;
+using CsvHelper;
+using CsvHelper.Configuration;
+using CsvHelper.Configuration.Attributes;
 
-// converter for epoch time to our time
-string convertUnix(int epoch)
+public class Cheep()
 {
-    // epoch counts from 1970 jan 1 at 0 o'clock.
-    string dt = new DateTime(1970, 1, 1, 0, 0, 0).AddSeconds(epoch).ToString();
-    // the original format is with . in the time and this replaces . with :
-    return new string(dt.Replace('.', ':'));
+    [Index(0)] //'Author' is a index 0 i the CSV file
+    public String Author {get; set;}
+    
+    [Index(1)]//'Message' is a index 1 i the CSV file
+    public String Message {get; set;}
+    
+    [Index(2)] //'Timestamp' is a index 2 i the CSV file
+    public int Timestamp {get; set;}
 }
 
-// hvis man skriver dotnet run -- cheep kalder man kommandoen
-if (args[0] == "cheep")
+public class Program
 {
-    // streamwriter for adding to the text file.
-    using (StreamWriter streamWriter = File.AppendText("chirp_cli_db.csv"))
+    static void Main(string[] args)
     {
-        string username = Environment.UserName;
-        // args[1] is everything that is written in the " " part, even with spaces etc.
-        string message = args[1];
-        // getting the current time
-        int time = (int)(DateTime.Now - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;
-        // formatting to fit with the other data
-        streamWriter.WriteLine(username + ",\"" + message + "\"," + time.ToString());
-    }
-    
-    // hvis man skriver dotnet run -- read kører man kommandoen
-} else if (args[0] == "read")
-{
-    using (StreamReader sr = new("chirp_cli_db.csv"))
-    {
-        string line;
-        while((line = sr.ReadLine()) != null)
-        {
-            // first we define the regex pattern
-            Regex pattern = new Regex("^([A-Za-z]{4,5}),\"([A-Za-z\\s*\\D]+)\",(\\d+)$");
-        
-            // if the match is a success we take each group and print it out (to test)
-            Match match = pattern.Match(line);
-            if (match.Success)
-            {
-                // first group is the username, second is comment etc.
-                string username = match.Groups[1].Value;
-                string comment = match.Groups[2].Value;
-                string timestamp = convertUnix(int.Parse(match.Groups[3].Value));
-                // formatting the print out
-                Console.WriteLine(username + " @ " + timestamp + ": " + comment);
-            }
+        string path = "chirp_cli_db.csv";
 
+        if (args[0] == "read")
+        {
+            read(path);
+        }else if (args[0] == "cheep")
+        {
+            cheep(path, args[1]);
         }
     }
+
+    //this method reads the CSV file using the external library CsvHelper and prints it in the right format
+    static void read(string path)
+    {
+        using (var reader = new StreamReader(path))
+        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+        {
+            csv.Read();
+            csv.ReadHeader();
+            while (csv.Read())
+            {
+                var record = csv.GetRecord<Cheep>();
+                var time = convertUnix(record.Timestamp);
+                Console.WriteLine(record.Author +  " @ " + time + ": " + record.Message);
+            }
+        }
+    }
+    //this method appends a new cheep (int the right format) to a CSV file, using the external library CsvHelper
+    static void cheep(string path, string message)
+    {
+        
+        int time = (int)(DateTime.Now - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;
+        var record = new Cheep{Author = Environment.UserName, Message = message, Timestamp = time};
+        
+        using (var writer = new StreamWriter(path, true))
+        using (var csv = new CsvWriter(writer, culture: CultureInfo.InvariantCulture))
+        {
+            csv.WriteRecord(record);
+            csv.NextRecord();
+        }
+    }
+    // converter for epoch time to our time
+    static string convertUnix(int epoch)
+    {
+        // epoch counts from 1970 jan 1 at 0 o'clock.
+        string dt = new DateTime(1970, 1, 1, 0, 0, 0).AddSeconds(epoch).ToString();
+        // the original format is with . in the time and this replaces . with :
+        return new string(dt.Replace('.', ':'));
+    }
+    
 }
