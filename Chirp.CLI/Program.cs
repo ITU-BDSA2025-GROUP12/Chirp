@@ -1,53 +1,100 @@
+using System.CommandLine;
+using System.CommandLine.Parsing;
+using System.ComponentModel;
+using System.Net.Http.Headers;
 using System;
+using System.CommandLine.Invocation;
+using System.Globalization;
 using System.Text.RegularExpressions;
+using CsvHelper;
+using CsvHelper.Configuration;
+using CsvHelper.Configuration.Attributes;
 
-// converter for epoch time to our time
-string convertUnix(int epoch)
-{
-    // epoch counts from 1970 jan 1 at 0 o'clock.
-    string dt = new DateTime(1970, 1, 1, 0, 0, 0).AddSeconds(epoch).ToString();
-    // the original format is with . in the time and this replaces . with :
-    return new string(dt.Replace('.', ':'));
-}
+// See https://aka.ms/new-console-template for more information
+class Program {
 
-// hvis man skriver dotnet run -- cheep kalder man kommandoen
-if (args[0] == "cheep")
+
+    public class Cheep()
 {
-    // streamwriter for adding to the text file.
-    using (StreamWriter streamWriter = File.AppendText("chirp_cli_db.csv"))
-    {
-        string username = Environment.UserName;
-        // args[1] is everything that is written in the " " part, even with spaces etc.
-        string message = args[1];
-        // getting the current time
-        int time = (int)(DateTime.Now - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;
-        // formatting to fit with the other data
-        streamWriter.WriteLine(username + ",\"" + message + "\"," + time.ToString());
-    }
+    [Index(0)] //'Author' is a index 0 i the CSV file
+    public String Author {get; set;}
     
-    // hvis man skriver dotnet run -- read kører man kommandoen
-} else if (args[0] == "read")
-{
-    using (StreamReader sr = new("chirp_cli_db.csv"))
+    [Index(1)]//'Message' is a index 1 i the CSV file
+    public String Message {get; set;}
+    
+    [Index(2)] //'Timestamp' is a index 2 i the CSV file
+    public int Timestamp {get; set;}
+}
+    static void Main(String[] args)
     {
-        string line;
-        while((line = sr.ReadLine()) != null)
+        string path = "chirp_cli_db.csv";
+        Option<string> cheepOpt = new Option<string>(
+                "--cheep");
+        Option<bool> readOpt = new Option<bool>("--read");
+        readOpt.DefaultValueFactory = _ => true;
+        var rootCommand = new RootCommand();
+        rootCommand.Add(cheepOpt);
+        rootCommand.Add(readOpt);
+        ParseResult parseResult = rootCommand.Parse(args);
+        if (parseResult.Errors.Count == 0)
         {
-            // first we define the regex pattern
-            Regex pattern = new Regex("^([A-Za-z]{4,5}),\"([A-Za-z\\s*\\D]+)\",(\\d+)$");
-        
-            // if the match is a success we take each group and print it out (to test)
-            Match match = pattern.Match(line);
-            if (match.Success)
+            if (parseResult.GetValue(cheepOpt) is string c)
             {
-                // first group is the username, second is comment etc.
-                string username = match.Groups[1].Value;
-                string comment = match.Groups[2].Value;
-                string timestamp = convertUnix(int.Parse(match.Groups[3].Value));
-                // formatting the print out
-                Console.WriteLine(username + " @ " + timestamp + ": " + comment);
+                cheep(path, c);
             }
-
+            else if (parseResult.GetValue(readOpt))
+            {
+                read(path);
+            } 
+                    }
+        else
+        {
+            foreach (ParseError parseError in parseResult.Errors)
+            {
+                Console.WriteLine(parseError.Message);
+            }
         }
+
+
+        //this method reads the CSV file using the external library CsvHelper and prints it in the right format
+        static void read(string path)
+        {
+            using (var reader = new StreamReader(path))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                csv.Read();
+                csv.ReadHeader();
+                while (csv.Read())
+                {
+                    var record = csv.GetRecord<Cheep>();
+                    var time = convertUnix(record.Timestamp);
+                    Console.WriteLine(record.Author +  " @ " + time + ": " + record.Message);
+                }
+            }
+        }
+        //this method appends a new cheep (int the right format) to a CSV file, using the external library CsvHelper
+        static void cheep(string path, string message)
+        {
+            
+            int time = (int)(DateTime.Now - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;
+            var record = new Cheep{Author = Environment.UserName, Message = message, Timestamp = time};
+            
+            using (var writer = new StreamWriter(path, true))
+            using (var csv = new CsvWriter(writer, culture: CultureInfo.InvariantCulture))
+            {
+                csv.WriteRecord(record);
+                csv.NextRecord();
+            }
+        }
+        // converter for epoch time to our time
+        static string convertUnix(int epoch)
+        {
+            // epoch counts from 1970 jan 1 at 0 o'clock.
+            string dt = new DateTime(1970, 1, 1, 0, 0, 0).AddSeconds(epoch).ToString();
+            // the original format is with . in the time and this replaces . with :
+            return new string(dt.Replace('.', ':'));
+        }
+
     }
+
 }
