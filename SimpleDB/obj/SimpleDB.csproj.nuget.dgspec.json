@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Freja\\itu\\BDSA\\Chirp\\Chirp.CLI\\SimpleDB\\SimpleDB.csproj": {}
+    "C:\\Users\\Freja\\itu\\BDSA\\Chirp\\SimpleDB\\SimpleDB.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Freja\\itu\\BDSA\\Chirp\\Chirp.CLI\\SimpleDB\\SimpleDB.csproj": {
+    "C:\\Users\\Freja\\itu\\BDSA\\Chirp\\SimpleDB\\SimpleDB.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Freja\\itu\\BDSA\\Chirp\\Chirp.CLI\\SimpleDB\\SimpleDB.csproj",
+        "projectUniqueName": "C:\\Users\\Freja\\itu\\BDSA\\Chirp\\SimpleDB\\SimpleDB.csproj",
         "projectName": "SimpleDB",
-        "projectPath": "C:\\Users\\Freja\\itu\\BDSA\\Chirp\\Chirp.CLI\\SimpleDB\\SimpleDB.csproj",
+        "projectPath": "C:\\Users\\Freja\\itu\\BDSA\\Chirp\\SimpleDB\\SimpleDB.csproj",
         "packagesPath": "C:\\Users\\Freja\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Freja\\itu\\BDSA\\Chirp\\Chirp.CLI\\SimpleDB\\obj\\",
+        "outputPath": "C:\\Users\\Freja\\itu\\BDSA\\Chirp\\SimpleDB\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Freja\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -37,7 +37,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net8.0": {
@@ -53,12 +54,26 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.19, 8.0.19]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.19, 8.0.19]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[8.0.19, 8.0.19]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.413/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Users\\Freja\\.dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
