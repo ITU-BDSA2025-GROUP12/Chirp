@@ -15,7 +15,11 @@ public class Program
             
         if (args[0] == "read")
         {
-            db.Read();
+            foreach (Cheep cheep in db.Read())
+            {
+                var time = new DateTime(1970, 1, 1, 0, 0, 0).AddSeconds(cheep.Timestamp).ToString("MM/dd/yy hh:mm:ss",CultureInfo.InvariantCulture);
+                Console.WriteLine(cheep.Author + " @ " + time + ": "+ cheep.Message);
+            }
         }
         else if (args[0] == "cheep")
         {
