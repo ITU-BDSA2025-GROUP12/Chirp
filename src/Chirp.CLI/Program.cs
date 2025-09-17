@@ -21,8 +21,7 @@ using SimpleDB;
 
 public class Program
 {
-    public static int Main (string[] args)
-    {
+    public static int Main (string[] args){
         IDatabaseRepository<Cheep> db = new CSVDatabase<Cheep>();
         UserInterface UI = new UserInterface();
         Option<string> cheepOpt = new Option<string>(

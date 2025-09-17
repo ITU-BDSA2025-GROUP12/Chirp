@@ -10,11 +10,16 @@ using CsvHelper;
 
 public sealed class CSVDatabase<T> : IDatabaseRepository<T> {
 
+
+    private string getDataPath()
+    {
+        return File.Exists("data/chirp_cli_db.csv") ? "data/chirp_cli_db.csv" : "../../assets/chirp_cli_db.csv";
+    }
     //this method reads the CSV file using the external library CsvHelper and prints it in the right format
     public IEnumerable<T> Read(int? limit = null)
     {
         List<T> result = new List<T>();
-        using (var reader = new StreamReader("../../assets/chirp_cli_db.csv"))
+        using (var reader = new StreamReader(getDataPath()))
         using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
         {
             csv.Read();
@@ -28,14 +33,14 @@ public sealed class CSVDatabase<T> : IDatabaseRepository<T> {
             return result;
         }
     }
-    
+
     //this method appends a new cheep (int the right format) to a CSV file, using the external library CsvHelper
     public void Store(T record)
     {
         //long time = (long)(DateTime.Now - new DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds;
         //record = new Cheep(Environment.UserName, message, time);
-        
-        using (var writer = new StreamWriter("../../assets/chirp_cli_db.csv", true))
+
+        using (var writer = new StreamWriter(getDataPath(), true))
         using (var csv = new CsvWriter(writer, culture: CultureInfo.InvariantCulture))
         {
             csv.WriteRecord(record);
@@ -51,5 +56,5 @@ public sealed class CSVDatabase<T> : IDatabaseRepository<T> {
         //return new string(dt.Replace('.', ':'));
         return dt;
     }
-    
+
 }
