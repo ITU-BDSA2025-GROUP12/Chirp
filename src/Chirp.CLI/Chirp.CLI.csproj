@@ -12,7 +12,12 @@
       <ProjectReference Include="..\SimpleDB\SimpleDB.csproj" />
       <PackageReference Include="System.COmmandLine" Version="2.0.0-beta7.25380.108" />
 
-    </ItemGroup>
-
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="../../assets/chirp_cli_db.csv">
+      <Link>data/chirp_cli_db.csv</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>
 
