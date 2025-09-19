@@ -52,7 +52,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      name: release
+    - name: release
       uses: softprops/action-gh-release@v2
       with:
         files: |
