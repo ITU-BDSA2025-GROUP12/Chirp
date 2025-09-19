@@ -10,7 +10,7 @@ jobs:
     permissions:
       issues: write
     steps:
-      - run: gh issue edit "$NUMBER" --add-label "bug,typo,documentation,duplicate,enhancement,good first issue,help wanted,invalid,question,wontfix"
+      - run: gh issue edit "$NUMBER" --add-label "help wanted"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
