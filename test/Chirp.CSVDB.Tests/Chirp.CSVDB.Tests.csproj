@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="../../src/SimpleDB/SimpleDB.csproj" />
+    <ProjectReference Include="../../src/Chirp.CLI/Chirp.CLI.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="../../assets/chirp_cli_db.csv">

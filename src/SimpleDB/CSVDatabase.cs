@@ -10,13 +10,22 @@ using CsvHelper;
 
 public sealed class CSVDatabase<T> : IDatabaseRepository<T> {
 
+    private static CSVDatabase<T>? _instance = null;
+    public static CSVDatabase<T> Instance()
+    {
+        if (_instance == null)
+        {
+            _instance = new CSVDatabase<T>();
+        }
+        return _instance;
+    }
 
     private string getDataPath()
     {
         return File.Exists("data/chirp_cli_db.csv") ? "data/chirp_cli_db.csv" : "../../assets/chirp_cli_db.csv";
     }
     //this method reads the CSV file using the external library CsvHelper and prints it in the right format
-    public IEnumerable<T> Read(int? limit = null)
+    public IEnumerable<T> Read(int limit = 0)
     {
         List<T> result = new List<T>();
         using (var reader = new StreamReader(getDataPath()))
@@ -24,10 +33,12 @@ public sealed class CSVDatabase<T> : IDatabaseRepository<T> {
         {
             csv.Read();
             csv.ReadHeader();
-            while (csv.Read())
+            int i = 0;
+            while (csv.Read() && (limit != 0 ? i < limit : true))
             {
                 var record = csv.GetRecord<T>();
                 result.Add(record);
+                i++;
             }
 
             return result;

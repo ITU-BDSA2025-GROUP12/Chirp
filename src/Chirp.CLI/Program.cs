@@ -21,13 +21,14 @@ using SimpleDB;
 
 public class Program
 {
-    public static int Main (string[] args){
-        IDatabaseRepository<Cheep> db = new CSVDatabase<Cheep>();
+    public static int Main(string[] args)
+    {
         UserInterface UI = new UserInterface();
         Option<string> cheepOpt = new Option<string>(
                 "--cheep");
-        Option<bool> readOpt = new Option<bool>("--read");
-        readOpt.DefaultValueFactory = _ => true;
+        Option<int> readOpt = new Option<int>("--read");
+        readOpt.Arity = ArgumentArity.ZeroOrOne;
+        readOpt.DefaultValueFactory = _ => 0;
         var rootCommand = new RootCommand();
         rootCommand.Add(cheepOpt);
         rootCommand.Add(readOpt);
@@ -36,21 +37,29 @@ public class Program
         {
             if (parseResult.GetValue(cheepOpt) is string c)
             {
-                db.Store(new Cheep(Environment.UserName, args[1], DateTimeOffset.UtcNow.ToUnixTimeSeconds()));
+                CSVDatabase<Cheep>.Instance().Store(new Cheep(Environment.UserName, args[1], ConvertingUnix()));
             }
-            else if (parseResult.GetValue(readOpt))
+            else if (parseResult.GetValue(readOpt) is int i)
             {
-            UserInterface.PrintCheeps(db.Read());
+                UserInterface.PrintCheeps(CSVDatabase<Cheep>.Instance().Read(i));
             }
             return 0;
         }
         else
         {
-                foreach (ParseError parseError in parseResult.Errors)
-                {
-                    Console.WriteLine(parseError.Message);
-                }
+            foreach (ParseError parseError in parseResult.Errors)
+            {
+                Console.WriteLine(parseError.Message);
+            }
             return 1;
         }
     }
+
+    public static long ConvertingUnix()
+    {
+        long result =  DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        return result;
+    }
+
+
 }
