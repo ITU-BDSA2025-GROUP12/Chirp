@@ -50,12 +50,9 @@ jobs:
     name: Publish
     needs: release MacOS
     uses: softprops/action-gh-release@v2
-      with:
-        files: |
+    with:
+      files: |
           osx.zip
-          osxarm.zip
-          win.zip
-          linux.zip
        
     
           
