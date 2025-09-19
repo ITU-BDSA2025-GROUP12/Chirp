@@ -49,6 +49,7 @@ jobs:
   publish:
     name: Publish
     needs: release_MacOS
+    runs-on: ubuntu-latest
     
     steps:
       name: release
