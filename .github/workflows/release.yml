@@ -48,7 +48,7 @@ jobs:
 
   publish:
     name: Publish
-    needs: release MacOS
+    needs: release_MacOS
     uses: softprops/action-gh-release@v2
     with:
       files: |
