@@ -29,7 +29,7 @@ jobs:
       - name: Test
         run: dotnet test --no-build --verbosity normal
   
-  release MacOS:
+  release_MacOS:
     name: Release MacOS
     needs: build
     runs-on: ubuntu-latest
