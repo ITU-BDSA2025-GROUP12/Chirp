@@ -12,6 +12,8 @@ obj/
 *.userosscache
 *.sln.docstates
 *.idea
+!.idea/codeStyles
+!.idea/codeStyles/*
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
