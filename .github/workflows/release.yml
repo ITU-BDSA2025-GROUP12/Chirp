@@ -35,20 +35,36 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - uses: actions/checkout@v4
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 8.0.x
       - name: Release
-        run: dotnet publish -c Release -r osx-x64 -p:PublishSingleFile=true -o ./publish/osx-64
+        run: dotnet publish -c Release -r osx-x64 -p:PublishSingleFile=true -o ./publish/osx-x64
       - name: ZIP
         run: zip -r osx.zip ./publish/osx-64
+        
+  release_windows:
+    name: Release Windows
+    needs: build
+    runs-on: ubuntu-latest
+  
+    steps:
+      - name: Release
+        run: dotnet publish -c Release -r win-x64 -p:PublishSingeFile=true -o ./publish/win-x64
+      - name: ZIP
+        run: zip -r win.zip ./publish/win-x64
+  
+  release_Linux:
+    name: Release Linux
+    needs: build
+    runs-on: ubuntu-latest
     
+    steps:
+      - name: Release
+        run: dotnet publish -c Release -r linux-x64 -p:PublishSingleFile:true -o ./publish/linux-x64
+      - name: ZIP
+        run: zip -r linux.zip ./publish/linux-x64
 
   publish:
     name: Publish
-    needs: release_MacOS
+    needs: [release_MacOS, release_Windows, release_Linux]
     runs-on: ubuntu-latest
     
     steps:
@@ -56,7 +72,10 @@ jobs:
       uses: softprops/action-gh-release@v2
       with:
         files: |
-            osx.zip
+          osx.zip
+          win.zip
+          linux.zip
+          
          
     
           
