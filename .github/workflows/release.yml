@@ -35,21 +35,36 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Release
         run: dotnet publish -c Release -r osx-x64 -p:PublishSingleFile=true -o ./publish/osx-x64
       - name: ZIP
-        run: zip -r osx.zip ./publish/osx-64
+        run: zip -r osx.zip ./publish/osx-x64
+      - name: Upload artifact Mac
+        uses: actions/upload-artifact@v4
+        with:
+          name: osx
+          path: osx.zip
+            
         
-  release_windows:
+  release_Windows:
     name: Release Windows
     needs: build
     runs-on: ubuntu-latest
   
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Release
-        run: dotnet publish -c Release -r win-x64 -p:PublishSingeFile=true -o ./publish/win-x64
+        run: dotnet publish -c Release -r win-x64 -p:PublishSingleFile=true -o ./publish/win-x64
       - name: ZIP
         run: zip -r win.zip ./publish/win-x64
+      - name: Upload artifact Windows
+        uses: actions/upload-artifact@v4
+        with:
+          name: win
+          path: win.zip
   
   release_Linux:
     name: Release Linux
@@ -57,10 +72,18 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Release
-        run: dotnet publish -c Release -r linux-x64 -p:PublishSingleFile:true -o ./publish/linux-x64
+        run: dotnet publish -c Release -r linux-x64 -p:PublishSingleFile=true -o ./publish/linux-x64
       - name: ZIP
         run: zip -r linux.zip ./publish/linux-x64
+      - name: Upload artifact Linux
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux
+          path: linux.zip
+        
 
   publish:
     name: Publish
@@ -68,17 +91,15 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: release
-      uses: softprops/action-gh-release@v2
-      with:
-        files: |
-          osx.zip
-          win.zip
-          linux.zip
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./artifacts
+      - name: release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            artifacts/osx/osx.zip
+            artifacts/win/win.zip
+            artifacts/linux/linux.zip
           
-         
-    
-          
-            
-            
-
