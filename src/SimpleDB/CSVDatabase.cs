@@ -1,4 +1,4 @@
-﻿using Chirp.CLI.Models;
+﻿using Chirp.Core;
 using Microsoft.CSharp.RuntimeBinder;
 
 namespace SimpleDB;

@@ -1,4 +1,5 @@
-﻿namespace SimpleDB;
+﻿using Chirp.Core;
+namespace SimpleDB;
 
 public interface IDatabaseRepository<T> {
     public IEnumerable<T> Read(int limit = 0);

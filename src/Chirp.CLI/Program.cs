@@ -1,47 +1,46 @@
-using Chirp.CLI.Models;
+using System.Net.Http.Json;
+using System.Net.Http;
+using Chirp.Core;
 using System.CommandLine;
 using System.CommandLine.Parsing;
-using System.ComponentModel;
-using System.Net.Http.Headers;
 using System;
-using System.CommandLine.Invocation;
-using System.Globalization;
-using System.Text.RegularExpressions;
-using CsvHelper;
-using CsvHelper.Configuration;
-using CsvHelper.Configuration.Attributes;
+using System.Collections.Generic;
 
 namespace Chirp.CLI;
-using System;
-using System.Globalization;
-using System.Text.RegularExpressions;
-using SimpleDB;
-
-
 
 public class Program
 {
-    public static int Main(string[] args)
+    public static int Main(string[] args) // Changed BACK to non-async
     {
-        UserInterface UI = new UserInterface();
-        Option<string> cheepOpt = new Option<string>(
-                "--cheep");
+        Option<string> cheepOpt = new Option<string>("--cheep");
         Option<int> readOpt = new Option<int>("--read");
         readOpt.Arity = ArgumentArity.ZeroOrOne;
         readOpt.DefaultValueFactory = _ => 0;
+        
         var rootCommand = new RootCommand();
         rootCommand.Add(cheepOpt);
         rootCommand.Add(readOpt);
+        
         ParseResult parseResult = rootCommand.Parse(args);
+        
         if (parseResult.Errors.Count == 0)
         {
-            if (parseResult.GetValue(cheepOpt) is string c)
+            using HttpClient client = new HttpClient();
+client.BaseAddress = new Uri("http://localhost:5172/");
+            
+            if (parseResult.GetValue(cheepOpt) is string message)
             {
-                CSVDatabase<Cheep>.Instance().Store(new Cheep(Environment.UserName, args[1], ConvertingUnix()));
+                // POST request to store a cheep (using .Result)
+                var newCheep = new Cheep(Environment.UserName, message, ConvertingUnix());
+                var response = client.PostAsJsonAsync("cheep", newCheep).Result; // Added .Result
+                response.EnsureSuccessStatusCode();
+                Console.WriteLine("Cheep posted successfully!");
             }
             else if (parseResult.GetValue(readOpt) is int i)
             {
-                UserInterface.PrintCheeps(CSVDatabase<Cheep>.Instance().Read(i));
+                // GET request to read cheeps (using .Result)
+                var cheeps = client.GetFromJsonAsync<List<Cheep>>("cheeps").Result; // Added .Result
+                UserInterface.PrintCheeps(cheeps);
             }
             return 0;
         }
@@ -57,9 +56,6 @@ public class Program
 
     public static long ConvertingUnix()
     {
-        long result =  DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-        return result;
+        return DateTimeOffset.UtcNow.ToUnixTimeSeconds();
     }
-
-
 }

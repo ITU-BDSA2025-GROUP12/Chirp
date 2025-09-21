@@ -1,19 +1,16 @@
-using Chirp.CLI.Models;
+using Chirp.Core;  
 
 namespace Chirp.CLI;
-using System;
-using System.Globalization;
-using System.Text.RegularExpressions;
-using SimpleDB;
 
-public class UserInterface
+public static class UserInterface
 {
-    public static void PrintCheeps(IEnumerable<Cheep> cheeps)
+    public static void PrintCheeps(IEnumerable<Cheep> cheeps)  // ← CHANGED FROM SimpleDB.Cheep
     {
-        foreach (Cheep cheep in cheeps)
+        foreach (var cheep in cheeps)
         {
-            var time = new DateTime(1970, 1, 1, 0, 0, 0).AddSeconds(cheep.Timestamp).ToString("MM/dd/yy hh:mm:ss",CultureInfo.InvariantCulture);
-            Console.WriteLine(cheep.Author + " @ " + time + ": "+ cheep.Message);
+            DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(cheep.Timestamp);
+            string formattedDate = dateTimeOffset.ToString("MM/dd/yy HH:mm:ss");
+            Console.WriteLine($"{cheep.Author} @ {formattedDate}: {cheep.Message}");
         }
     }
 }
