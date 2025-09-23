@@ -1,0 +1,31 @@
+name: Create CLI Release
+
+on:
+  push:
+    tags: ['v*']  # Trigger when you push a version tag like v1.0.0
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Build CLI
+      run: dotnet build src/Chirp.CLI/ --configuration Release
+
+    - name: Publish CLI
+      run: dotnet publish src/Chirp.CLI/ -c Release -o ./publish-cli --self-contained true -r win-x64
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: ./publish-cli/*
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
