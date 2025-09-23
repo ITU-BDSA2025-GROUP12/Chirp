@@ -1,7 +1,7 @@
 namespace Chirp.Tests;
 
 using Chirp.CLI;
-using Chirp.CLI.Models;
+using Chirp.Core;
 using System.Globalization;
 using System.Net.Security;
 
