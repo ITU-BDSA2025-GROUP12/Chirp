@@ -40,8 +40,7 @@ client.BaseAddress = new Uri("http://localhost:5172/");
             {
                 // GET request to read cheeps (using .Result)
                 var cheeps = client.GetFromJsonAsync<List<Cheep>>("cheeps").Result; // Added .Result
-                UserInterface.PrintCheeps(cheeps);
-            }
+                UserInterface.PrintCheeps(cheeps ?? new List<Cheep>());            }
             return 0;
         }
         else
