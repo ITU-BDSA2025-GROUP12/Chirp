@@ -19,14 +19,15 @@ public class CheepsController : ControllerBase
     [HttpGet("cheeps")]
     public ActionResult<List<Cheep>> GetCheeps()
     {
-        var cheeps = _database.Read();
-        return Ok(cheeps);
+        Cheep c = new("Nancy", "Davolio",0);
+        //var cheeps = _database.Read();
+        return Ok(new List<Cheep> { c });
     }
 
     [HttpPost("cheep")]
     public ActionResult PostCheep([FromBody] Cheep newCheep)
     {
-        _database.Store(newCheep);
+        //_database.Store(newCheep);
         return Ok();
     }
 }
