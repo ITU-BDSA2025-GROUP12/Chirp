@@ -30,9 +30,18 @@ jobs:
           NUMBER: ${{ github.event.issue.number }}
           LABELS: triage
 
-      - name: Assigned issues labeling
+      - name: Assigned removing label
         if: github.event.action == 'assigned'
         run: gh issue edit "$NUMBER" --remove-label "new"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.issue.number }}
+          LABELS: triage
+
+      - name: Assigned adding labeling
+        if: github.event.action == 'assigned'
+        run: gh issue edit "$NUMBER" --add-label "in-progress"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
