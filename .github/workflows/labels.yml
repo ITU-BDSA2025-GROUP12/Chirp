@@ -6,6 +6,7 @@ on:
       - opened
       - assigned
       - unassigned
+      - closed
 jobs:
   label_issues:
     runs-on: ubuntu-latest
@@ -51,6 +52,15 @@ jobs:
       - name: Unassigned issues labeling
         if: github.event.action == 'unassigned'
         run: gh issue edit "$NUMBER" --add-label "help wanted,new"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.issue.number }}
+          LABELS: triage
+
+      - name: Closed issues labeling
+        if: github.event.action == 'closed'
+        run: gh issue edit "$NUMBER" --remove-label "in-progress"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
