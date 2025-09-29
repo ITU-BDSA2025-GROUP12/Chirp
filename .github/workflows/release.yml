@@ -94,6 +94,7 @@ jobs:
       - name: release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: test-release
           files: |
             artifacts/osx/osx.zip
             artifacts/win/win.zip
