@@ -34,10 +34,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Change directory
-        run: cd src/Chirp.CLI/
       - name: Publish
-        run: dotnet publish -c Release -r osx-x64 -p:PublishSingleFile=true -o ./publish/osx-x64
+        run: dotnet publish src/Chirp.CLI/ -c Release -r osx-x64 -p:PublishSingleFile=true -o ./publish/osx-x64
       - name: Zip
         run: zip -r osx.zip ./publish/osx-x64
       - name: Upload artifact
@@ -55,10 +53,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Change directory
-        run: cd src/Chirp.CLI/
       - name: Publish
-        run: dotnet publish -c Release -r win-x64 -p:PublishSingleFile=true -o ./publish/win-x64
+        run: dotnet publish src/Chirp.CLI/ -c Release -r win-x64 -p:PublishSingleFile=true -o ./publish/win-x64
       - name: Zip
         run: zip -r win.zip ./publish/win-x64
       - name: Upload artifact
@@ -75,10 +71,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Change directory
-        run: cd src/Chirp.CLI/
       - name: Publish
-        run: dotnet publish -c Release -r linux-x64 -p:PublishSingleFile=true -o ./publish/linux-x64
+        run: dotnet publish src/Chirp.CLI/ -c Release -r linux-x64 -p:PublishSingleFile=true -o ./publish/linux-x64
       - name: Zip
         run: zip -r linux.zip ./publish/linux-x64
       - name: Upload artifact
