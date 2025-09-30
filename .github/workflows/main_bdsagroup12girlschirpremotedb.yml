@@ -35,12 +35,18 @@ jobs:
           dotnet build --configuration Release
           dotnet publish -c Release --property:PublishDir='publish/myapp'
 
+      - name: zip
+        working-directory: ./Chirp/src/Chirp.WebService/publish/myapp
+        run: |
+          zip -r myapp.zip .
+
       - name: 'Run Azure webapp deploy action using publish profile credentials'
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'bdsagroup12chirpremotedb2' # Replace with your app name
           publish-profile: ${{ secrets.AZURE_WEB_PUBLISH_PROFILE_2 }} # Define secret variable in repository settings as per action documentation
-          package: './Chirp/src/Chirp.WebService/publish/myapp'
+          package: './Chirp/src/Chirp.WebService/publish/myapp/myapp.zip'
+          type: ZIP
         #- name: Build with dotnet
       #  run: dotnet build --configuration Release
 
