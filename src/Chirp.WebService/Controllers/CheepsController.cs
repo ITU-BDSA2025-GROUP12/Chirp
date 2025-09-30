@@ -19,9 +19,8 @@ public class CheepsController : ControllerBase
     [HttpGet("cheeps")]
     public ActionResult<List<Cheep>> GetCheeps()
     {
-        Cheep c = new("Nancy", "Davolio",0);
-        //var cheeps = _database.Read();
-        return Ok(new List<Cheep> { c });
+        var cheeps = _database.Read();
+        return Ok(cheeps);
     }
 
     [HttpPost("cheep")]
