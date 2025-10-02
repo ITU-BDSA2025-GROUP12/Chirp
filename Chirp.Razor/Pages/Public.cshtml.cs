@@ -12,10 +12,19 @@ public class PublicModel : PageModel
     {
         _service = service;
     }
-
-    public ActionResult OnGet()
+    
+//Jeg tror nok den her metode skal være async fordi getCheeps er det, men ikke sikker vv
+    public async Task<IActionResult> OnGet([FromQuery] int page = 1)
     {
-        Cheeps = _service.GetCheeps();
-        return Page();
+	    Cheeps = await _service.GetCheeps(page);
+	    return Page();
     }
+    
+   // public ActionResult OnGet()
+    //{
+    //  Cheeps = _service.GetCheeps();
+    //return Page();
+    //}
+    
+
 }
