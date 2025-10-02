@@ -26,8 +26,8 @@ public class Program
         if (parseResult.Errors.Count == 0)
         {
             using HttpClient client = new HttpClient();
-client.BaseAddress = new Uri("http://localhost:5172/");
             
+            client.BaseAddress = new Uri("https://bdsagroup12girlschirpremotedb.azurewebsites.net/");            
             if (parseResult.GetValue(cheepOpt) is string message)
             {
                 // POST request to store a cheep (using .Result)
