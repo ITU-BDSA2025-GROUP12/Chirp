@@ -4,7 +4,7 @@ public record CheepViewModel(string Author, string Message, string Timestamp);
 
 public interface ICheepService
 {
-    public Task<List<CheepViewModel>> GetCheeps();
+    public Task<List<CheepViewModel>> GetCheeps(int page);
     public Task<List<CheepViewModel>> GetCheepsFromAuthor(string author);
 }
 
@@ -80,4 +80,6 @@ public class CheepService : ICheepService
     {
         return dateTime.ToString("MM/dd/yy H:mm:ss");
     }
+    
+    
 }
