@@ -2,14 +2,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddSingleton<ICheepService, CheepService>();
 
-// Get database path from environment variable or use default
-var dbPath = Environment.GetEnvironmentVariable("CHIRPDBPATH") 
-    ?? Path.Combine(Path.GetTempPath(), "chirp.db");
-
-// Register services with dependency injection
-builder.Services.AddScoped<DBFacade>(_ => new DBFacade(dbPath));
-builder.Services.AddScoped<ICheepService, CheepService>();
 
 var app = builder.Build();
 
@@ -17,6 +11,7 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

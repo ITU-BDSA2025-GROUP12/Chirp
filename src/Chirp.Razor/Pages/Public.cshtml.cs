@@ -13,10 +13,11 @@ public class PublicModel : PageModel
         _service = service;
     }
     
-//Jeg tror nok den her metode skal være async fordi getCheeps er det, men ikke sikker vv
-    public async Task<IActionResult> OnGet([FromQuery] int page = 1)
+//Jeg tror nok den her metode skal være async fordi getCheeps er det, men ikke sikker vv (Camilla)
+// Jeg har ændret denne her metode til ikke længere at være async.
+    public IActionResult OnGet([FromQuery] int page)
     {
-	    Cheeps = await _service.GetCheeps(page);
+	    Cheeps = _service.GetCheeps(page);
 	    return Page();
     }
     
