@@ -3,6 +3,11 @@ using Microsoft.Data.Sqlite;
 
 public class DBFacade
 {
+    private readonly string dbpath;
+    public DBFacade(string dbpath)
+    {
+        this.dbpath = dbpath;;
+    }
     public List<CheepViewModel> GetCheeps(int page)
     {
         const int pageSize = 32; //32 cheeps per side

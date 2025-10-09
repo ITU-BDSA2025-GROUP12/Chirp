@@ -11,15 +11,21 @@ public interface ICheepService
 
 public class CheepService : ICheepService
 {
+    
+    //Dependency injection?
+    private readonly DBFacade dbf;
+    public CheepService(DBFacade dbf)
+    {
+        this.dbf = dbf;
+    }
+    
     public List<CheepViewModel> GetCheeps(int page)
     {
-        DBFacade dbf = new DBFacade();
         return dbf.GetCheeps(page);
     }
 
     public List<CheepViewModel> GetCheepsFromAuthor(string author)
     {
-        DBFacade dbf = new  DBFacade();
         return dbf.GetCheepsFromAuthor(author);
     }
 
