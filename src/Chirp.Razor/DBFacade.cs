@@ -48,11 +48,13 @@ public class DBFacade
         return cheeps;
     }
 
-    public List<CheepViewModel> GetCheepsFromAuthor(string author)
+    public List<CheepViewModel> GetCheepsFromAuthor(string author, int page)
     {
         var cheeps = new List<CheepViewModel>();
         
-        
+        const int pageSize = 32; //32 cheeps per side
+        int offset = (page - 1) *  pageSize; //hvor mange cheeps skal springes over, dvs
+        //hvis vi er på side to skal den vise cheeps 32 - 64, så springe de første 32 over
         
         using var connection = new SqliteConnection("Data Source=chirp.db");
         connection.Open();
@@ -65,9 +67,12 @@ public class DBFacade
                               JOIN user u ON m.author_id = u.user_id
                               WHERE u.username = @username
                               ORDER BY m.pub_date DESC
+                              LIMIT @limit OFFSET @offset
                               """;
         
         command.Parameters.AddWithValue("@username", author);
+        command.Parameters.AddWithValue("@limit", pageSize);
+        command.Parameters.AddWithValue("@offset", offset);
         
         
         using var reader = command.ExecuteReader();
