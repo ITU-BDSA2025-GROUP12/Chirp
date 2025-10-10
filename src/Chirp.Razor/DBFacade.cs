@@ -18,7 +18,7 @@ public class DBFacade
         var cheeps = new List<CheepViewModel>();
         
         //Create a connection to database
-        using var connection = new SqliteConnection("Data Source=chirp.db");
+        using var connection = new SqliteConnection(dbpath);
         //Open connection to database
         connection.Open();
         
@@ -56,7 +56,7 @@ public class DBFacade
         int offset = (page - 1) *  pageSize; //hvor mange cheeps skal springes over, dvs
         //hvis vi er på side to skal den vise cheeps 32 - 64, så springe de første 32 over
         
-        using var connection = new SqliteConnection("Data Source=chirp.db");
+        using var connection = new SqliteConnection(dbpath);
         connection.Open();
         
         using var command = connection.CreateCommand();

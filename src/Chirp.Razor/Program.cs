@@ -13,7 +13,7 @@ if (chirpdbpath == null)
     chirpdbpath = Path.Combine(Path.GetTempPath(), "chirp.db");
 }
 
-string connectionDS = $"$Data Source={chirpdbpath}";
+string connectionDS = $"Data Source={chirpdbpath}";
 
 builder.Services.AddSingleton<DBFacade>(new DBFacade(connectionDS));
 
