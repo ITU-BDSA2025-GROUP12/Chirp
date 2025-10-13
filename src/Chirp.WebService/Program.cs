@@ -1,5 +1,3 @@
-
-using Chirp.Core;
 using SimpleDB;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<IDatabaseRepository<Cheep>, CSVDatabase<Cheep>>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddControllers(); 
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -20,7 +18,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.MapControllers(); 
+app.MapControllers();
 app.Run();
 
 // Make the Program class accessible for testing
