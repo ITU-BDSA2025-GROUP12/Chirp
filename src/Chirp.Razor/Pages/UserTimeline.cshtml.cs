@@ -19,6 +19,9 @@ public class UserTimelineModel : PageModel
     {
         if (string.IsNullOrWhiteSpace(author)) return NotFound();
         Cheeps = (await _repo.GetCheepsFromAuthor(author, page)).ToList();
+    public ActionResult OnGet(string author, [FromQuery] int page)
+    {
+        Cheeps = _service.GetCheepsFromAuthor(author, page);
         return Page();
     }
 }
