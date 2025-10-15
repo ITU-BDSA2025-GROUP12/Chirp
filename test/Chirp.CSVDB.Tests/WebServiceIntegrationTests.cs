@@ -14,19 +14,21 @@ public class WebServiceIntegrationTests : IClassFixture<WebApplicationFactory<Pr
         _client = factory.CreateClient();
     }
 
-    [Fact(Skip = "HTTP integration tests fail in CI")]
+    //[Fact(Skip = "HTTP integration tests fail in CI")]
+    [Fact]
     public async Task GetCheeps_ReturnsSuccessAndJsonContent()
     {
         // Act
         var response = await _client.GetAsync("/cheeps");
-        
+
         // Assert
         response.EnsureSuccessStatusCode();
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.Equal("application/json", response.Content.Headers.ContentType?.MediaType);
     }
 
-   [Fact(Skip = "HTTP integration tests fail in CI")]
+   //[Fact(Skip = "HTTP integration tests fail in CI")]
+    [Fact]
     public async Task PostCheep_ReturnsSuccessStatusCode()
     {
         // Arrange
