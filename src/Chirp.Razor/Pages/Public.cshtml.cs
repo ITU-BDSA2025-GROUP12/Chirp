@@ -20,9 +20,9 @@ public class PublicModel : PageModel
     }
     
     // Jeg tror nok den her metode skal være async fordi getCheeps er det, men ikke sikker vv
-    public async Task<IActionResult> OnGet([FromQuery] int page = 1)
+    public IActionResult OnGet([FromQuery] int page = 1)
     {
-        Cheeps = (await _repo.GetCheeps(page)).ToList();
+        Cheeps = _repo.GetCheeps(page).ToList();
         return Page();
     }
 

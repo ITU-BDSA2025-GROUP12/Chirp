@@ -7,8 +7,8 @@ public class ChirpDBContext : DbContext
 {
     public ChirpDBContext(DbContextOptions<ChirpDBContext> options) : base(options) { }
 
-    public DbSet<Cheep> Cheeps => Set<Cheep>();
-    public DbSet<Author> Authors => Set<Author>();
+    private DbSet<Cheep> Cheeps => Set<Cheep>();
+    private DbSet<Author> Authors => Set<Author>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

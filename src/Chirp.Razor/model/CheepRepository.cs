@@ -7,7 +7,6 @@ using Chirp.Razor.Data;
 
 namespace Chirp.Razor.Data;
 
-
 public class CheepRepository : ICheepRepository
 {
     private readonly ChirpDBContext _context;
@@ -17,12 +16,12 @@ public class CheepRepository : ICheepRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Cheep>> GetCheeps(int page)
+    public List<Cheep> GetCheeps(int page)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<IEnumerable<Cheep>> GetCheepsFromAuthor(string author, int page)
+    public List<Cheep> GetCheepsFromAuthor(string author, int page)
     {
         throw new NotImplementedException();
     }
