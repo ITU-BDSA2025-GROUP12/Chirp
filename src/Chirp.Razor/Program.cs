@@ -1,4 +1,5 @@
 using Chirp.Razor;
+using Chirp.Core;
 //using Chirp.Razor.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +29,10 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+//seed database
+ChirpDBContext context = new ChirpDBContext();
+DbInitializer.SeedDatabase(context);
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

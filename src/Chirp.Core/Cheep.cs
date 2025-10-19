@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Chirp.Core;
 
 public record Cheep
@@ -5,6 +7,10 @@ public record Cheep
     public required int CheepId;
     public required int AuthorId;
     public required Author Author;
-    public required string Text;
     public required DateTime TimeStamp;
+    
+    [MaxLength(160)]
+    public required string Text;
+    
+    
 }
