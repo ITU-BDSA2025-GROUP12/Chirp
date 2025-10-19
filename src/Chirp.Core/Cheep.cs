@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Chirp.Core;
 
-public record Cheep
+public class Cheep
 {
     public required int CheepId;
     public required int AuthorId;
