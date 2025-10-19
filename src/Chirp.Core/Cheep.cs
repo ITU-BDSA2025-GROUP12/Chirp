@@ -2,9 +2,9 @@ namespace Chirp.Core;
 
 public record Cheep
 {
-    public int CheepId;
-    public int AuthorId;
-    public string Author;
-    public string Text;
-    public DateTime Timestamp;
+    public required int CheepId;
+    public required int AuthorId;
+    public required Author Author;
+    public required string Text;
+    public required DateTime TimeStamp;
 }
