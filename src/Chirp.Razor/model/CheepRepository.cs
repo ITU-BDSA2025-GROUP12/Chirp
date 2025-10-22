@@ -18,7 +18,11 @@ public class CheepRepository : ICheepRepository
 
     public List<Cheep> GetCheeps(int page)
     {
-        throw new NotImplementedException();
+        // TODO: implement method to get cheeps
+        var query = _context.Cheeps.Select(cheep => cheep);
+
+        var result = query.ToList();
+        return result;
     }
 
     public List<Cheep> GetCheepsFromAuthor(string author, int page)

@@ -5,10 +5,12 @@ namespace Chirp.Razor.Data;
 
 public class ChirpDBContext : DbContext
 {
-    public ChirpDBContext(DbContextOptions<ChirpDBContext> options) : base(options) { }
+    public ChirpDBContext(DbContextOptions options) : base(options)
+    {
+    }
 
-    private DbSet<Cheep> Cheeps => Set<Cheep>();
-    private DbSet<Author> Authors => Set<Author>();
+    public DbSet<Cheep> Cheeps { get; set; }
+    public DbSet<Author> Authors { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -31,5 +33,6 @@ public class ChirpDBContext : DbContext
         modelBuilder.Entity<Cheep>()
             .Property(c => c.Text)
             .IsRequired();
+        base.OnModelCreating(modelBuilder);
     }
 }
