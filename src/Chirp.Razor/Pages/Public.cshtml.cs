@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Linq;
-using System.Threading.Tasks;
-using Chirp.Razor;
-using Chirp.Core;
-using Chirp.Razor.Data; 
 
 namespace Chirp.Razor.Pages;
 
@@ -25,10 +20,12 @@ public class PublicModel : PageModel
         Cheeps = _repo.GetCheeps(page).ToList();
         return Page();
     }
+    
+   // public ActionResult OnGet()
+    //{
+    //  Cheeps = _service.GetCheeps();
+    //return Page();
+    //}
+    
 
-    // public ActionResult OnGet()
-    // {
-    //   Cheeps = _service.GetCheeps();
-    //   return Page();
-    // }
 }

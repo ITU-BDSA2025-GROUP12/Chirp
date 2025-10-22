@@ -18,7 +18,7 @@ public class DBFacade
         var cheeps = new List<CheepViewModel>();
 
         //Create a connection to database
-        using var connection = new SqliteConnection(dbpath);
+        using var connection = new SqliteConnection("Data Source=chirp.db");
         //Open connection to database
         connection.Open();
 

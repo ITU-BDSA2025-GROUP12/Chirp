@@ -1,8 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Chirp.Core;
-using Chirp.Razor.Data;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Chirp.Razor.Pages;
