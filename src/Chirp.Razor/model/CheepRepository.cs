@@ -18,31 +18,22 @@ public class CheepRepository : ICheepRepository
 
     public List<Cheep> GetCheeps(int page)
     {
-        // TODO: implement method to get cheeps
-        var query = _context.Cheeps.Select(cheep => cheep);
-        /*.Join(_context.Authors,
+        var query = _context.Cheeps
+        .Join(_context.Authors,
               cheep => cheep.AuthorId,
               author => author.AuthorId,
               (cheep, author) =>
-              new
+              new Cheep()
               {
-                  cheep.AuthorId,
-                  cheep.CheepId,
-                  cheep.Text,
-                  cheep.TimeStamp,
+                  AuthorId=cheep.AuthorId,
+                  CheepId=cheep.CheepId,
+                  Text=cheep.Text,
+                  TimeStamp=cheep.TimeStamp,
                   Author = author
 
               }
         );
-*/
         var result = query.ToList();
-        foreach(Cheep c in result)
-        {
-            Console.WriteLine(c.CheepId);
-            Console.WriteLine(c.AuthorId);
-            Console.WriteLine(c.TimeStamp);
-            Console.WriteLine(c.Author != null);
-        }
         return result;
     }
 

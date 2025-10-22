@@ -7,7 +7,7 @@ public class Cheep {
 	public required DateTime TimeStamp { get; set; }
 
 	public int AuthorId { get; set; }
-	public Author Author { get; set; }
+	public Author Author { get; set; } = null!;
 
 	public required int CheepId { get; set; }
 

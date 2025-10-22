@@ -39,7 +39,7 @@ namespace Chirp.Razor.Migrations
                 {
                     table.PrimaryKey("PK_Cheeps", x => x.CheepId);
                     table.ForeignKey(
-                        name: "fk_cheep_author",
+                        name: "FK_Cheeps_Authors_AuthorId",
                         column: x => x.AuthorId,
                         principalTable: "Authors",
                         principalColumn: "AuthorId",

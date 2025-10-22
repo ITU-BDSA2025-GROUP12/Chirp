@@ -18,12 +18,11 @@ public class ChirpDBContext : DbContext
         modelBuilder.Entity<Cheep>().HasKey(c => c.CheepId);
 
         // Relationships
-        modelBuilder.Entity<Cheep>()
-            .HasOne(c => c.Author)
-            .WithMany(a => a.Cheeps)
-            .HasForeignKey(c => c.AuthorId)
-            .HasConstraintName("fk_cheep_author")
-            .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<Author>()
+            .HasMany(a => a.Cheeps)
+            .WithOne(c => c.Author)
+            .HasForeignKey("AuthorId")
+            .IsRequired();
 
         // Simple property constraints
         modelBuilder.Entity<Author>()

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Chirp.Razor.Migrations
 {
     [DbContext(typeof(ChirpDBContext))]
-    [Migration("20251022192735_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20251022201147_constraintForeignKey")]
+    partial class constraintForeignKey
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,8 +69,7 @@ namespace Chirp.Razor.Migrations
                         .WithMany("Cheeps")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_cheep_author");
+                        .IsRequired();
 
                     b.Navigation("Author");
                 });
