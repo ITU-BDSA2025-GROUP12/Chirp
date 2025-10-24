@@ -1,24 +1,30 @@
 using Chirp.Razor;
+using Chirp.Razor.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddSingleton<ICheepService, CheepService>();
+builder.Services.AddScoped<ICheepRepository, CheepRepository>();
 
 //CHIRPDBPATH
-string chirpdbpath = Environment.GetEnvironmentVariable("CHIRPDBPATH");
-if (chirpdbpath == null)
-{
-    chirpdbpath = Path.Combine(Path.GetTempPath(), "chirp.db");
-}
+string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-string connectionDS = $"Data Source={chirpdbpath}";
-
-builder.Services.AddSingleton<DBFacade>(new DBFacade(connectionDS));
+builder.Services.AddDbContext<ChirpDBContext>(options => options.UseSqlite(connectionString));
 
 
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
+    // From the scope, get an instance of our database context.
+    // Through the `using` keyword, we make sure to dispose it after we are done.
+    using var context = scope.ServiceProvider.GetService<ChirpDBContext>();
+
+    // Execute the migration from code.
+    context.Database.Migrate();
+    DbInitializer.SeedDatabase(context);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -27,6 +33,9 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+//seed database
+//ChirpDBContext context = new ChirpDBContext();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
