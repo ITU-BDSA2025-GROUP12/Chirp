@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Chirp.Razor;
 using Chirp.Razor.Data;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +21,6 @@ using (var scope = app.Services.CreateScope())
     // From the scope, get an instance of our database context.
     // Through the `using` keyword, we make sure to dispose it after we are done.
     using var context = scope.ServiceProvider.GetService<ChirpDBContext>();
-
     // Execute the migration from code.
     context.Database.Migrate();
     DbInitializer.SeedDatabase(context);
@@ -44,4 +44,6 @@ app.MapRazorPages();
 
 app.Run();
 
-public partial class Program { }
+public partial class Program
+{
+}

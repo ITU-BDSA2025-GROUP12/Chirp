@@ -1,14 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Web">
   <ItemGroup>
-      <MySourceFiles Include="../../src/Chirp.Razor/chirp.db"/>
+      <MySourceFiles Include="../../src/Chirp.Razor/chirp.db" />
   </ItemGroup>
 
   <Target Name="CopyFiles" AfterTargets="AfterBuild">
       <Message Text="Hi" Importance="high" />
-      <Copy
-          SourceFiles="@(MySourceFiles)"
-          DestinationFolder="/tmp"
-      />
+      <Copy SourceFiles="@(MySourceFiles)" DestinationFolder="/tmp" />
   </Target>
 
   <PropertyGroup>
@@ -24,6 +21,7 @@
   </ItemGroup>
 
  <ItemGroup>
+   <PackageReference Include="Microsoft.EntityFrameworkCore.SQLite" Version="9.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.8" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageReference Include="xunit" Version="2.9.3" />
