@@ -15,7 +15,7 @@ public class CheepRepository : ICheepRepository
     {
         _context = context;
     }
-    public Task<IEnumerable<Cheep>> GetCheeps(int page)
+    public List<Cheep> GetCheeps(int page) // Query
     {
         var query = _context.Cheeps
             .Join(_context.Authors,
@@ -32,11 +32,11 @@ public class CheepRepository : ICheepRepository
                 });
 
         var result = query.ToList();
-        return Task.FromResult<IEnumerable<Cheep>>(result);
+        return result;
     }
 
 
-    public Task<IEnumerable<Cheep>> GetCheepsFromAuthor(string author, int page)
+    public List<Cheep> GetCheepsFromAuthor(string author, int page) // Query
     {
         var result = _context.Cheeps
             .Join(_context.Authors,
@@ -54,45 +54,44 @@ public class CheepRepository : ICheepRepository
             })
             .ToList();
 
-        return Task.FromResult<IEnumerable<Cheep>>(result);
+        return result;
     }
 
 
-    public async Task<int> GetCheepCount()
+    public async Task<int> GetCheepCount() // Not implemented
     {
         throw new NotImplementedException();
     }
 
-    public async Task<int> GetCheepCountFromAuthor(string author)
+    public async Task<int> GetCheepCountFromAuthor(string author) // Not implemented
     {
         throw new NotImplementedException();
     }
 
-    public async Task<Author?> FindAuthorByName(string name)
+    public async Task<Author?> FindAuthorByName(string name) // Query
     {
         return await _context.Authors
         .AsNoTracking()
         .FirstOrDefaultAsync(a => a.Name == name);
     }
 
-    public async Task<Author?> FindAuthorByEmail(string email)
+    public async Task<Author?> FindAuthorByEmail(string email) // Query
     {
         return await _context.Authors
         .AsNoTracking()
         .FirstOrDefaultAsync(a => a.Email == email);
     }
 
-    public async Task CreateAuthor(Author author)
+    public async Task CreateAuthor(Author author) // Command
     {
         _context.Authors.Add(author);
         await _context.SaveChangesAsync();
     }
 
-    public Task CreateCheep(Cheep cheep)
+    public async Task CreateCheep(Cheep cheep) // Command
     {
         _context.Cheeps.Add(cheep);
-        _context.SaveChanges();
-        return Task.CompletedTask;
+        await _context.SaveChangesAsync();
     }
 
 
