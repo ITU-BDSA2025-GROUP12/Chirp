@@ -86,12 +86,25 @@ public class CheepRepository : ICheepRepository
     {
         _context.Authors.Add(author);
         await _context.SaveChangesAsync();
+
+        //add more rules to creating author
+
     }
 
     public async Task CreateCheep(Cheep cheep) // Command
     {
-        _context.Cheeps.Add(cheep);
-        await _context.SaveChangesAsync();
+        if (cheep.Author != null)
+        {
+            _context.Cheeps.Add(cheep);
+            await _context.SaveChangesAsync();
+        }
+        else {
+            if (cheep.Author == null)
+            {
+                throw new InvalidOperationException("Cannot create cheep: author not found");
+            }
+        }
+
     }
 
 
