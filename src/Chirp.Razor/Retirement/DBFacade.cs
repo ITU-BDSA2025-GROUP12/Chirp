@@ -1,4 +1,4 @@
-namespace Chirp.Razor;
+/*namespace Chirp.Razor;
 using Microsoft.Data.Sqlite;
 
 public class DBFacade
@@ -88,3 +88,4 @@ public class DBFacade
     }
 
 }
+*/

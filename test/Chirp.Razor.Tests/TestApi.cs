@@ -2,7 +2,7 @@ namespace Chirp.Razor.Tests;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using Chirp.Razor.Data;
+using Chirp.Infrastructure.Data;
 using System.Net;
 using Microsoft.AspNetCore.TestHost;
 using Xunit;

@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Chirp.Razor.Data;
+using Chirp.Infrastructure.Data;
 using SQLitePCL;
 
-namespace Chirp.Razor.Data;
+namespace Chirp.Infrastructure.Data;
 
 public class CheepRepository : ICheepRepository
 {
@@ -58,12 +58,12 @@ public class CheepRepository : ICheepRepository
     }
 
 
-    public async Task<int> GetCheepCount() // Not implemented
+    public Task<int> GetCheepCount() // Not implemented. async??
     {
         throw new NotImplementedException();
     }
 
-    public async Task<int> GetCheepCountFromAuthor(string author) // Not implemented
+    public Task<int> GetCheepCountFromAuthor(string author) // Not implemented. async?
     {
         throw new NotImplementedException();
     }
