@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Chirp.Razor.Data;
+using Chirp.Infrastructure.Data;
 using SQLitePCL;
 
-namespace Chirp.Razor.Data;
+namespace Chirp.Infrastructure.Data;
 
 public class CheepRepository : ICheepRepository
 {

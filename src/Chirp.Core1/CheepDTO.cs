@@ -1,4 +1,4 @@
-namespace Chirp.Razor.Pages;
+namespace Chirp.Core.DTOs;
 
 public class CheepDTO
 { //not sure about the visibility modifiers in here
