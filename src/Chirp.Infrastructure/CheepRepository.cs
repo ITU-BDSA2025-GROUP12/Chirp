@@ -58,12 +58,12 @@ public class CheepRepository : ICheepRepository
     }
 
 
-    public async Task<int> GetCheepCount() // Not implemented
+    public Task<int> GetCheepCount() // Not implemented. async??
     {
         throw new NotImplementedException();
     }
 
-    public async Task<int> GetCheepCountFromAuthor(string author) // Not implemented
+    public Task<int> GetCheepCountFromAuthor(string author) // Not implemented. async?
     {
         throw new NotImplementedException();
     }
