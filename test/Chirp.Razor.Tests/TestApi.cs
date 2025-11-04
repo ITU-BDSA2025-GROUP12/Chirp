@@ -39,7 +39,7 @@ public class TestAPI : IClassFixture<CustomWebApplicationFactory<Program>>
         var response = await _client.GetAsync($"/{author}");
         response.EnsureSuccessStatusCode();
         var content = await response.Content.ReadAsStringAsync();
-
+    
         Assert.Contains("Chirp!", content);
         Assert.Contains($"{author}'s Timeline", content);
     }

@@ -5,7 +5,6 @@
 
   <Target Name="CopyFiles" AfterTargets="AfterBuild">
       <Message Text="Hi" Importance="high" />
-      <Copy SourceFiles="@(MySourceFiles)" DestinationFolder="/tmp" />
   </Target>
 
   <PropertyGroup>
@@ -24,6 +23,7 @@
   </ItemGroup>
 
  <ItemGroup>
+   <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.10" />
    <PackageReference Include="Microsoft.EntityFrameworkCore.SQLite" Version="9.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.8" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
