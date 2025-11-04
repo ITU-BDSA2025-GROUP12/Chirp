@@ -29,4 +29,4 @@ jobs:
       run: dotnet build src/Chirp.Web/Chirp.Web.csproj --configuration Release --no-restore
       
     - name: Test
-      run: dotnet test --no-build --verbosity diag
+      run: dotnet test
