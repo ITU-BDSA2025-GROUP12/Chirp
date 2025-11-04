@@ -84,10 +84,21 @@ public class CheepRepository : ICheepRepository
 
     public async Task CreateAuthor(Author author) // Command
     {
+
+        if (author == null) throw new ArgumentNullException(nameof(author), "Author cannot be empt.y");
+
+        if (string.IsNullOrWhiteSpace(author.Name)) throw new ArgumentException("Athor name cannot be empty or whitespace");
+
+        if (author.Name.Length > 30) throw new ArgumentException("Author name cannot be longer than 30 characters");
+
+        if (string.IsNullOrWhiteSpace(author.Email)) throw new ArgumentException("Author email cannot be empty.", nameof(author.Email));
+
+        var existing = await _context.Authors.FirstOrDefaultAsync(async => async.Name == author.Name || async.Email == author.Email);
+        if (existing != null) throw new InvalidOperationException("An author with this name or email already exists.");
+
         _context.Authors.Add(author);
         await _context.SaveChangesAsync();
 
-        //add more rules to creating author
 
     }
 
