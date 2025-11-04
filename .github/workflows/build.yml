@@ -22,13 +22,10 @@ jobs:
         dotnet-version: 8.0.x
         
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore src/Chirp.Web
       
     - name: Build all projects
-      run: dotnet build --no-restore
+      run: dotnet build src/Chrip.Web --configuration Release --no-restore
       
     - name: Test
       run: dotnet test --no-build --verbosity normal
-      
-    - name: Build Razor
-      run: dotnet build src/Chirp.Razor/ --configuration Release
