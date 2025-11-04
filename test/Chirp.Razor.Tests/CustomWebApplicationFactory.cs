@@ -19,7 +19,6 @@ public class CustomWebApplicationFactory<TProgram>
             var dbContextDescriptor = services.SingleOrDefault(
                 d => d.ServiceType ==
                     typeof(IDbContextOptionsConfiguration<ChirpDBContext>));
-            
 
             var dbConnectionDescriptor = services.SingleOrDefault(
                 d => d.ServiceType ==
