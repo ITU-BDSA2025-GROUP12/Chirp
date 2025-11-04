@@ -85,9 +85,9 @@ public class CheepRepository : ICheepRepository
     public async Task CreateAuthor(Author author) // Command
     {
 
-        if (author == null) throw new ArgumentNullException(nameof(author), "Author cannot be empt.y");
+        if (author == null) throw new ArgumentNullException(nameof(author), "Author cannot be empty.");
 
-        if (string.IsNullOrWhiteSpace(author.Name)) throw new ArgumentException("Athor name cannot be empty or whitespace");
+        if (string.IsNullOrWhiteSpace(author.Name)) throw new ArgumentException("Author name cannot be empty or whitespace.");
 
         if (author.Name.Length > 30) throw new ArgumentException("Author name cannot be longer than 30 characters");
 
