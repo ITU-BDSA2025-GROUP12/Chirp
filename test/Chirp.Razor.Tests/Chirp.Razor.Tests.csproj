@@ -1,7 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-  <ItemGroup>
-      <MySourceFiles Include="../../src/Chirp.Razor/chirp.db" />
-  </ItemGroup>
 
   <Target Name="CopyFiles" AfterTargets="AfterBuild">
       <Message Text="Hi" Importance="high" />
@@ -17,7 +14,6 @@
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
  <ItemGroup>
-    <ProjectReference Include="../../src/Chirp.Razor/Chirp.Razor.csproj" />
     <ProjectReference Include="..\..\src\Chirp.Core1\Chirp.Core1.csproj" />
     <ProjectReference Include="..\..\src\Chirp.Infrastructure\Chirp.Infrastructure.csproj" />
     <ProjectReference Include="..\..\src\Chirp.Web\Chirp.Web.csproj" />
