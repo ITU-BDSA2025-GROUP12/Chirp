@@ -1,13 +1,15 @@
-using System.Runtime.CompilerServices;
-using Chirp.Razor;
 using Chirp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<ICheepRepository, CheepRepository>();
+builder.Services.AddDefaultIdentity<IdentityUser>(options => 
+    options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ChirpDBContext>();
 
 //CHIRPDBPATH
 string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
