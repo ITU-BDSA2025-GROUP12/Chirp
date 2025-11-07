@@ -1,3 +1,4 @@
+using System.Transactions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -6,10 +7,10 @@ namespace Chirp.Infrastructure;
 
 public class ChirpDBContext : IdentityDbContext<Author, IdentityRole<int>, int>
 {
-    public ChirpDBContext(DbContextOptions options) : base(options)
+    public ChirpDBContext(DbContextOptions<ChirpDBContext> options) : base(options)
     {
     }
-
+    
     public DbSet<Cheep> Cheeps { get; set; }
     public DbSet<Author> Authors { get; set; }
 
