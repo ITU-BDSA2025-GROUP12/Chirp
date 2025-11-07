@@ -2,6 +2,8 @@ using System.Runtime.CompilerServices;
 using Chirp.Razor;
 using Chirp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using AspNet.Security.OAuth.GitHub;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,20 @@ builder.Services.AddScoped<ICheepRepository, CheepRepository>();
 string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<ChirpDBContext>(options => options.UseSqlite(connectionString));
+
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = "GitHub";
+    })
+    .AddCookie()
+    .AddGitHub(o =>
+    {
+        o.ClientId = builder.Configuration["authentication:github:clientId"];
+        o.ClientSecret = builder.Configuration["authentication:github:clientSecret"];
+        o.CallbackPath = "/signin-github";
+    });
 
 
 var app = builder.Build();
@@ -34,9 +50,9 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-//seed database
-//ChirpDBContext context = new ChirpDBContext();
-
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseSession();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
