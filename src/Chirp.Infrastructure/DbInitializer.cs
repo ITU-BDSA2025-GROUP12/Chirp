@@ -1,7 +1,7 @@
 
-using Chirp.Infrastructure.Data;
+using Chirp.Infrastructure;
 
-namespace Chirp.Infrastructure.Data;
+namespace Chirp.Infrastructure;
 
 public static class DbInitializer
 {
@@ -210,7 +210,7 @@ public static class DbInitializer
             var c184 = new Cheep() { CheepId = 184, AuthorId = a1.AuthorId, Author = a1, Text = "You have no doubt the luminous mixture with which I will quit it, lest Truth shake me falsely.", TimeStamp = DateTime.Parse("2023-08-01 13:14:35") };
             var c185 = new Cheep() { CheepId = 185, AuthorId = a10.AuthorId, Author = a10, Text = "He staggered back with his landlady.", TimeStamp = DateTime.Parse("2023-08-01 13:15:16") };
             var c186 = new Cheep() { CheepId = 186, AuthorId = a1.AuthorId, Author = a1, Text = "I have the truth out of all other explanations are more busy than yourself.", TimeStamp = DateTime.Parse("2023-08-01 13:17:08") };
-            var c187 = new Cheep() { CheepId = 187, AuthorId = a10.AuthorId, Author = a10, Text = "Collar and shirt bore the letters, of course.", TimeStamp = DateTime.Parse("2023-08-01 13:15:56") };
+            var c187 = new Cheep() { CheepId = 187, AuthorId = a10.AuthorId, Author = a10, Text = "Hello, I am feeling good!<script>alert('If you see this in a popup, you are in trouble!');</script>", TimeStamp = DateTime.Parse("2023-08-01 13:15:56") };
             var c188 = new Cheep() { CheepId = 188, AuthorId = a5.AuthorId, Author = a5, Text = "Koo-loo! howled Queequeg, as if it were to drag the firm for which my poor Watson, here we made our way to bed; but, as he said.", TimeStamp = DateTime.Parse("2023-08-01 13:13:33") };
             var c189 = new Cheep() { CheepId = 189, AuthorId = a7.AuthorId, Author = a7, Text = "This fin is some connection between the finger and thumb in his straight-bodied coat, spilled tuns upon tuns of leviathan gore.", TimeStamp = DateTime.Parse("2023-08-01 13:13:40") };
             var c190 = new Cheep() { CheepId = 190, AuthorId = a4.AuthorId, Author = a4, Text = "Half in my rear, and once more arose, and with soft green moss, where I used to be.", TimeStamp = DateTime.Parse("2023-08-01 13:15:31") };

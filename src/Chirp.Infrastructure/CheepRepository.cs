@@ -1,11 +1,6 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Chirp.Infrastructure.Data;
-using SQLitePCL;
 
-namespace Chirp.Infrastructure.Data;
+namespace Chirp.Infrastructure;
 
 public class CheepRepository : ICheepRepository
 {
@@ -35,6 +30,20 @@ public class CheepRepository : ICheepRepository
         return result;
     }
 
+   /* public List<Cheep> getCheeps(int page)
+    {
+        const int pageSize = 32; //cheeps per side
+        int offset = (page-1) * pageSize; //hvor mange cheeps der springes over af databasen
+        
+        var cheeps = _context.Cheeps
+            .Include(c => c.Author)
+            .OrderByDescending(c => c.TimeStamp)
+            .Skip(offset)
+            .Take(pageSize);
+        
+        return  cheeps.ToList();
+        
+    }*/
 
     public List<Cheep> GetCheepsFromAuthor(string author, int page) // Query
     {

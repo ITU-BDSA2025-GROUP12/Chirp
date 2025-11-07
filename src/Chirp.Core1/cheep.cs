@@ -1,6 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-public class Cheep {
+using Microsoft.AspNetCore.Identity; 
+
+public class Cheep : IdentityUser<int>  {
 	[MaxLength(160)]
 	public required String Text { get; set; }
 
