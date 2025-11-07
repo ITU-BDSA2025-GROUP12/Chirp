@@ -4,6 +4,7 @@ using Chirp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using AspNet.Security.OAuth.GitHub;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using static Microsoft.AspNetCore.Http.StatusCodes;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,8 +14,12 @@ builder.Services.AddScoped<ICheepRepository, CheepRepository>();
 
 //CHIRPDBPATH
 string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
 builder.Services.AddDbContext<ChirpDBContext>(options => options.UseSqlite(connectionString));
+
+//In memory session provider with default in memory implementation of IDisibutedCache
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+
 
 builder.Services.AddAuthentication(options =>
     {
@@ -29,6 +34,14 @@ builder.Services.AddAuthentication(options =>
         o.ClientSecret = builder.Configuration["authentication:github:clientSecret"];
         o.CallbackPath = "/signin-github";
     });
+    Console.WriteLine("Loaded GitHub ClientId: " + builder.Configuration["authentication:github:clientId"]);
+
+builder.Services.AddHttpsRedirection(options =>
+{
+    options.RedirectStatusCode = Status307TemporaryRedirect;
+    options.HttpsPort = 5000;
+});
+
 
 
 var app = builder.Build();
@@ -50,12 +63,13 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseAuthentication();
-app.UseAuthorization();
-app.UseSession();
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseSession();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapRazorPages();
 
 app.Run();
