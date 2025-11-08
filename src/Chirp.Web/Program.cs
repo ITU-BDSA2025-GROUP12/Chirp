@@ -8,9 +8,11 @@ using static Microsoft.AspNetCore.Http.StatusCodes;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<ICheepRepository, CheepRepository>();
+Console.WriteLine($"Environment: {builder.Environment.EnvironmentName}");
 
 //CHIRPDBPATH
 string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -19,7 +21,6 @@ builder.Services.AddDbContext<ChirpDBContext>(options => options.UseSqlite(conne
 //In memory session provider with default in memory implementation of IDisibutedCache
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
-
 
 builder.Services.AddAuthentication(options =>
     {
@@ -38,8 +39,8 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddHttpsRedirection(options =>
 {
-    options.RedirectStatusCode = Status307TemporaryRedirect;
-    options.HttpsPort = 5000;
+    //options.RedirectStatusCode = Status307TemporaryRedirect;
+   // options.HttpsPort = 5000;
 });
 
 
