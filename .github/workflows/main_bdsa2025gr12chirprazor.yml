@@ -1,8 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-#razor page deploy workflow
-name: Build and deploy ASP.Net Core app to Azure Web App - bdsagroup12girlschirprazor
+name: Build and deploy ASP.Net Core app to Azure Web App - bdsa2025gr12chirprazor
 
 on:
   push:
@@ -52,15 +51,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_FB9DE6DB31FE4BC1AC4135436434F8A4 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_9447DDD0008B48D4A28FAB1337423975 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_CD23A888515C4AA782923C40569328A0 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_C0B80482BB45425F8240858DB3BE7B6F }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_01A9F74336EC42318A7B71D7815F5358 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_09BB6DD53C944EAFB45BF21982275827 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'bdsagroup12girlschirprazor'
+          app-name: 'bdsa2025gr12chirprazor'
           slot-name: 'Production'
           package: .
           

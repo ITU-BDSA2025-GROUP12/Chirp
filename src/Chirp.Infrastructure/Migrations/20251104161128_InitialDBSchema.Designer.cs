@@ -8,17 +8,17 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Chirp.Razor.Migrations
+namespace Chirp.Infrastructure.Migrations
 {
     [DbContext(typeof(ChirpDBContext))]
-    [Migration("20251022200758_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20251104161128_InitialDBSchema")]
+    partial class InitialDBSchema
     {
         /// <inheritdoc />
-        protected void BuildTargetModel(ModelBuilder modelBuilder) //override???
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "9.0.9");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.21");
 
             modelBuilder.Entity("Author", b =>
                 {
