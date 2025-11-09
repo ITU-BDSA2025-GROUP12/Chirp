@@ -16,6 +16,7 @@ public class ChirpDBContext : IdentityDbContext<Author, IdentityRole<int>, int>
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) // Command
     {
+        base.OnModelCreating(modelBuilder);
         // Keys
         modelBuilder.Entity<Author>().HasKey(a => a.AuthorId);
         modelBuilder.Entity<Cheep>().HasKey(c => c.CheepId);
