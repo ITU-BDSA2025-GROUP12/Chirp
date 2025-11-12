@@ -5,16 +5,15 @@ using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//CHIRPDBPATH
+string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ChirpDBContext>(options => options.UseSqlite(connectionString));
+
 // Add services to the container.
 builder.Services.AddIdentity<Author, IdentityRole<int>>(options =>
     options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ChirpDBContext>()
     .AddDefaultTokenProviders();
-
-//CHIRPDBPATH
-string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
-builder.Services.AddDbContext<ChirpDBContext>(options => options.UseSqlite(connectionString));
 
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<ICheepRepository, CheepRepository>();

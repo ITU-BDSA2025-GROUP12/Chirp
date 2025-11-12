@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 using Microsoft.AspNetCore.Identity; 
 
-public class Cheep : IdentityUser<int>  {
+public class Cheep  {
 	[MaxLength(160)]
 	public required String Text { get; set; }
 
