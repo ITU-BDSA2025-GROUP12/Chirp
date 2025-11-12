@@ -1,6 +1,11 @@
+using System.Runtime.CompilerServices;
 using Chirp.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using AspNet.Security.OAuth.GitHub;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using static Microsoft.AspNetCore.Http.StatusCodes;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +13,31 @@ var builder = WebApplication.CreateBuilder(args);
 //CHIRPDBPATH
 string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ChirpDBContext>(options => options.UseSqlite(connectionString));
+
+//In memory session provider with default in memory implementation of IDisibutedCache
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = "GitHub";
+    })
+    .AddCookie()
+    .AddGitHub(o =>
+    {
+        o.ClientId = builder.Configuration["authentication:github:clientId"];
+        o.ClientSecret = builder.Configuration["authentication:github:clientSecret"];
+        o.CallbackPath = "/signin-github";
+    });
+builder.Services.AddHttpsRedirection(options =>
+{
+    //options.RedirectStatusCode = Status307TemporaryRedirect;
+   // options.HttpsPort = 5000;
+});
+
+
 
 // Add services to the container.
 builder.Services.AddIdentity<Author, IdentityRole<int>>(options =>
@@ -44,9 +74,10 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
-
+app.UseSession();
 app.UseAuthentication(); // Optional
 app.UseAuthorization(); // Optional
+
 
 app.MapRazorPages();
 
