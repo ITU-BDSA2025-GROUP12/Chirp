@@ -13,6 +13,7 @@ builder.Services.AddDbContext<ChirpDBContext>(options => options.UseSqlite(conne
 builder.Services.AddIdentity<Author, IdentityRole<int>>(options =>
     options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ChirpDBContext>()
+    .AddDefaultUI()
     .AddDefaultTokenProviders();
 
 builder.Services.AddRazorPages();

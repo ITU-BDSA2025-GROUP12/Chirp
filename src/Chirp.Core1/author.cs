@@ -5,4 +5,6 @@ public class Author : IdentityUser<int>{
 	public required String Name { get; set; }
 	//public required String Email { get; set; }
 	public ICollection<Cheep> Cheeps { get; } = new List<Cheep>();
+
+	public required String Email{ get; set; }
 }
