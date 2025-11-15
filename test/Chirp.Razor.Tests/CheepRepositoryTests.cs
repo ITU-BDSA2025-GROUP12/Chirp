@@ -1,5 +1,6 @@
 namespace Chirp.Razor.Tests;
 using Chirp.Infrastructure.Data;
+using Chirp.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 using System.Linq;
