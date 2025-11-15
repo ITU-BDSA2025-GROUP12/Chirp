@@ -1,6 +1,7 @@
 using System.Runtime.CompilerServices;
 using Chirp.Razor;
 using Chirp.Infrastructure.Data;
+using Chirp.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

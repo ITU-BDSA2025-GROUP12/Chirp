@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Chirp.Infrastructure.Data;
 using SQLitePCL;
 
-namespace Chirp.Infrastructure.Data;
+namespace Chirp.Infrastructure.Repositories;
 
 public class CheepRepository : ICheepRepository
 {
