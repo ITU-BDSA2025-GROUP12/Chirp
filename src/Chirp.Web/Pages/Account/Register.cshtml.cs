@@ -87,7 +87,7 @@ namespace Chirp.Web.Pages.Account
                var user = new Author{
                     UserName = Input.Email,
                     Email = Input.Email,
-                    Name = Input.Name
+                    FirstName = Input.Name
                 };
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -97,8 +97,8 @@ namespace Chirp.Web.Pages.Account
                 {
                      _logger.LogInformation("User created a new account with password.");
 
-                    //var claim = new Claim("FullName",Input.Name);
-                    //await _userManager.AddClaimAsync(user, claim);
+                    var claim = new Claim("FullName",Input.Name);
+                    await _userManager.AddClaimAsync(user, claim);
                     var userId = await _userManager.GetUserIdAsync(user);
                     Console.WriteLine($"User id er {userId}");
                     Console.WriteLine(user.ToString());

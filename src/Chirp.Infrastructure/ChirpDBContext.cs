@@ -30,7 +30,7 @@ public class ChirpDBContext : IdentityDbContext<Author, IdentityRole<int>, int>
 
         // Simple property constraints
         modelBuilder.Entity<Author>()
-            .Property(a => a.Name)
+            .Property(a => a.FirstName)
             .IsRequired();
 
         modelBuilder.Entity<Cheep>()
