@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using AspNet.Security.OAuth.GitHub;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using static Microsoft.AspNetCore.Http.StatusCodes;
+using CustomTokenProviders;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -41,13 +42,24 @@ builder.Services.AddHttpsRedirection(options =>
 
 // Add services to the container.
 builder.Services.AddIdentity<Author, IdentityRole<int>>(options =>
-    options.SignIn.RequireConfirmedAccount = true)
+{
+  options.SignIn.RequireConfirmedAccount = true;
+  options.Tokens.EmailConfirmationTokenProvider = "emailconfirmation";
+})
     .AddEntityFrameworkStores<ChirpDBContext>()
     .AddDefaultUI()
-    .AddDefaultTokenProviders();
+    .AddDefaultTokenProviders()
+    .AddTokenProvider<EmailConfirmationTokenProvider<Author>>("emailconfirmation");
 
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<ICheepRepository, CheepRepository>();
+
+builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
+      options.TokenLifespan = TimeSpan.FromHours(2));
+
+builder.Services.Configure<EmailConfirmationTokenProviderOptions>(opt =>
+     opt.TokenLifespan = TimeSpan.FromDays(3));
+
 
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
@@ -77,10 +89,7 @@ app.UseRouting();
 app.UseSession();
 app.UseAuthentication(); // Optional
 app.UseAuthorization(); // Optional
-
-
 app.MapRazorPages();
-
 app.Run();
 
 public partial class Program

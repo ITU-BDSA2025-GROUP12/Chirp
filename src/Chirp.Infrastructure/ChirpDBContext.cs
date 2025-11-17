@@ -18,14 +18,14 @@ public class ChirpDBContext : IdentityDbContext<Author, IdentityRole<int>, int>
     {
         base.OnModelCreating(modelBuilder);
         // Keys
-        modelBuilder.Entity<Author>().HasKey(a => a.AuthorId);
+        modelBuilder.Entity<Author>().HasKey(a => a.Id);
         modelBuilder.Entity<Cheep>().HasKey(c => c.CheepId);
 
         // Relationships
         modelBuilder.Entity<Author>()
             .HasMany(a => a.Cheeps)
             .WithOne(c => c.Author)
-            .HasForeignKey("AuthorId")
+            .HasForeignKey(c => c.Id)
             .IsRequired();
 
         // Simple property constraints

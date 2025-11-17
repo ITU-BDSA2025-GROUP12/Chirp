@@ -14,12 +14,12 @@ public class CheepRepository : ICheepRepository
     {
         var query = _context.Cheeps
             .Join(_context.Authors,
-                cheep => cheep.AuthorId,
-                author => author.AuthorId,
+                cheep => cheep.Id,
+                author => author.Id,
                 (cheep, author) =>
                 new Cheep()
                 {
-                    AuthorId = cheep.AuthorId,
+                    Id = cheep.Id,
                     CheepId = cheep.CheepId,
                     Text = cheep.Text,
                     TimeStamp = cheep.TimeStamp,
@@ -49,13 +49,13 @@ public class CheepRepository : ICheepRepository
     {
         var result = _context.Cheeps
             .Join(_context.Authors,
-                cheep => cheep.AuthorId,
-                a => a.AuthorId,
+                cheep => cheep.Id,
+                a => a.Id,
                 (cheep, a) => new { cheep, a })
             .Where(x => x.a.Name == author)
             .Select(x => new Cheep
             {
-                AuthorId = x.cheep.AuthorId,
+                Id = x.cheep.Id,
                 CheepId  = x.cheep.CheepId,
                 Text     = x.cheep.Text,
                 TimeStamp= x.cheep.TimeStamp,
