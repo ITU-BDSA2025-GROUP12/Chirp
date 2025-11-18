@@ -29,6 +29,8 @@ jobs:
       
     - name: Test
       run: |
-       export GitHub__ClientId="${{ secrets.GITHUBCLIENTID }}"
-       export GitHub__ClientSecret="${{ secrets.GITHUBCLIENTSECRET }}"
+       echo "{
+        \"authentication:github:clientSecret\": \"${{ secrets.GITHUBCLIENTSECRET }}\",
+        \"authentication:github:clientId\": \"${{ secrets.GITHUBCLIENTID }}\"
+       }" > ~/.microsoft/usersecrets/d4d4acf8-5e86-41ab-a234-fa8ac0efadc6/secrets.json
        dotnet test
