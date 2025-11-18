@@ -20,7 +20,6 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
-        include-prerelease: true
         
     - name: Restore dependencies
       run: dotnet restore src/Chirp.Web/Chirp.Web.csproj
@@ -29,4 +28,7 @@ jobs:
       run: dotnet build src/Chirp.Web/Chirp.Web.csproj --configuration Release --no-restore
       
     - name: Test
-      run: dotnet test
+      run: |
+       export GitHub__ClientId="${{ secrets.GITHUBCLIENTID }}"
+       export GitHub__ClientSecret="${{ secrets.GITHUBCLIENTSECRET }}"
+       dotnet test
