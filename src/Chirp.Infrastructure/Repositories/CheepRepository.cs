@@ -1,6 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 
+<<<<<<< HEAD:src/Chirp.Infrastructure/CheepRepository.cs
 namespace Chirp.Infrastructure;
+=======
+namespace Chirp.Infrastructure.Repositories;
+>>>>>>> origin/main:src/Chirp.Infrastructure/Repositories/CheepRepository.cs
 
 public class CheepRepository : ICheepRepository
 {
