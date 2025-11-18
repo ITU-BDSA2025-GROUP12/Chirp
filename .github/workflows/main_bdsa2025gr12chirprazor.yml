@@ -63,3 +63,4 @@ jobs:
           app-name: 'bdsa2025gr12chirprazor'
           slot-name: 'Production'
           package: .
+          clean: true
