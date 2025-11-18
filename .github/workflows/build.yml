@@ -29,6 +29,7 @@ jobs:
       
     - name: Test
       run: |
+       mkdir -p ~/.microsoft/usersecrets/d4d4acf8-5e86-41ab-a234-fa8ac0efadc6
        echo "{
         \"authentication:github:clientSecret\": \"${{ secrets.GITHUBCLIENTSECRET }}\",
         \"authentication:github:clientId\": \"${{ secrets.GITHUBCLIENTID }}\"
