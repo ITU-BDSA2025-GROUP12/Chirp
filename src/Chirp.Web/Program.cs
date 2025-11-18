@@ -30,8 +30,8 @@ builder.Services.AddAuthentication(options =>
     .AddCookie()
     .AddGitHub(o =>
     {
-        o.ClientId = builder.Configuration["authentication:github:clientId"];
-        o.ClientSecret = builder.Configuration["authentication:github:clientSecret"];
+        o.ClientId = builder.Configuration["authentication:github:clientId"] ?? Environment.GetEnvironmentVariable("Github__ClientId");
+        o.ClientSecret = builder.Configuration["authentication:github:clientSecret"] ?? Environment.GetEnvironmentVariable("Github__ClientSecret");
         o.CallbackPath = "/signin-github";
     });
 builder.Services.AddHttpsRedirection(options =>
