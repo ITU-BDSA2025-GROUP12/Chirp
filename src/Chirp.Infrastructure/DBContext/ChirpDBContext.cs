@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace Chirp.Infrastructure;
+namespace Chirp.Infrastructure.Data;
 
 public class ChirpDBContext : IdentityDbContext<Author, IdentityRole<int>, int>
 {

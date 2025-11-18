@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 using Chirp.Infrastructure.Repositories;
-using Chirp.Infrastructure;
+using Chirp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +8,7 @@ using AspNet.Security.OAuth.GitHub;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 using CustomTokenProviders;
+using Chirp.Infrastructure.Data;
 
 
 var builder = WebApplication.CreateBuilder(args);

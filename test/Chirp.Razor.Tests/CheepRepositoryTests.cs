@@ -15,10 +15,10 @@ public class CheepRepositoryTests
 
         var context = new ChirpDBContext(options);
 
-        var author = new Author { AuthorId = 1, Name = "Name", Email = "name@example.com" };
+        var author = new Author { Id = 1, FirstName = "Name", Email = "name@example.com" };
         context.Authors.Add(author);
         for (int i = 1; i <= 100; i++)
-            context.Cheeps.Add(new Cheep { CheepId = i, Author = author, AuthorId = 1, Text = $"Cheep {i}", TimeStamp = DateTime.Now });
+            context.Cheeps.Add(new Cheep { CheepId = i, Author = author, Id = 1, Text = $"Cheep {i}", TimeStamp = DateTime.Now });
 
         context.SaveChanges();
         return new CheepRepository(context);
@@ -40,7 +40,7 @@ public class CheepRepositoryTests
         
         var result = repo.GetCheepsFromAuthor("Jacqualine Gilcoine", 1);
         
-        Assert.All(result, c => Assert.Equal("Alice", c.Author.Name));
+        Assert.All(result, c => Assert.Equal("Alice", c.Author.FirstName));
     }
 
     [Fact]
