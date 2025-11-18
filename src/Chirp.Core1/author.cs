@@ -1,6 +1,8 @@
-public class Author {
-	public required int AuthorId { get; set; }
-	public required String Name { get; set; }
-	public required String Email { get; set; }
+using Microsoft.AspNetCore.Identity;
+
+public class Author : IdentityUser<int>{
+	public String? FirstName { get; set; } = string.Empty;
 	public ICollection<Cheep> Cheeps { get; } = new List<Cheep>();
+
+	//public required String Email{ get; set; }
 }

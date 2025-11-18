@@ -33,4 +33,10 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+
+ <ItemGroup>
+   <Folder Include="..\..\src\Chirp.Razor\">
+     <Link>Chirp.Razor</Link>
+   </Folder>
+ </ItemGroup>
 </Project>

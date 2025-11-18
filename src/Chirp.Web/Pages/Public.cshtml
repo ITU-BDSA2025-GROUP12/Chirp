@@ -1,5 +1,5 @@
 ﻿@page "/"
-@model Chirp.Razor.Pages.PublicModel
+@model Chirp.Web.Pages.PublicModel
 @{
     ViewData["Title"] = "Chirp!";
     Layout = "Shared/_Layout";
@@ -16,7 +16,7 @@
                 @if (cheep.Author != null) {
                     <li>
                         <p>
-                            <a href="/@cheep.Author.Name">@cheep.Author.Name</a>
+                            <a href="/@cheep.Author.FirstName">@cheep.Author.FirstName</a>
                             @cheep.Text
                             <small>&mdash; @cheep.TimeStamp.ToString("yyyy-MM-dd HH:mm")</small>
                         </p>

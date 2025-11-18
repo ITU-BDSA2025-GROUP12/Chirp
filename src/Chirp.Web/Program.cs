@@ -1,19 +1,66 @@
 using System.Runtime.CompilerServices;
-using Chirp.Razor;
-using Chirp.Infrastructure.Data;
 using Chirp.Infrastructure.Repositories;
+using Chirp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using AspNet.Security.OAuth.GitHub;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using static Microsoft.AspNetCore.Http.StatusCodes;
+using CustomTokenProviders;
+using Chirp.Infrastructure.Data;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
+//CHIRPDBPATH
+string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ChirpDBContext>(options => options.UseSqlite(connectionString));
+
+//In memory session provider with default in memory implementation of IDisibutedCache
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = "GitHub";
+    })
+    .AddCookie()
+    .AddGitHub(o =>
+    {
+        o.ClientId = builder.Configuration["authentication:github:clientId"];
+        o.ClientSecret = builder.Configuration["authentication:github:clientSecret"];
+        o.CallbackPath = "/signin-github";
+    });
+builder.Services.AddHttpsRedirection(options =>
+{
+    //options.RedirectStatusCode = Status307TemporaryRedirect;
+   // options.HttpsPort = 5000;
+});
+
+
+
 // Add services to the container.
+builder.Services.AddIdentity<Author, IdentityRole<int>>(options =>
+{
+  options.SignIn.RequireConfirmedAccount = true;
+  options.Tokens.EmailConfirmationTokenProvider = "emailconfirmation";
+})
+    .AddEntityFrameworkStores<ChirpDBContext>()
+    .AddDefaultUI()
+    .AddDefaultTokenProviders()
+    .AddTokenProvider<EmailConfirmationTokenProvider<Author>>("emailconfirmation");
+
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<ICheepRepository, CheepRepository>();
 
-//CHIRPDBPATH
-string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
+      options.TokenLifespan = TimeSpan.FromHours(2));
 
-builder.Services.AddDbContext<ChirpDBContext>(options => options.UseSqlite(connectionString));
+builder.Services.Configure<EmailConfirmationTokenProviderOptions>(opt =>
+     opt.TokenLifespan = TimeSpan.FromDays(3));
 
 
 var app = builder.Build();
@@ -41,8 +88,10 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+app.UseSession();
+app.UseAuthentication(); // Optional
+app.UseAuthorization(); // Optional
 app.MapRazorPages();
-
 app.Run();
 
 public partial class Program

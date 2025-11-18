@@ -1,10 +1,5 @@
 namespace Chirp.Razor.Tests;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.DependencyInjection;
-using Chirp.Infrastructure.Data;
-using System.Net;
-using Microsoft.AspNetCore.TestHost;
 using Xunit;
 
 public class TestAPI : IClassFixture<CustomWebApplicationFactory<Program>>
