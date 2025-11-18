@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+using Chirp.Infrastructure.Repositories;
 using Chirp.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
