@@ -6,9 +6,10 @@ namespace Chirp.Web.Pages;
 public class PublicModel : PageModel
 {
     private readonly ICheepRepository _repo;
-
     public List<Cheep> Cheeps { get; set; } = new();
-
+    
+    [BindProperty] public string Message { get; set; }
+    
     public PublicModel(ICheepRepository repo)
     {
         _repo = repo;
@@ -19,6 +20,12 @@ public class PublicModel : PageModel
     {
         Cheeps = _repo.GetCheeps(page);
         return Page();
+    }
+
+    public ActionResult OnPost(Cheep chep)
+    {
+        _repo.CreateCheep(chep);
+        return RedirectToPage("Public");
     }
     
    // public ActionResult OnGet()
