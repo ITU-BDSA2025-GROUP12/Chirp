@@ -97,6 +97,7 @@ namespace Chirp.Web.Pages.Account
                 {
                      _logger.LogInformation("User created a new account with password.");
 
+                    //Ved ikke om der skal være claim når man tilføjer name på den anden måde
                     var claim = new Claim("FullName",Input.Name);
                     await _userManager.AddClaimAsync(user, claim);
                     var userId = await _userManager.GetUserIdAsync(user);
