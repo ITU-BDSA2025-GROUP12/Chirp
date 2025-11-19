@@ -12,6 +12,13 @@
     <div class=navigation>
         @if (User.Identity.IsAuthenticated)
         {
+            <div class="cheepbox">
+                <h3>Tell others what's on your mind @(User.Identity.Name)!</h3>
+                <form method="post">
+                    <input type="Text"/>
+                    <input type="submit" value="Cheep">
+                </form>
+            </div>
             <div>
                 <a href="/@(User.Identity.Name)">my timeline</a> |
                 <a href="/">public timeline</a> |
