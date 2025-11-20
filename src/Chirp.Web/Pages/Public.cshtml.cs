@@ -22,9 +22,9 @@ public class PublicModel : PageModel
         return Page();
     }
 
-    public ActionResult OnPost(Cheep chep)
+    public ActionResult OnPost(String message)
     {
-        _repo.CreateCheep(chep);
+        //_repo.CreateCheep(cheep);
         return RedirectToPage("Public");
     }
     
