@@ -8,6 +8,8 @@ public class PublicModel : PageModel
     private readonly ICheepRepository _repo;
     public List<Cheep> Cheeps { get; set; } = new();
     
+    
+    
     [BindProperty] public string Message { get; set; }
     
     public PublicModel(ICheepRepository repo)
@@ -16,15 +18,15 @@ public class PublicModel : PageModel
     }
     
     // Jeg tror nok den her metode skal være async fordi getCheeps er det, men ikke sikker vv
-    public IActionResult OnGet([FromQuery] int page = 1)
+    public ActionResult OnGet([FromQuery] int page = 1)
     {
-        Cheeps = _repo.GetCheeps(page);
+        Cheeps =  _repo.GetCheeps(page);
         return Page();
     }
 
-    public ActionResult OnPost(String message)
+    public ActionResult OnPost()
     {
-        //_repo.CreateCheep(cheep);
+        _repo.CreateCheep(Message, User.Identity.Name);
         return RedirectToPage("Public");
     }
     

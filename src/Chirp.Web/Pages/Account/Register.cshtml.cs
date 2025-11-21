@@ -91,7 +91,6 @@ namespace Chirp.Web.Pages.Account
                     Email = Input.Email,
                     FirstName = Input.Name
                 };
-                //_cheepRepository.CreateAuthor(user); // Added as an attempt to make posting work.
                 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
