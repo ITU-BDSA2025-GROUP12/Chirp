@@ -12,8 +12,12 @@ public class UserTimelineModel : PageModel
     [BindProperty] public string Message { get; set; }
 
 
-    public UserTimelineModel(ICheepRepository repo) => _repo = repo;
-
+    public UserTimelineModel(ICheepRepository repo)
+    {
+        
+        _repo = repo;
+    }
+    
     public IActionResult OnGet(string author, [FromQuery] int page = 1)
     {
         if (string.IsNullOrWhiteSpace(author)) return NotFound();
