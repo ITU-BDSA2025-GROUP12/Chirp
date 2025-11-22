@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Chirp.Infrastructure.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Identity.Client;
 
 
 namespace Chirp.Infrastructure.Repositories;
@@ -7,9 +9,11 @@ namespace Chirp.Infrastructure.Repositories;
 public class CheepRepository : ICheepRepository
 {
     private readonly ChirpDBContext _context;
+    private UserManager<Author> _userManager;
 
-    public CheepRepository(ChirpDBContext context)
+    public CheepRepository(ChirpDBContext context, UserManager<Author> userManager)
     {
+        _userManager = userManager;
         _context = context;
     }
     public List<Cheep> GetCheeps(int page) // Query
@@ -90,9 +94,9 @@ public class CheepRepository : ICheepRepository
     }
 
 
-    public Task<int> GetCheepCount() // Not implemented. async??
+    public int GetCheepCount() // Query
     {
-        throw new NotImplementedException();
+        return _context.Cheeps.Count();
     }
 
     public Task<int> GetCheepCountFromAuthor(string author) // Not implemented. async?
@@ -107,11 +111,13 @@ public class CheepRepository : ICheepRepository
         .FirstOrDefaultAsync(a => a.FirstName == name);
     }
 
-    public async Task<Author?> FindAuthorByEmail(string email) // Query
+    public async Task<Author?> FindAuthorByEmail(string email) // Query -- Virker ikke btw
     {
-        return await _context.Authors
+        var author = await _context.Authors
         .AsNoTracking()
         .FirstOrDefaultAsync(a => a.Email == email);
+
+        return author;
     }
 
     public async Task CreateAuthor(Author author) // Command
@@ -134,18 +140,28 @@ public class CheepRepository : ICheepRepository
 
     }
 
-    public async Task CreateCheep(Cheep cheep) // Command
+    public async Task CreateCheep(String message, String email) // Command
     {
-        if (cheep.Author != null)
+        if (message != "")
         {
-            _context.Cheeps.Add(cheep);
-            await _context.SaveChangesAsync();
-        }
-        else {
-            if (cheep.Author == null)
+
+            Author author = await _userManager.FindByEmailAsync(email);
+            
+            if (author == null) throw new InvalidOperationException("Author not found.");
+
+            var calcinID = GetCheepCount();
+            var theID = calcinID + 1;
+
+            var cheep = new Cheep
             {
-                throw new InvalidOperationException("Cannot create cheep: author not found");
-            }
+                Text = message.Trim(),
+                TimeStamp = DateTime.Now,
+                Author = author,
+                CheepId = theID,
+            };
+            
+            _context.Cheeps.Add(cheep);
+            _context.SaveChanges();
         }
 
     }
