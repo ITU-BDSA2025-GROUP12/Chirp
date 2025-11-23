@@ -94,8 +94,8 @@ namespace Chirp.Web.Pages.Account
                 
                 await _userStore.SetUserNameAsync(user, Input.Name, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-                var result = await _userManager.CreateAsync(user, Input.Password);
-
+                var result = await _userManager.CreateAsync(user, Input.Password);  
+                
                 if (result.Succeeded)
                 {
                      _logger.LogInformation("User created a new account with password.");

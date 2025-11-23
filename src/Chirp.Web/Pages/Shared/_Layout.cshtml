@@ -9,18 +9,15 @@
     <link rel="icon" type="image/png" href="/favicon/favicon.ico">
 </head>
 <body>
-@{
-    String username = await CheepRepository.FindAuthorNameByEmail(User.Identity.Name);
-}
 <div class=page>
     <h1><img src="/images/icon1.png" alt="Icon1"/>Chirp!</h1>
     <div class=navigation>
         @if (User.Identity.IsAuthenticated)
         {
             <div>
-                <a href="/@(username)">My timeline</a> |
+                <a href="/@(await CheepRepository.FindAuthorNameByEmail(User.Identity.Name))">My timeline</a> |
                 <a href="/">Public timeline</a> |
-                <a href="/Account/Logout">Logout [@(username)]</a>
+                <a href="/Account/Logout">Logout [@(await CheepRepository.FindAuthorNameByEmail(User.Identity.Name))]</a>
             </div>
         }
         else

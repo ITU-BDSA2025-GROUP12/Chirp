@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Chirp.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Identity.Client;
+using Microsoft.IdentityModel.Tokens;
 
 
 namespace Chirp.Infrastructure.Repositories;
@@ -115,7 +116,14 @@ public class CheepRepository : ICheepRepository
 
     public async Task<string> FindAuthorNameByEmail(string email) // Query
     {
-        var author =  await _userManager.FindByEmailAsync(email);
+        
+        var author = await _userManager.FindByEmailAsync(email);
+        if (author == null) throw new ArgumentNullException("Email can't be null");
+        if (author.FirstName.IsNullOrEmpty())
+        {
+            author.FirstName = email;
+            Console.WriteLine("Bro didn't have a name so I named him " + author.FirstName + " myself!");
+        }
         Console.WriteLine(author + "'s name is: " + author.FirstName);
         return author.FirstName;
     }
