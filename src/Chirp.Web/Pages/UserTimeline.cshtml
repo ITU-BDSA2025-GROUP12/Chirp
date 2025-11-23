@@ -1,13 +1,24 @@
 ﻿@page "/{author}"
 @model Chirp.Web.Pages.UserTimelineModel
+@inject ICheepRepository CheepRepository
 @{
     ViewData["Title"] = "Chirp!";
     Layout = "Shared/_Layout";
     var routeName = HttpContext.GetRouteValue("author");
+    var ownUserName = await CheepRepository.FindAuthorNameByEmail(User.Identity.Name);
 }
 
 <div>
     <h2> @routeName's Timeline </h2>
+    @if(User.Identity.IsAuthenticated) {
+        <div class="cheepbox">
+            <h3>Tell others what's on your mind @(ownUserName)!</h3>
+            <form method="post">
+                <input required type="text" asp-for="Message">
+                <input type="submit" value="Cheep">
+            </form>
+        </div>
+    }
 
     @if (Model.Cheeps.Any())
     {
@@ -17,7 +28,7 @@
                 <li>
                     <p>
                         <strong>
-                            <a href="/@cheep.Author">@cheep.Author</a>
+                            <a href="/@cheep.Author.FirstName">@cheep.Author.FirstName</a>
                         </strong>
                         @cheep.Text
                         <small>&mdash; @cheep.TimeStamp</small>

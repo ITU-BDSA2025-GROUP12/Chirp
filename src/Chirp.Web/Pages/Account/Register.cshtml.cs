@@ -30,13 +30,14 @@ namespace Chirp.Web.Pages.Account
         private readonly IUserEmailStore<Author> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ICheepRepository _cheepRepository;
 
         public RegisterModel(
             UserManager<Author> userManager,
             IUserStore<Author> userStore,
             SignInManager<Author> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender, ICheepRepository cheepRepository)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +45,7 @@ namespace Chirp.Web.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _cheepRepository = cheepRepository;
         }
 
         [BindProperty]
@@ -85,11 +87,12 @@ namespace Chirp.Web.Pages.Account
             if (ModelState.IsValid)
             {
                var user = new Author{
-                    UserName = Input.Email,
+                    UserName = Input.Name,
                     Email = Input.Email,
                     FirstName = Input.Name
                 };
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                
+                await _userStore.SetUserNameAsync(user, Input.Name, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
