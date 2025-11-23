@@ -16,6 +16,14 @@ public class CheepRepository : ICheepRepository
         _userManager = userManager;
         _context = context;
     }
+
+    
+    // https://stackoverflow.com/questions/1618863/how-to-sort-a-collection-by-datetime-in-c-sharp
+    public void SortByTime(List<Cheep> cheeps) // Command
+    {
+        cheeps.Sort((x, y) => DateTime.Compare(x.TimeStamp, y.TimeStamp));
+        cheeps.Reverse(); // Reverses the list.
+    }
     public List<Cheep> GetCheeps(int page) // Query
     {
         var query = _context.Cheeps
@@ -33,6 +41,7 @@ public class CheepRepository : ICheepRepository
                 });
 
         var result = query.ToList();
+        SortByTime(result);
         return result;
     }
 
@@ -68,7 +77,7 @@ public class CheepRepository : ICheepRepository
                 Author   = x.a
             })
             .ToList();
-
+        SortByTime(result);
         return result;
     }
 
@@ -89,7 +98,7 @@ public class CheepRepository : ICheepRepository
                 Author   = x.a
             })
             .ToList();
-
+        SortByTime(result);
         return result;
     }
 
@@ -104,19 +113,16 @@ public class CheepRepository : ICheepRepository
         throw new NotImplementedException();
     }
 
-    public async Task<Author?> FindAuthorByName(string name) // Query
+    public async Task<string> FindAuthorNameByEmail(string email) // Query
     {
-        return await _context.Authors
-        .AsNoTracking()
-        .FirstOrDefaultAsync(a => a.FirstName == name);
+        var author =  await _userManager.FindByEmailAsync(email);
+        Console.WriteLine(author + "'s name is: " + author.FirstName);
+        return author.FirstName;
     }
 
-    public async Task<Author?> FindAuthorByEmail(string email) // Query -- Virker ikke btw
+    public async Task<Author?> FindAuthorByEmail(string email) // Query (Should be tested!!!)
     {
-        var author = await _context.Authors
-        .AsNoTracking()
-        .FirstOrDefaultAsync(a => a.Email == email);
-
+        var author = await _userManager.FindByEmailAsync(email);
         return author;
     }
 
@@ -140,24 +146,24 @@ public class CheepRepository : ICheepRepository
 
     }
 
-    public async Task CreateCheep(String message, String email) // Command
+    public async void CreateCheep(String message, String email) // Command
     {
         if (message != "")
         {
 
-            Author author = await _userManager.FindByEmailAsync(email);
+            var author = await _userManager.FindByEmailAsync(email);
             
             if (author == null) throw new InvalidOperationException("Author not found.");
 
-            var calcinID = GetCheepCount();
-            var theID = calcinID + 1;
+            var calcinId = GetCheepCount();
+            var theId = calcinId + 1;
 
             var cheep = new Cheep
             {
                 Text = message.Trim(),
                 TimeStamp = DateTime.Now,
                 Author = author,
-                CheepId = theID,
+                CheepId = theId,
             };
             
             _context.Cheeps.Add(cheep);

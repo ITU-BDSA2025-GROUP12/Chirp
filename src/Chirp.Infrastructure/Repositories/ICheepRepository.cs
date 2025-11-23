@@ -5,9 +5,9 @@ public interface ICheepRepository
     public List<Cheep> GetCheepsFromEmail(string email, int page); // Query
     //Task<int> GetCheepCount();
     Task<int> GetCheepCountFromAuthor(string author);
-    Task<Author?> FindAuthorByName(string name);
+    Task<string> FindAuthorNameByEmail(string name);
     Task<Author?> FindAuthorByEmail(string email);
     Task CreateAuthor(Author author);
-    Task CreateCheep(String message, String name);
+    void CreateCheep(String message, String name);
 
 }
