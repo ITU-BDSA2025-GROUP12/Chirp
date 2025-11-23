@@ -87,12 +87,12 @@ namespace Chirp.Web.Pages.Account
             if (ModelState.IsValid)
             {
                var user = new Author{
-                    UserName = Input.Email,
+                    UserName = Input.Name,
                     Email = Input.Email,
                     FirstName = Input.Name
                 };
                 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                await _userStore.SetUserNameAsync(user, Input.Name, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
