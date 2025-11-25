@@ -59,7 +59,8 @@ namespace Chirp.Web.Pages.Account
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
-
+            
+            [DataType(DataType.Text)]
             [Display(Name = "Full Name")]
             public string Name{get; set;}
 
@@ -86,13 +87,16 @@ namespace Chirp.Web.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
+                    
                var user = new Author{
                     UserName = Input.Name,
                     Email = Input.Email,
                     FirstName = Input.Name
                 };
+               
+               
                 
-                await _userStore.SetUserNameAsync(user, Input.Name, CancellationToken.None);
+                await _userStore.SetUserNameAsync(user, Input.Name, CancellationToken.None); //Has to be Input.Email or the login will fail.
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);  
                 
@@ -101,8 +105,10 @@ namespace Chirp.Web.Pages.Account
                      _logger.LogInformation("User created a new account with password.");
 
                     //Ved ikke om der skal være claim når man tilføjer name på den anden måde
-                    var claim = new Claim("FullName",Input.Name);
-                    await _userManager.AddClaimAsync(user, claim);
+                    var claim = new Claim(ClaimTypes.Name, Input.Name); // Deepseek assistance
+                    var claim2 = new Claim(ClaimTypes.Email, Input.Email); // Deepseek assistancec
+                    var claims  = new[] { claim, claim2 };  
+                    await _userManager.AddClaimsAsync(user, claims);
                     var userId = await _userManager.GetUserIdAsync(user);
                     Console.WriteLine($"User id er {userId}");
                     Console.WriteLine(user.ToString());

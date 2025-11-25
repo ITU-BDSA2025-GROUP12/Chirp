@@ -76,11 +76,19 @@ namespace Chirp.Web.Pages.Account
 
             if (ModelState.IsValid)
             {
+                Console.WriteLine("Trynna log u in bro");
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var UserName = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+                if (UserName == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return Page();
+                }
+                var result = await _signInManager.PasswordSignInAsync(UserName.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    Console.WriteLine("Successs bro");
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }

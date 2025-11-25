@@ -113,6 +113,7 @@ public class CheepRepository : ICheepRepository
     {
         throw new NotImplementedException();
     }
+    
 
     public async Task<string> FindAuthorNameByEmail(string email) // Query
     {
@@ -159,7 +160,7 @@ public class CheepRepository : ICheepRepository
         if (message != "")
         {
 
-            var author = await _userManager.FindByEmailAsync(email);
+            var author = await _userManager.FindByNameAsync(email);
             
             if (author == null) throw new InvalidOperationException("Author not found.");
 
