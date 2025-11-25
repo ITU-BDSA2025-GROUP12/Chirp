@@ -87,7 +87,14 @@ namespace Chirp.Web.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                    
+
+                var a = await _cheepRepository.FindAuthorByEmail(Input.Email);
+                if (a != null)
+                {
+                    ModelState.AddModelError(string.Empty, "Email is in use.");
+                    return Page();
+                }
+                
                var user = new Author{
                     UserName = Input.Name,
                     Email = Input.Email,
@@ -95,8 +102,8 @@ namespace Chirp.Web.Pages.Account
                 };
                
                
-                
-                await _userStore.SetUserNameAsync(user, Input.Name, CancellationToken.None); //Has to be Input.Email or the login will fail.
+                // When you log into the site you use your email. The email is then used to find the username.
+                await _userStore.SetUserNameAsync(user, Input.Name, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);  
                 

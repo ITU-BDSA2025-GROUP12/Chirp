@@ -129,11 +129,24 @@ public class CheepRepository : ICheepRepository
         return author.FirstName;
     }
 
-    public async Task<Author?> FindAuthorByEmail(string email) // Query (Should be tested!!!)
+
+    public async Task<Author?> FindAuthorByEmail(string email)
     {
-        var author = await _userManager.FindByEmailAsync(email);
-        return author;
+        var result =  _context.Authors
+            .Where(x => x.Email == email);
+
+        if (result.IsNullOrEmpty())
+        {
+            return null;
+        }
+
+        return result.First();
     }
+    // public async Task<Author?> FindAuthorByEmail(string email) // Query (Should be tested!!!)
+    // {
+    //     var author = await _userManager.FindByEmailAsync(email);
+    //     return author;
+    // }
 
     public async Task CreateAuthor(Author author) // Command
     {

@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Chirp.Web.Pages.Account
 {
@@ -79,12 +80,23 @@ namespace Chirp.Web.Pages.Account
                 Console.WriteLine("Trynna log u in bro");
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+                
+                //To login the email is written in the login field.
+                //SignInManager tries to find a corresponding author with the email.
                 var UserName = await _signInManager.UserManager.FindByEmailAsync(Input.Email);
+                
+                //If the author doesn't exist we throw an error.
                 if (UserName == null)
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
+                } else if (UserName.UserName.IsNullOrEmpty())
+                {
+                    UserName.UserName = Input.Email;
+                    UserName.FirstName = Input.Email;
                 }
+                
+                //If the author exists we try to log in to the account with the author's username. This should work as the email should correspond to a username.
                 var result = await _signInManager.PasswordSignInAsync(UserName.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
