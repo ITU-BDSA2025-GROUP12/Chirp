@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Chirp.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Identity.Client;
+using Microsoft.IdentityModel.Tokens;
 
 
 namespace Chirp.Infrastructure.Repositories;
@@ -112,19 +113,40 @@ public class CheepRepository : ICheepRepository
     {
         throw new NotImplementedException();
     }
+    
 
     public async Task<string> FindAuthorNameByEmail(string email) // Query
     {
-        var author =  await _userManager.FindByEmailAsync(email);
+        
+        var author = await _userManager.FindByEmailAsync(email);
+        if (author == null) throw new ArgumentNullException("Email can't be null");
+        if (author.FirstName.IsNullOrEmpty())
+        {
+            author.FirstName = email;
+            Console.WriteLine("Bro didn't have a name so I named him " + author.FirstName + " myself!");
+        }
         Console.WriteLine(author + "'s name is: " + author.FirstName);
         return author.FirstName;
     }
 
-    public async Task<Author?> FindAuthorByEmail(string email) // Query (Should be tested!!!)
+
+    public async Task<Author?> FindAuthorByEmail(string email)
     {
-        var author = await _userManager.FindByEmailAsync(email);
-        return author;
+        var result =  _context.Authors
+            .Where(x => x.Email == email);
+
+        if (result.IsNullOrEmpty())
+        {
+            return null;
+        }
+
+        return result.First();
     }
+    // public async Task<Author?> FindAuthorByEmail(string email) // Query (Should be tested!!!)
+    // {
+    //     var author = await _userManager.FindByEmailAsync(email);
+    //     return author;
+    // }
 
     public async Task CreateAuthor(Author author) // Command
     {
@@ -151,7 +173,7 @@ public class CheepRepository : ICheepRepository
         if (message != "")
         {
 
-            var author = await _userManager.FindByEmailAsync(email);
+            var author = await _userManager.FindByNameAsync(email);
             
             if (author == null) throw new InvalidOperationException("Author not found.");
 
