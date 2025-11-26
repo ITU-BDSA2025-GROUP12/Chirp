@@ -12,9 +12,8 @@ public class CheepRepository : ICheepRepository
     private readonly ChirpDBContext _context;
     private UserManager<Author> _userManager;
 
-    public CheepRepository(ChirpDBContext context, UserManager<Author> userManager)
+    public CheepRepository(ChirpDBContext context)
     {
-        _userManager = userManager;
         _context = context;
     }
 
