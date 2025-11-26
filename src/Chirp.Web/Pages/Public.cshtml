@@ -23,6 +23,11 @@
             @foreach (var cheep in Model.Cheeps)
             {
                 @if (cheep.Author != null) {
+                    //Github accounts only have UserName and not FirstName while the authors in the DBinitializer only have FirstName and not UserName.
+                    @if (String.IsNullOrEmpty(cheep.Author.UserName) && !String.IsNullOrEmpty(cheep.Author.FirstName))
+                    {
+                        cheep.Author.UserName = cheep.Author.FirstName;
+                    }
                     <li>
                         <p>
                             <a href="/@cheep.Author.UserName">@cheep.Author.UserName</a>

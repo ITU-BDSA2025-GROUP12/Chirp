@@ -1,4 +1,5 @@
 ﻿@page "/{author}"
+@using Microsoft.IdentityModel.Tokens
 @model Chirp.Web.Pages.UserTimelineModel
 @inject ICheepRepository CheepRepository
 @{
@@ -25,6 +26,10 @@
         <ul id="messagelist" class="cheeps">
             @foreach (var cheep in Model.Cheeps)
             {
+                @if (cheep.Author.UserName.IsNullOrEmpty() && !cheep.Author.FirstName.IsNullOrEmpty())
+                {
+                    cheep.Author.UserName = cheep.Author.FirstName;
+                }
                 <li>
                     <p>
                         <strong>

@@ -90,7 +90,9 @@ namespace Chirp.Web.Pages.Account
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
-                } else if (UserName.UserName.IsNullOrEmpty())
+                }
+                //If the author doesn't have a username or firstname we set them.
+                if (UserName.UserName.IsNullOrEmpty())
                 {
                     UserName.UserName = Input.Email;
                     UserName.FirstName = Input.Email;
