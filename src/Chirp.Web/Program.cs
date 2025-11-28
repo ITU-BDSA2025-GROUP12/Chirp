@@ -18,7 +18,7 @@ string? connectionString = builder.Configuration.GetConnectionString("DefaultCon
 builder.Services.AddDbContext<ChirpDBContext>(options => options.UseSqlite(connectionString));
 
 //In memory session provider with default in memory implementation of IDisibutedCache
-builder.Services.AddDistributedMemoryCache();
+builder.Services.AddDistributedMemoryCache();   
 builder.Services.AddSession();
 
 builder.Services.AddAuthentication(options =>

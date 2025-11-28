@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Chirp.Web.Pages;
@@ -9,7 +10,7 @@ public class UserTimelineModel : PageModel
 
     public List<Cheep> Cheeps { get; set; } = new();
     
-    [BindProperty] public string Message { get; set; }
+    [BindProperty][MaxLength(160)] public string Message { get; set; }
 
 
     public UserTimelineModel(ICheepRepository repo)
