@@ -36,5 +36,10 @@ public class ChirpDBContext : IdentityDbContext<Author, IdentityRole<int>, int>
         modelBuilder.Entity<Cheep>()
             .Property(c => c.Text)
             .IsRequired();
+        
+        //Unique index for email. (DeepSeek)
+        modelBuilder.Entity<Author>()
+            .HasIndex(a => a.Email)
+            .IsUnique();
     }
 }

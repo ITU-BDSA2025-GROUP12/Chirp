@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Chirp.Infrastructure.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Identity.Client;
+using Microsoft.IdentityModel.Tokens;
 
 
 namespace Chirp.Infrastructure.Repositories;
@@ -7,10 +10,19 @@ namespace Chirp.Infrastructure.Repositories;
 public class CheepRepository : ICheepRepository
 {
     private readonly ChirpDBContext _context;
+    private UserManager<Author> _userManager;
 
     public CheepRepository(ChirpDBContext context)
     {
         _context = context;
+    }
+
+    
+    // https://stackoverflow.com/questions/1618863/how-to-sort-a-collection-by-datetime-in-c-sharp
+    public void SortByTime(List<Cheep> cheeps) // Command
+    {
+        cheeps.Sort((x, y) => DateTime.Compare(x.TimeStamp, y.TimeStamp));
+        cheeps.Reverse(); // Reverses the list.
     }
     public List<Cheep> GetCheeps(int page) // Query
     {
@@ -29,6 +41,7 @@ public class CheepRepository : ICheepRepository
                 });
 
         var result = query.ToList();
+        SortByTime(result);
         return result;
     }
 
@@ -64,7 +77,7 @@ public class CheepRepository : ICheepRepository
                 Author   = x.a
             })
             .ToList();
-
+        SortByTime(result);
         return result;
     }
 
@@ -85,34 +98,54 @@ public class CheepRepository : ICheepRepository
                 Author   = x.a
             })
             .ToList();
-
+        SortByTime(result);
         return result;
     }
 
 
-    public Task<int> GetCheepCount() // Not implemented. async??
+    public int GetCheepCount() // Query
     {
-        throw new NotImplementedException();
+        return _context.Cheeps.Count();
     }
 
     public Task<int> GetCheepCountFromAuthor(string author) // Not implemented. async?
     {
         throw new NotImplementedException();
     }
+    
 
-    public async Task<Author?> FindAuthorByName(string name) // Query
+    public async Task<string> FindAuthorNameByEmail(string email) // Query
     {
-        return await _context.Authors
-        .AsNoTracking()
-        .FirstOrDefaultAsync(a => a.FirstName == name);
+        
+        var author = await _userManager.FindByEmailAsync(email);
+        if (author == null) throw new ArgumentNullException("Email can't be null");
+        if (author.FirstName.IsNullOrEmpty())
+        {
+            author.FirstName = email;
+            Console.WriteLine("Bro didn't have a name so I named him " + author.FirstName + " myself!");
+        }
+        Console.WriteLine(author + "'s name is: " + author.FirstName);
+        return author.FirstName;
     }
 
-    public async Task<Author?> FindAuthorByEmail(string email) // Query
+
+    public async Task<Author?> FindAuthorByEmail(string email)
     {
-        return await _context.Authors
-        .AsNoTracking()
-        .FirstOrDefaultAsync(a => a.Email == email);
+        var result =  _context.Authors
+            .Where(x => x.Email == email);
+
+        if (result.IsNullOrEmpty())
+        {
+            return null;
+        }
+
+        return result.First();
     }
+    // public async Task<Author?> FindAuthorByEmail(string email) // Query (Should be tested!!!)
+    // {
+    //     var author = await _userManager.FindByEmailAsync(email);
+    //     return author;
+    // }
 
     public async Task CreateAuthor(Author author) // Command
     {
@@ -134,18 +167,28 @@ public class CheepRepository : ICheepRepository
 
     }
 
-    public async Task CreateCheep(Cheep cheep) // Command
+    public async void CreateCheep(String message, String email) // Command
     {
-        if (cheep.Author != null)
+        if (message != "")
         {
-            _context.Cheeps.Add(cheep);
-            await _context.SaveChangesAsync();
-        }
-        else {
-            if (cheep.Author == null)
+
+            var author = await _userManager.FindByNameAsync(email);
+            
+            if (author == null) throw new InvalidOperationException("Author not found.");
+
+            var calcinId = GetCheepCount();
+            var theId = calcinId + 1;
+
+            var cheep = new Cheep
             {
-                throw new InvalidOperationException("Cannot create cheep: author not found");
-            }
+                Text = message.Trim(),
+                TimeStamp = DateTime.Now,
+                Author = author,
+                CheepId = theId,
+            };
+            
+            _context.Cheeps.Add(cheep);
+            _context.SaveChanges();
         }
 
     }

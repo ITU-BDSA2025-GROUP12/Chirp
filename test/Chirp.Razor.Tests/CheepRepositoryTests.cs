@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Xunit;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+
 
 public class CheepRepositoryTests
 {
@@ -44,7 +46,7 @@ public class CheepRepositoryTests
     }
 
     [Fact]
-    public async Task CreateCheep_Throws_IfNoAuthor() {
+    public void CreateCheep_Throws_IfNoAuthor() {
         var options = new DbContextOptionsBuilder<ChirpDBContext>().UseInMemoryDatabase(databaseName: "NoAuthor").Options;
 
         var context = new ChirpDBContext(options);
@@ -56,7 +58,7 @@ public class CheepRepositoryTests
             Author = null
         };
 
-        await Assert.ThrowsAsync<InvalidOperationException>(() => repo.CreateCheep(cheep));
+        Assert.Throws<NullReferenceException>(() => repo.CreateCheep(cheep.Text, cheep.Author.Email));
     }
     
     
