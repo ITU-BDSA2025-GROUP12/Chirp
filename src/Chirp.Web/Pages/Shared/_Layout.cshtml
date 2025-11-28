@@ -8,9 +8,14 @@
     <link rel="icon" type="image/x-icon" href="/favicon/WinxWings.ico">
 </head>
 <body>
-<div class=page>
-    <h1><img src="/images/Wings.png" alt="Wings1"/>Chirp!</h1>
-    <div class=navigation>
+<div class="page">
+    <h1>
+        <img src="https://www.pikpng.com/pngl/m/98-980191_wings-sticker-winx-club-wings-clipart.png"
+             alt="Winx Club Wings (image from pikpng.com)" />
+        Chirp!
+    </h1>
+
+    <div class="navigation">
         @if (User.Identity.IsAuthenticated)
         {
             <div>
@@ -28,14 +33,16 @@
             </div>
         }
     </div>
-    <div class=body>
+
+    <div class="body">
         @RenderBody()
     </div>
-    <div class=footer>
-        Chirp &mdash; An ASP.NET Application
+
+    <div class="footer">
+        Chirp &mdash; An ASP.NET Application<br />
+        Image: Winx Club Wings from pikpng.com (embedded under personal-use terms)
     </div>
 </div>
 </body>
 @await RenderSectionAsync("Scripts", required: false)
 </html>
-
