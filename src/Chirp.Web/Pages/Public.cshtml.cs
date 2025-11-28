@@ -11,9 +11,7 @@ public class PublicModel : PageModel
     
     
     
-    [BindProperty]
-    [MaxLength(160)] 
-    public string Message { get; set; }
+    [BindProperty] public string Message { get; set; }
     
     public PublicModel(ICheepRepository repo)
     {

@@ -10,7 +10,7 @@ public class UserTimelineModel : PageModel
 
     public List<Cheep> Cheeps { get; set; } = new();
     
-    [BindProperty][MaxLength(160)] public string Message { get; set; }
+    [BindProperty] public string Message { get; set; }
 
 
     public UserTimelineModel(ICheepRepository repo)

@@ -50,6 +50,7 @@ public class CheepRepositoryTests
         var options = new DbContextOptionsBuilder<ChirpDBContext>().UseInMemoryDatabase(databaseName: "NoAuthor").Options;
 
         var context = new ChirpDBContext(options);
+
         var repo = new CheepRepository(context);
         var cheep = new Cheep {
             CheepId = 1,

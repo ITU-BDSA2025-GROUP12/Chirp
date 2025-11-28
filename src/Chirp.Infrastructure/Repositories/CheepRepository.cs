@@ -12,7 +12,7 @@ public class CheepRepository : ICheepRepository
     private readonly ChirpDBContext _context;
     private UserManager<Author> _userManager;
 
-    public CheepRepository(ChirpDBContext context)
+    public CheepRepository(ChirpDBContext context) // Skal være her ellers så kan den ikke "FindAuthorByName"
     {
         _context = context;
     }
@@ -167,15 +167,17 @@ public class CheepRepository : ICheepRepository
 
     }
 
-    public async void CreateCheep(String message, String email) // Command
+    public async void CreateCheep(String message, String name) // Command
     {
         if (message != "")
         {
 
-            var author = await _userManager.FindByNameAsync(email);
-            
-            if (author == null) throw new InvalidOperationException("Author not found.");
+            var authors = _context.Authors
+                .Where(x => x.FirstName == name || x.UserName == name);
+            if (authors.IsNullOrEmpty()) throw new InvalidOperationException("Author not found.");
 
+            var author = authors.First();
+            
             var calcinId = GetCheepCount();
             var theId = calcinId + 1;
 
