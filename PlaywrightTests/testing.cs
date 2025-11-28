@@ -10,28 +10,10 @@ namespace PlaywrightTests;
 [TestFixture]
 public class ExampleTest : PageTest {
 	[Test]
-	public async Task HasTitle()
-	{
-		await Page.GotoAsync("https://playwright.dev");
-
-		// Expect a title "to contain" a substring.
-		await Expect(Page).ToHaveTitleAsync(new Regex("Playwright"));
-	}
-
-	[Test]
-	public async Task GetStartedLink() {
-		await Page.GotoAsync("https://playwright.dev");
-
-		// Click the get started link.
-		await Page.GetByRole(AriaRole.Link, new() { Name = "Get started" }).ClickAsync();
-
-		// Expects page to have a heading with the name of Installation.
-		await Expect(Page.GetByRole(AriaRole.Heading, new() { Name = "Installation" })).ToBeVisibleAsync();
-	}
-
-	[Test]
 	public async Task testingWithChirp() {
 		await Page.GotoAsync("https://bdsa2025gr12chirprazor-gzh9b7ghhxb0cybn.norwayeast-01.azurewebsites.net/");
-		await Expect(Page.GetByRole(AriaRole.Heading, new() { Name = "Icon1Chirp!" })).ToBeVisibleAsync();
+		await Expect(Page.GetByRole(AriaRole.Heading, new() { Name = "Wings1Chirp!" })).ToBeVisibleAsync();
 	}
+	[Test]
+	public async Task 
 }
