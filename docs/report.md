@@ -88,10 +88,14 @@ Describe how to run your test suites:
 ## License
 State the software license you chose for your application.
 
+The software license we chose for our application is the MIT License. It is a license that .NET uses, so we chose it as well for our project.
+
 ## LLMs, ChatGPT, CoPilot, and Others
 Describe:
 
 - Which LLM(s) you used (if any)  
 - How and when you used them  
 - How helpful they were  
-- Whether they sped up or slowed down development  
+- Whether they sped up or slowed down development
+
+DeepSeek has been used in our project for debugging and understanding tasks. In some cases it has been used to write code, however this has actually been less helpful as it has caused us to debug more than write code. It can be hard to understand some of the code DeepSeek produces as it can overcomplicate things or use packages we have not been introduced to. The person who produced this code may be able to understand it but it makes it harder for another member to refactor without removing function. This has all caused the development of our code to be slowed down. The book itself has been more helpful to developing the code than DeepSeek has. Using AI as a debugging tool has been helpful in some cases and done no improvement or change in others.
