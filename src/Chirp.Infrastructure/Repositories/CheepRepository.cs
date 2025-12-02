@@ -132,7 +132,7 @@ public class CheepRepository : ICheepRepository
     public async Task<Author?> FindAuthorByEmail(string email)
     {
         var result =  _context.Authors
-            .Where(x => x.Email == email);
+            .Where(x => x.UserName == email);
 
         if (result.IsNullOrEmpty())
         {
@@ -172,7 +172,7 @@ public class CheepRepository : ICheepRepository
         if (message != "")
         {
 
-            var author = await _userManager.FindByNameAsync(email);
+            var author = await FindAuthorByEmail(email);
             
             if (author == null) throw new InvalidOperationException("Author not found.");
 
