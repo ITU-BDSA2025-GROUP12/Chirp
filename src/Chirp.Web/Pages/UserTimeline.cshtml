@@ -15,10 +15,31 @@
         <div class="cheepbox">
             <h3>Tell others what's on your mind @(ownUserName)!</h3>
             <form method="post">
-                <input required type="text" asp-for="Message">
+                <input required type="text" id="input" asp-for="Message">
                 <input type="submit" value="Cheep">
+                <span class="word" id="word">160 characters left</span>
             </form>
         </div>
+        <script>
+            let word = document.getElementById("word"); // Word counter
+            let input = document.getElementById("input"); // Input written in the form
+            const maximumlen = 160; // Max length
+            
+            updatecount();
+            
+            input.addEventListener('input',updatecount);
+            
+            function updatecount() {
+                const nowlen = input.value.length; // Current length
+                const remaining = maximumlen - nowlen;
+                word.textContent = `${remaining} characters left`
+                
+                if(remaining == 0) {
+                    word.style.color = "red"
+                }
+            }
+            
+        </script>
     }
 
     @if (Model.Cheeps.Any())
