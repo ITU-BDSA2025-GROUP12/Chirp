@@ -1,4 +1,3 @@
-
 using Chirp.Infrastructure;
 
 namespace Chirp.Infrastructure.Data;

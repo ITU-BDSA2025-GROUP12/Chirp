@@ -1,3 +1,6 @@
+
+namespace Chirp.Infrastructure.Repositories;
+
 public interface ICheepRepository
 {
     public List<Cheep> GetCheeps(int page); // Query

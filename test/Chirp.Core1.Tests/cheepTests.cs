@@ -1,4 +1,3 @@
-using Chirp.Core1;
 using Xunit;
 
 namespace Chirp.Core1.Tests;

@@ -1,22 +1,38 @@
-namespace Chirp.Razor.Tests;
 using Chirp.Infrastructure.Data;
+using System.Data.Common;
 using Chirp.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.Sqlite;
 
+namespace Chirp.Infrastructure.Tests.Repositories;
+	
 
 public class CheepRepositoryTests
 {
+	private readonly DbConnection connection;
+	private readonly DbContextOptions<ChirpDBContext> options;
+
+
+	public CheepRepositoryTests(){
+	connection = new SqliteConnection("Filename=:memory:");
+		connection.Open(); 
+		options = new DbContextOptionsBuilder<ChirpDBContext>()
+			.UseSqlite(connection)
+			.Options;
+	}
+	
+
     private CheepRepository GetRepositoryWithData()
     {
-        var options = new DbContextOptionsBuilder<ChirpDBContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
-            .Options;
-
-        var context = new ChirpDBContext(options);
-
+	
+        //var options = new DbContextOptionsBuilder<ChirpDBContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+        //    .Options;
+   		var context = new ChirpDBContext(options);
+		context.Database.EnsureCreated();
         var author = new Author { Id = 1, FirstName = "Name", Email = "name@example.com" };
         context.Authors.Add(author);
         for (int i = 1; i <= 100; i++)
@@ -40,16 +56,17 @@ public class CheepRepositoryTests
     public void GetCheepsFromAuthor_FiltersByName() {
         var repo = GetRepositoryWithData();
         
-        var result = repo.GetCheepsFromAuthor("Helge", 1);
+        var result = repo.GetCheepsFromAuthor("Name", 1);
         
-        Assert.All(result, c => Assert.Equal("Helge", c.Author.FirstName));
+        Assert.All(result, c => Assert.Equal("Name", c.Author.FirstName));
     }
 
     [Fact]
     public void CreateCheep_Throws_IfNoAuthor() {
-        var options = new DbContextOptionsBuilder<ChirpDBContext>().UseInMemoryDatabase(databaseName: "NoAuthor").Options;
+        //var options = new DbContextOptionsBuilder<ChirpDBContext>().UseInMemoryDatabase(databaseName: "NoAuthor").Options;
 
         var context = new ChirpDBContext(options);
+		
         var repo = new CheepRepository(context);
         var cheep = new Cheep {
             CheepId = 1,

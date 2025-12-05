@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using Chirp.Infrastructure.Repositories;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;

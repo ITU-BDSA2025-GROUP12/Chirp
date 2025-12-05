@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity; 
 
-namespace Chirp.Core1;
 
 public class Cheep  {
 	[MaxLength(160)]
