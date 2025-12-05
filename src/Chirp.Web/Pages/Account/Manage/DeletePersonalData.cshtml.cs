@@ -9,18 +9,20 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity;
+using Chirp.Core1;
 
 namespace newAppp.Areas.Identity.Pages.Account.Manage
 {
     public class DeletePersonalDataModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<Author> _userManager;
+        private readonly SignInManager<Author> _signInManager;
         private readonly ILogger<DeletePersonalDataModel> _logger;
 
         public DeletePersonalDataModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<Author> userManager,
+            SignInManager<Author> signInManager,
             ILogger<DeletePersonalDataModel> logger)
         {
             _userManager = userManager;
@@ -86,18 +88,37 @@ namespace newAppp.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-            var result = await _userManager.DeleteAsync(user);
-            var userId = await _userManager.GetUserIdAsync(user);
-            if (!result.Succeeded)
-            {
-                throw new InvalidOperationException($"Unexpected error occurred deleting user.");
-            }
+        
+        user.IsDeleted = true;
 
-            await _signInManager.SignOutAsync();
+        // Clear personal info
+        user.Email = null;
+        user.NormalizedEmail = null;
+        user.PhoneNumber = null;
 
-            _logger.LogInformation("User with ID '{UserId}' deleted themselves.", userId);
+        // If added DisplayName to Author, clear it
+        user.DisplayName = null;
 
-            return Redirect("~/");
+        // Username must stay non-null and unique
+        var technicalName = "deleted-" + Guid.NewGuid().ToString("N");
+        user.UserName = technicalName;
+        user.NormalizedUserName = technicalName.ToUpperInvariant();
+
+        var result = await _userManager.UpdateAsync(user);
+        var userId = await _userManager.GetUserIdAsync(user);
+
+        if (!result.Succeeded)
+        {
+            throw new InvalidOperationException("Unexpected error occurred anonymizing user.");
+        }
+
+        // Log the user out
+        await _signInManager.SignOutAsync();
+
+        _logger.LogInformation("User with ID '{UserId}' anonymized themselves (Forget me).", userId);
+
+        return Redirect("~/");
+
         }
     }
 }
