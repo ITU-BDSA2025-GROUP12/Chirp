@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Chirp.Web.Pages;
@@ -10,7 +11,9 @@ public class PublicModel : PageModel
     
     
     
-    [BindProperty] public string Message { get; set; }
+    [BindProperty] 
+    [StringLength(160, ErrorMessage = "nah!")]
+    public string Message { get; set; }
     
     public PublicModel(ICheepRepository repo)
     {
