@@ -37,6 +37,7 @@ namespace newAppp.Areas.Identity.Pages.Account.Manage
         public async Task<IActionResult> OnGet()
         {
             var user = await _userManager.GetUserAsync(User);
+            var userName = await _userManager.GetUserNameAsync(user);
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -44,7 +45,7 @@ namespace newAppp.Areas.Identity.Pages.Account.Manage
             
             Cheeps = _repo.GetCheepsFromAuthor(user.FirstName, 1).ToList();
             
-            UserName = user.FirstName;
+            UserName = userName;
             Email = await _userManager.GetEmailAsync(user);
             Message = ("Hello " + UserName + ", this is your personal data!");
             
