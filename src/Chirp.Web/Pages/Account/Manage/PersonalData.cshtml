@@ -1,15 +1,44 @@
 ﻿@page
 @model PersonalDataModel
 @{
-    ViewData["Title"] = "Personal Data";
+    ViewData["Header"] = @Model.Message;
     ViewData["ActivePage"] = ManageNavPages.PersonalData;
 }
 
-<h3>@ViewData["Title"]</h3>
+<h3>@ViewData["Header"]</h3>
 
 <div class="row">
     <div class="col-md-6">
         <p>Your account contains personal data that you have given us. This page allows you to download or delete that data.</p>
+        
+        <div class="username">
+            <p>Your username:
+                <strong>@Model.UserName </strong>
+            </p>
+        </div>
+        <div class="email">
+            <p>Your email:
+                <strong>@Model.Email </strong>
+            </p>
+        </div>
+        <div class="userCheeps">
+            <p>Your cheeps:</p>
+            <ul id="messagelist" class="cheeps">
+                @foreach (var cheep in Model.Cheeps)
+                {
+                    <li>
+                        <p>
+                            <strong>
+                                <a href="/@cheep.Author.UserName">@cheep.Author.UserName</a>
+                            </strong>
+                            @cheep.Text
+                            <small>&mdash; @cheep.TimeStamp</small>
+                        </p>
+                    </li>
+                }
+            </ul>
+        </div>
+        
         <p>
             <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
         </p>
