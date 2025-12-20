@@ -41,9 +41,9 @@ public class CheepRepositoryTests
     public void GetCheepsFromAuthor_FiltersByName() {
         var repo = GetRepositoryWithData();
         
-        var result = repo.GetCheepsFromAuthor("Jacqualine Gilcoine", 1);
+        var result = repo.GetCheepsFromAuthor("Helge", 1);
         
-        Assert.All(result, c => Assert.Equal("Alice", c.Author.FirstName));
+        Assert.All(result, c => Assert.Equal("Helge", c.Author.FirstName));
     }
 
     [Fact]
