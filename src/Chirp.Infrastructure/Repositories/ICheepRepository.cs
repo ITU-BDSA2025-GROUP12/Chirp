@@ -8,6 +8,9 @@ public interface ICheepRepository
     Task<string> FindAuthorNameByEmail(string name);
     Task<Author?> FindAuthorByEmail(string email);
     Task CreateAuthor(Author author);
-    void CreateCheep(String message, String name);
+    void CreateCheep(string message, string name);
+    Task AddToFollowingList(string followingName, string followerName);
+    Task RemoveFromFollowingList(string followingName, string followerName);
+
 
 }

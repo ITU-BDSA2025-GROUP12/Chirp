@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Chirp.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Tokens;
 
@@ -192,6 +193,42 @@ public class CheepRepository : ICheepRepository
         }
 
     }
+
+public Task AddToFollowingList(String followerName, String followingName)
+{
+    
+    //noget med context
+    var authorFollower = _context.Authors
+       .FirstOrDefault(author => author.FirstName == followerName);
+
+    var authorFollowing = _context.Authors
+        .FirstOrDefault(author => author.FirstName == followingName);
+
+    if (authorFollowing != null && authorFollower != null)
+    {
+        authorFollower.Following.Add(authorFollowing);
+    }
+    _context.SaveChanges();
+    
+    return Task.FromResult(0); //???
+}
+
+public Task RemoveFromFollowingList(string followerName, string followingName){
+    var authorFollower = _context.Authors
+        .FirstOrDefault(author => author.FirstName == followerName);
+
+    var authorFollowing = _context.Authors
+        .FirstOrDefault(author => author.FirstName == followingName);
+
+    if (authorFollowing != null && authorFollower != null)
+    {
+        authorFollower.Following.Remove(authorFollowing);
+    }
+    _context.SaveChanges();
+
+    return Task.FromResult(0);
+}
+
 
 
 }
