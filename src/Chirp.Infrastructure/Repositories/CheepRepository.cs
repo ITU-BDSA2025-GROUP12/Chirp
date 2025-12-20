@@ -30,26 +30,14 @@ public class CheepRepository : ICheepRepository
         cheeps.Sort((x, y) => DateTime.Compare(x.TimeStamp, y.TimeStamp));
         cheeps.Reverse(); // Reverses the list.
     }
-    public List<Cheep> GetCheeps(int page) // Query
+    public List<Cheep> GetCheeps(int page) //Query
     {
-        var query = _context.Cheeps
-            .Join(_context.Authors,
-                cheep => cheep.Id,
-                author => author.Id,
-                (cheep, author) =>
-                new Cheep()
-                {
-                    Id = cheep.Id,
-                    CheepId = cheep.CheepId,
-                    Text = cheep.Text,
-                    TimeStamp = cheep.TimeStamp,
-                    Author = author
-                });
-
-        var result = query.ToList();
-        SortByTime(result);
-        return result;
+        return _context.Cheeps
+            .Include(c => c.Author)
+            .OrderByDescending(c => c.TimeStamp)
+            .ToList();
     }
+
 
    /* public List<Cheep> getCheeps(int page)
     {
@@ -66,47 +54,29 @@ public class CheepRepository : ICheepRepository
         
     }*/
 
-    public List<Cheep> GetCheepsFromAuthor(string author, int page) // Query
+   public List<Cheep> GetCheepsFromAuthor(string author, int page) //Query
     {
         var result = _context.Cheeps
-            .Join(_context.Authors,
-                cheep => cheep.Id,
-                a => a.Id,
-                (cheep, a) => new { cheep, a })
-            .Where(x => x.a.FirstName == author || x.a.UserName == author)
-            .Select(x => new Cheep
-            {
-                Id = x.cheep.Id,
-                CheepId  = x.cheep.CheepId,
-                Text     = x.cheep.Text,
-                TimeStamp= x.cheep.TimeStamp,
-                Author   = x.a
-            })
+            .Include(c => c.Author)
+            .Where(c =>
+                c.Author.UserName == author ||
+                c.Author.FirstName == author)
+            .OrderByDescending(c => c.TimeStamp)
             .ToList();
-        SortByTime(result);
+
         return result;
     }
 
-    public List<Cheep> GetCheepsFromEmail(string email, int page) // Query
+
+   public List<Cheep> GetCheepsFromEmail(string email, int page) //Query
     {
-        var result = _context.Cheeps
-            .Join(_context.Authors,
-                cheep => cheep.Id,
-                a => a.Id,
-                (cheep, a) => new { cheep, a })
-            .Where(x => x.a.Email == email)
-            .Select(x => new Cheep
-            {
-                Id = x.cheep.Id,
-                CheepId  = x.cheep.CheepId,
-                Text     = x.cheep.Text,
-                TimeStamp= x.cheep.TimeStamp,
-                Author   = x.a
-            })
+        return _context.Cheeps
+            .Include(c => c.Author)
+            .Where(c => c.Author.Email == email)
+            .OrderByDescending(c => c.TimeStamp)
             .ToList();
-        SortByTime(result);
-        return result;
     }
+
 
 
     public async Task<int> GetCheepCount() // Query
