@@ -7,6 +7,7 @@ public class PublicModel : PageModel
 {
     private readonly ICheepRepository _repo;
     public List<Cheep> Cheeps { get; set; } = new();
+    public HashSet<Author> FollowingList { get; set; } = new();
     
     
     
@@ -29,7 +30,21 @@ public class PublicModel : PageModel
         _repo.CreateCheep(Message, User.Identity.Name);
         return RedirectToPage("Public");
     }
-    
+
+
+    public ActionResult onPostFollow(string followingName)
+    {
+        _repo.AddToFollowingList(User.Identity.Name, followingName);
+        return RedirectToPage("Public");
+    }
+
+    public ActionResult onPostUnfollow(string followingName)
+    {
+        _repo.RemoveFromFollowingList(User.Identity.Name, followingName);
+        return RedirectToPage("Public");
+    }
+
+
    // public ActionResult OnGet()
     //{
     //  Cheeps = _service.GetCheeps();

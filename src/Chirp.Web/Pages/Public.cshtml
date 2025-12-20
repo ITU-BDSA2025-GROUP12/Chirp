@@ -29,12 +29,24 @@
                         cheep.Author.UserName = cheep.Author.FirstName;
                     }
                     <li>
-                        <p>
+                        <div>
                             <a href="/@cheep.Author.UserName">@cheep.Author.UserName</a>
-                            <button>Follow</button>
+                            @if (!Model.FollowingList.Contains(cheep.Author))
+                            {
+                                <form method="post" asp-page-handler="Follow"> //
+                                    <input type="hidden" name="followingName" value="@cheep.Author.UserName">
+                                    <button type="submit">Follow</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <form method="post" asp-page-handler="Unfollow">
+                                    <input type="hidden" name="followingName" value="@cheep.Author.UserName"/>
+                                </form>
+                            }
                             @cheep.Text
                             <small>&mdash; @cheep.TimeStamp.ToString("yyyy-MM-dd HH:mm")</small>
-                        </p>
+                        </div>
                     </li>
                 }
             }
