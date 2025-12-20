@@ -14,6 +14,6 @@ public interface ICheepRepository
     Task<string> FindAuthorNameByEmail(string name);
     Task<Author?> FindAuthorByEmail(string email);
     Task CreateAuthor(Author author);
-    void CreateCheep(String message, String name);
+    Task CreateCheep(string message, string? name);
 
 }

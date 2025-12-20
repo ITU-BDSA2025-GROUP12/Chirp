@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
 using Chirp.Core1;
 
-namespace newAppp.Areas.Identity.Pages.Account.Manage
+namespace Chirp.Web.Pages.Account.Manage
 {
     public class DeletePersonalDataModel : PageModel
     {
@@ -58,7 +58,7 @@ namespace newAppp.Areas.Identity.Pages.Account.Manage
         /// </summary>
         public bool RequirePassword { get; set; }
 
-        public async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -88,21 +88,26 @@ namespace newAppp.Areas.Identity.Pages.Account.Manage
                 }
             }
 
-        
+            // Mark as deleted
         user.IsDeleted = true;
 
-        // Clear personal info
-        user.Email = null;
-        user.NormalizedEmail = null;
+        // Make public-facing name “Deleted user”
+        user.DisplayName = "Deleted user";
+        user.FirstName = "Deleted";
+
+        // Make Email + UserName non-personal but still valid and unique
+        user.UserName = $"deleted-{user.Id}";
+        user.Email = $"deleted-{user.Id}@example.invalid";
+
+        user.NormalizedUserName = _userManager.NormalizeName(user.UserName);
+        user.NormalizedEmail = _userManager.NormalizeEmail(user.Email);
+
+        // Lock account forever to prevent password login too
+        user.LockoutEnabled = true;
+        user.LockoutEnd = DateTimeOffset.MaxValue;
+
+        // Clear other personal info
         user.PhoneNumber = null;
-
-        // If added DisplayName to Author, clear it
-        user.DisplayName = null;
-
-        // Username must stay non-null and unique
-        var technicalName = "deleted-" + Guid.NewGuid().ToString("N");
-        user.UserName = technicalName;
-        user.NormalizedUserName = technicalName.ToUpperInvariant();
 
         var result = await _userManager.UpdateAsync(user);
         var userId = await _userManager.GetUserIdAsync(user);
@@ -112,7 +117,6 @@ namespace newAppp.Areas.Identity.Pages.Account.Manage
             throw new InvalidOperationException("Unexpected error occurred anonymizing user.");
         }
 
-        // Log the user out
         await _signInManager.SignOutAsync();
 
         _logger.LogInformation("User with ID '{UserId}' anonymized themselves (Forget me).", userId);

@@ -27,9 +27,10 @@ public class UserTimelineModel : PageModel
         return Page();
     }
     
-    public ActionResult OnPost()
+   public async Task<IActionResult> OnPost(string author)
     {
-        _repo.CreateCheep(Message, User.Identity.Name);
-        return RedirectToPage("UserTimeline");
+        await _repo.CreateCheep(Message, User.Identity?.Name);
+        return RedirectToPage("UserTimeline", new { author });
     }
+
 }

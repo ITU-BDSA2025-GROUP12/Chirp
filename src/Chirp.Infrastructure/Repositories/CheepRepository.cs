@@ -1,8 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Chirp.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Identity.Client;
-using Microsoft.IdentityModel.Tokens;
 using Chirp.Core1;
 
 
@@ -95,7 +93,7 @@ public class CheepRepository : ICheepRepository
         
         var author = await _userManager.FindByEmailAsync(email);
         if (author == null) throw new ArgumentNullException("Email can't be null");
-        if (author.FirstName.IsNullOrEmpty())
+        if (string.IsNullOrEmpty(author.FirstName))
         {
             author.FirstName = email;
             Console.WriteLine("Bro didn't have a name so I named him " + author.FirstName + " myself!");
@@ -110,7 +108,7 @@ public class CheepRepository : ICheepRepository
         var result =  _context.Authors
             .Where(x => x.UserName == email);
 
-        if (result.IsNullOrEmpty())
+        if (!result.Any())
         {
             return null;
         }
@@ -137,24 +135,26 @@ public class CheepRepository : ICheepRepository
 
     }
 
-    public async Task CreateCheep(string message, string email)
+// CheepRepository.cs
+public async Task CreateCheep(string message, string? name)
+{
+    var author = await _context.Authors
+        .SingleOrDefaultAsync(a => a.UserName == name);
+
+    if (author == null)
+        throw new InvalidOperationException("Author not found.");
+
+    var cheep = new Cheep
     {
-        if (string.IsNullOrWhiteSpace(message)) return;
-        if (string.IsNullOrWhiteSpace(email)) return;
+        Text = message,
+        TimeStamp = DateTime.UtcNow,
+        Author = author
+    };
 
-        var author = await _userManager.FindByEmailAsync(email);
-        if (author == null) throw new InvalidOperationException("Author not found.");
+    _context.Cheeps.Add(cheep);
+    await _context.SaveChangesAsync();
+}
 
-        var cheep = new Cheep
-        {
-            Text = message.Trim(),
-            TimeStamp = DateTime.Now,
-            AuthorId = author.Id
-        };
-
-        _context.Cheeps.Add(cheep);
-        await _context.SaveChangesAsync();
-    }
 
 
 

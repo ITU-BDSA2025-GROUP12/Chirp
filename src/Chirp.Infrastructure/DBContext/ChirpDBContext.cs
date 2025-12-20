@@ -17,7 +17,7 @@ public class ChirpDBContext : IdentityDbContext<Author, IdentityRole<int>, int>
     public DbSet<Author> Authors { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
+    {
     base.OnModelCreating(modelBuilder);
 
     // Author

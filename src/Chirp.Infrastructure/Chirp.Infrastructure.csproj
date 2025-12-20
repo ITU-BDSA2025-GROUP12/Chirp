@@ -6,20 +6,25 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
     <ItemGroup>
       <ProjectReference Include="..\Chirp.Core1\Chirp.Core1.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.20" />
+      <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.20" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.20" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.20" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.20" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.20">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
       <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="3.0.2" />
     </ItemGroup>
+
 
     <ItemGroup>
       <Folder Include="Chirp.Infrastructure\obj\" />
