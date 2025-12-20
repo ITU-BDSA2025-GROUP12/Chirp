@@ -16,18 +16,19 @@ public class ChirpDBContext : IdentityDbContext<Author, IdentityRole<int>, int>
     public DbSet<Cheep> Cheeps { get; set; }
     public DbSet<Author> Authors { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder) // Command
-    {
-        base.OnModelCreating(modelBuilder);
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    base.OnModelCreating(modelBuilder);
+
         // Keys
         modelBuilder.Entity<Author>().HasKey(a => a.Id);
-        modelBuilder.Entity<Cheep>().HasKey(c => c.CheepId);
+        modelBuilder.Entity<Cheep>().HasKey(c => c.Id);
 
         // Relationships
-        modelBuilder.Entity<Author>()
-            .HasMany(a => a.Cheeps)
-            .WithOne(c => c.Author)
-            .HasForeignKey(c => c.Id)
+        modelBuilder.Entity<Cheep>()
+            .HasOne(c => c.Author)
+            .WithMany(a => a.Cheeps)
+            .HasForeignKey(c => c.AuthorId)
             .IsRequired();
 
         // Simple property constraints
@@ -37,11 +38,7 @@ public class ChirpDBContext : IdentityDbContext<Author, IdentityRole<int>, int>
 
         modelBuilder.Entity<Cheep>()
             .Property(c => c.Text)
-            .IsRequired();
-        
-        //Unique index for email. (DeepSeek)
-        modelBuilder.Entity<Author>()
-            .HasIndex(a => a.Email)
-            .IsUnique();
-    }
+        .IsRequired();
+}
+
 }
