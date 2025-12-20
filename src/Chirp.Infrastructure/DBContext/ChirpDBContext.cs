@@ -20,25 +20,38 @@ public class ChirpDBContext : IdentityDbContext<Author, IdentityRole<int>, int>
 {
     base.OnModelCreating(modelBuilder);
 
-        // Keys
-        modelBuilder.Entity<Author>().HasKey(a => a.Id);
-        modelBuilder.Entity<Cheep>().HasKey(c => c.Id);
+    // Author
+    modelBuilder.Entity<Author>(entity =>
+    {
+        entity.HasKey(a => a.Id);
 
-        // Relationships
-        modelBuilder.Entity<Cheep>()
-            .HasOne(c => c.Author)
+        entity.Property(a => a.FirstName)
+            .IsRequired();
+
+        // Email should be unique
+        entity.HasIndex(a => a.Email)
+            .IsUnique();
+    });
+
+    // Cheep
+    modelBuilder.Entity<Cheep>(entity =>
+    {
+        // Use Id as the primary key
+        entity.HasKey(c => c.Id);
+
+        entity.Property(c => c.Text)
+            .IsRequired();
+
+        entity.Property(c => c.TimeStamp)
+            .IsRequired();
+
+        entity.HasOne(c => c.Author)
             .WithMany(a => a.Cheeps)
             .HasForeignKey(c => c.AuthorId)
-            .IsRequired();
-
-        // Simple property constraints
-        modelBuilder.Entity<Author>()
-            .Property(a => a.FirstName)
-            .IsRequired();
-
-        modelBuilder.Entity<Cheep>()
-            .Property(c => c.Text)
-        .IsRequired();
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
+    });
 }
+
 
 }

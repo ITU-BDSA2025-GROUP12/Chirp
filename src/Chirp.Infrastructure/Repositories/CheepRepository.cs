@@ -8,15 +8,20 @@ using Chirp.Core1;
 
 namespace Chirp.Infrastructure.Repositories;
 
+
+
 public class CheepRepository : ICheepRepository
 {
     private readonly ChirpDBContext _context;
-    private UserManager<Author> _userManager;
+    private readonly UserManager<Author> _userManager;
 
-    public CheepRepository(ChirpDBContext context)
-    {
-        _context = context;
-    }
+
+   public CheepRepository(ChirpDBContext context, UserManager<Author> userManager)
+{
+    _context = context;
+    _userManager = userManager;
+}
+
 
     
     // https://stackoverflow.com/questions/1618863/how-to-sort-a-collection-by-datetime-in-c-sharp
@@ -162,31 +167,25 @@ public class CheepRepository : ICheepRepository
 
     }
 
-    public async void CreateCheep(String message, String email) // Command
+    public async Task CreateCheep(string message, string email)
     {
-        if (message != "")
+        if (string.IsNullOrWhiteSpace(message)) return;
+        if (string.IsNullOrWhiteSpace(email)) return;
+
+        var author = await _userManager.FindByEmailAsync(email);
+        if (author == null) throw new InvalidOperationException("Author not found.");
+
+        var cheep = new Cheep
         {
-            
+            Text = message.Trim(),
+            TimeStamp = DateTime.Now,
+            AuthorId = author.Id
+        };
 
-            var author = await FindAuthorByEmail(email);
-            
-            if (author == null) throw new InvalidOperationException("Author not found.");
-
-            int uniqueID = Guid.NewGuid().GetHashCode(); // Unique ID generation. (Hopefully)
-
-            var cheep = new Cheep
-            {
-                Text = message.Trim(),
-                TimeStamp = DateTime.Now,
-                Author = author,
-                CheepId = uniqueID,
-            };
-            
-            _context.Cheeps.Add(cheep);
-            _context.SaveChanges();
-        }
-
+        _context.Cheeps.Add(cheep);
+        await _context.SaveChangesAsync();
     }
+
 
 
 }
