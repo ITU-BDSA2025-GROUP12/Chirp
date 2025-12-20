@@ -6,6 +6,7 @@ using Xunit;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Chirp.Core1;
 
 
 public class CheepRepositoryTests

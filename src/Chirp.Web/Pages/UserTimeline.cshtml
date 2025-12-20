@@ -1,6 +1,7 @@
 ﻿@page "/{author}"
 @using Microsoft.IdentityModel.Tokens
 @model Chirp.Web.Pages.UserTimelineModel
+@using Chirp.Infrastructure.Repositories;
 @inject ICheepRepository CheepRepository
 @{
     ViewData["Title"] = "Chirp!";
