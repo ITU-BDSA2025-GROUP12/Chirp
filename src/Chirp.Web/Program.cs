@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using static Microsoft.AspNetCore.Http.StatusCodes;
 using CustomTokenProviders;
 using Chirp.Infrastructure.Data;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 
 var builder = WebApplication.CreateBuilder(args);

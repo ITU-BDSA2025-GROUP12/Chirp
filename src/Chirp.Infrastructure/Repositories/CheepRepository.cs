@@ -67,7 +67,7 @@ public class CheepRepository : ICheepRepository
                 cheep => cheep.Id,
                 a => a.Id,
                 (cheep, a) => new { cheep, a })
-            .Where(x => x.a.FirstName == author)
+            .Where(x => x.a.FirstName == author || x.a.UserName == author)
             .Select(x => new Cheep
             {
                 Id = x.cheep.Id,
@@ -103,7 +103,7 @@ public class CheepRepository : ICheepRepository
     }
 
 
-    public int GetCheepCount() // Query
+    public async Task<int> GetCheepCount() // Query
     {
         return _context.Cheeps.Count();
     }
@@ -132,7 +132,7 @@ public class CheepRepository : ICheepRepository
     public async Task<Author?> FindAuthorByEmail(string email)
     {
         var result =  _context.Authors
-            .Where(x => x.Email == email);
+            .Where(x => x.UserName == email);
 
         if (result.IsNullOrEmpty())
         {
@@ -141,12 +141,6 @@ public class CheepRepository : ICheepRepository
 
         return result.First();
     }
-    // public async Task<Author?> FindAuthorByEmail(string email) // Query (Should be tested!!!)
-    // {
-    //     var author = await _userManager.FindByEmailAsync(email);
-    //     return author;
-    // }
-
     public async Task CreateAuthor(Author author) // Command
     {
 
@@ -171,20 +165,20 @@ public class CheepRepository : ICheepRepository
     {
         if (message != "")
         {
+            
 
-            var author = await _userManager.FindByNameAsync(email);
+            var author = await FindAuthorByEmail(email);
             
             if (author == null) throw new InvalidOperationException("Author not found.");
 
-            var calcinId = GetCheepCount();
-            var theId = calcinId + 1;
+            int uniqueID = Guid.NewGuid().GetHashCode(); // Unique ID generation. (Hopefully)
 
             var cheep = new Cheep
             {
                 Text = message.Trim(),
                 TimeStamp = DateTime.Now,
                 Author = author,
-                CheepId = theId,
+                CheepId = uniqueID,
             };
             
             _context.Cheeps.Add(cheep);

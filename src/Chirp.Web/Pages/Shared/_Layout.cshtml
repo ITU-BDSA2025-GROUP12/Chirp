@@ -5,17 +5,20 @@
 <head>
     <title>@ViewData["Title"]</title>
     <link href="/css/style.css" rel="stylesheet" type="text/css" />
-    <link rel="icon" type="image/x-icon" href="/favicon/WinxWings.ico">
+    <link rel="icon" type="image/x-icon" href="/favicon/WinxW.ico">
 </head>
 <body>
-<div class=page>
-    <h1><img src="/images/Wings.png" alt="Wings1"/>Chirp!</h1>
-    <div class=navigation>
+<div class="page">
+    <h1><img src="/images/WinxW.png" alt="Wings1"/>Chirp!</h1>
+
+
+    <div class="navigation">
         @if (User.Identity.IsAuthenticated)
         {
             <div>
                 <a href="/@(User.Identity.Name)">My timeline</a> |
                 <a href="/">Public timeline</a> |
+                <a href="/Account/Manage">About me</a> |
                 <a href="/Account/Logout">Logout [@User.Identity.Name]</a>
             </div>
         }
@@ -28,14 +31,16 @@
             </div>
         }
     </div>
-    <div class=body>
+
+    <div class="body">
         @RenderBody()
     </div>
-    <div class=footer>
-        Chirp &mdash; An ASP.NET Application
+
+    <div class="footer">
+        Chirp &mdash; An ASP.NET Application<br />
+        Image: Winx Club Wings from pikpng.com (embedded under personal-use terms)
     </div>
 </div>
 </body>
 @await RenderSectionAsync("Scripts", required: false)
 </html>
-
