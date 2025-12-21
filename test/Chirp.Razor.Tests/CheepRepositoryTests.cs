@@ -66,7 +66,7 @@ public class CheepRepositoryTests
 
         var repo = new CheepRepository(context, null!);
 
-        await Assert.ThrowsAsync<NullReferenceException>(async () =>
+        await Assert.ThrowsAsync<InvalidOperationException>(async () =>
         {
             await repo.CreateCheep("This should fail", "noauthor@example.com");
         });
