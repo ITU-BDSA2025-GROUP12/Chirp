@@ -67,7 +67,7 @@ public class CheepRepository : ICheepRepository
                 cheep => cheep.Id,
                 a => a.Id,
                 (cheep, a) => new { cheep, a })
-            .Where(x => x.a.FirstName == author || x.a.Email == author)
+            .Where(x => x.a.FirstName == author || x.a.UserName == author)
             .Select(x => new Cheep
             {
                 Id = x.cheep.Id,
