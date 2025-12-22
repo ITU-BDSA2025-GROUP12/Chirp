@@ -11,7 +11,7 @@ Provide an illustration of your domain model.
 Make sure it is correct and complete.
 
 Insert diagram here:
-![Domain Model](Domain Model.png)
+![Domain Model](Domain-Model.png)
 
 ## Architecture — In the small
 Illustrate the organization of your code base.  
