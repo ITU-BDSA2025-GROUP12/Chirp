@@ -54,7 +54,7 @@ Insert diagram here:
 Add a UML activity diagram showing your GitHub Actions workflow.  
 Briefly describe how your application is built, tested, released, and deployed.
 
-Insert diagram here:
+The activity diagram shows how our GitHub Actions workflow builds and deploys the Chirp! application. The workflow starts when code is pushed to the main branch or when it is started manually. First, the repository is checked out and the .NET environment is set up. Then the application is built and published in release mode, and the resulting files are saved so they can be used later during deployment. After that, the artifact is downloaded, the workflow logs in to Azure, and the application is deployed to the production Azure Web App.
 
 ![Build and Deploy Workflow](build-workflow.png)
 
