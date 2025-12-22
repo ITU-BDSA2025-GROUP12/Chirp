@@ -10,15 +10,13 @@ date: "2025"
 Provide an illustration of your domain model.  
 Make sure it is correct and complete.
 
-Insert diagram here:
 ![Domain Model](Domain-Model.png)
 
 ## Architecture — In the small
 Illustrate the organization of your code base.  
 Explain which layers exist in your onion architecture and what belongs to each layer.
 
-Insert diagram here:
-![Architecture Small](images/architecture-small.pdf)
+![Architecture Small](Architecture-in-the-small.png)
 
 ## Architecture of Deployed Application
 Illustrate the architecture of your deployed client-server application.  
