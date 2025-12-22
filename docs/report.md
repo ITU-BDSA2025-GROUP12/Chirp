@@ -55,7 +55,9 @@ Add a UML activity diagram showing your GitHub Actions workflow.
 Briefly describe how your application is built, tested, released, and deployed.
 
 Insert diagram here:
-![Build and Deploy Workflow](GitHub Actions – Build and Deploy Workflow.png)
+
+![Build and Deploy Workflow](build-workflow.png)
+
 
 ## Team Work
 Insert a screenshot of your project board before hand-in:
