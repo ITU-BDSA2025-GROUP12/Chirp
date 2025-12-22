@@ -2,6 +2,8 @@ using System.Transactions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Chirp.Core1;
+
 
 namespace Chirp.Infrastructure.Data;
 
@@ -14,32 +16,42 @@ public class ChirpDBContext : IdentityDbContext<Author, IdentityRole<int>, int>
     public DbSet<Cheep> Cheeps { get; set; }
     public DbSet<Author> Authors { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder) // Command
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
-        // Keys
-        modelBuilder.Entity<Author>().HasKey(a => a.Id);
-        modelBuilder.Entity<Cheep>().HasKey(c => c.CheepId);
+    base.OnModelCreating(modelBuilder);
 
-        // Relationships
-        modelBuilder.Entity<Author>()
-            .HasMany(a => a.Cheeps)
-            .WithOne(c => c.Author)
-            .HasForeignKey(c => c.Id)
+    // Author
+    modelBuilder.Entity<Author>(entity =>
+    {
+        entity.HasKey(a => a.Id);
+
+        entity.Property(a => a.FirstName)
             .IsRequired();
 
-        // Simple property constraints
-        modelBuilder.Entity<Author>()
-            .Property(a => a.FirstName)
-            .IsRequired();
-
-        modelBuilder.Entity<Cheep>()
-            .Property(c => c.Text)
-            .IsRequired();
-        
-        //Unique index for email. (DeepSeek)
-        modelBuilder.Entity<Author>()
-            .HasIndex(a => a.Email)
+        // Email should be unique
+        entity.HasIndex(a => a.Email)
             .IsUnique();
-    }
+    });
+
+    // Cheep
+    modelBuilder.Entity<Cheep>(entity =>
+    {
+        // Use Id as the primary key
+        entity.HasKey(c => c.Id);
+
+        entity.Property(c => c.Text)
+            .IsRequired();
+
+        entity.Property(c => c.TimeStamp)
+            .IsRequired();
+
+        entity.HasOne(c => c.Author)
+            .WithMany(a => a.Cheeps)
+            .HasForeignKey(c => c.AuthorId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
+    });
+}
+
+
 }

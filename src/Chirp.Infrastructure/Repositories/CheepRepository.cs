@@ -1,21 +1,25 @@
 using Microsoft.EntityFrameworkCore;
 using Chirp.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Identity.Client;
-using Microsoft.IdentityModel.Tokens;
+using Chirp.Core1;
 
 
 namespace Chirp.Infrastructure.Repositories;
 
+
+
 public class CheepRepository : ICheepRepository
 {
     private readonly ChirpDBContext _context;
-    private UserManager<Author> _userManager;
+    private readonly UserManager<Author> _userManager;
 
-    public CheepRepository(ChirpDBContext context)
-    {
-        _context = context;
-    }
+
+   public CheepRepository(ChirpDBContext context, UserManager<Author> userManager)
+{
+    _context = context;
+    _userManager = userManager;
+}
+
 
     
     // https://stackoverflow.com/questions/1618863/how-to-sort-a-collection-by-datetime-in-c-sharp
@@ -24,26 +28,14 @@ public class CheepRepository : ICheepRepository
         cheeps.Sort((x, y) => DateTime.Compare(x.TimeStamp, y.TimeStamp));
         cheeps.Reverse(); // Reverses the list.
     }
-    public List<Cheep> GetCheeps(int page) // Query
+    public List<Cheep> GetCheeps(int page) //Query
     {
-        var query = _context.Cheeps
-            .Join(_context.Authors,
-                cheep => cheep.Id,
-                author => author.Id,
-                (cheep, author) =>
-                new Cheep()
-                {
-                    Id = cheep.Id,
-                    CheepId = cheep.CheepId,
-                    Text = cheep.Text,
-                    TimeStamp = cheep.TimeStamp,
-                    Author = author
-                });
-
-        var result = query.ToList();
-        SortByTime(result);
-        return result;
+        return _context.Cheeps
+            .Include(c => c.Author)
+            .OrderByDescending(c => c.TimeStamp)
+            .ToList();
     }
+
 
    /* public List<Cheep> getCheeps(int page)
     {
@@ -60,47 +52,29 @@ public class CheepRepository : ICheepRepository
         
     }*/
 
-    public List<Cheep> GetCheepsFromAuthor(string author, int page) // Query
+   public List<Cheep> GetCheepsFromAuthor(string author, int page) //Query
     {
         var result = _context.Cheeps
-            .Join(_context.Authors,
-                cheep => cheep.Id,
-                a => a.Id,
-                (cheep, a) => new { cheep, a })
-            .Where(x => x.a.FirstName == author || x.a.UserName == author)
-            .Select(x => new Cheep
-            {
-                Id = x.cheep.Id,
-                CheepId  = x.cheep.CheepId,
-                Text     = x.cheep.Text,
-                TimeStamp= x.cheep.TimeStamp,
-                Author   = x.a
-            })
+            .Include(c => c.Author)
+            .Where(c =>
+                c.Author.UserName == author ||
+                c.Author.FirstName == author)
+            .OrderByDescending(c => c.TimeStamp)
             .ToList();
-        SortByTime(result);
+
         return result;
     }
 
-    public List<Cheep> GetCheepsFromEmail(string email, int page) // Query
+
+   public List<Cheep> GetCheepsFromEmail(string email, int page) //Query
     {
-        var result = _context.Cheeps
-            .Join(_context.Authors,
-                cheep => cheep.Id,
-                a => a.Id,
-                (cheep, a) => new { cheep, a })
-            .Where(x => x.a.Email == email)
-            .Select(x => new Cheep
-            {
-                Id = x.cheep.Id,
-                CheepId  = x.cheep.CheepId,
-                Text     = x.cheep.Text,
-                TimeStamp= x.cheep.TimeStamp,
-                Author   = x.a
-            })
+        return _context.Cheeps
+            .Include(c => c.Author)
+            .Where(c => c.Author.Email == email)
+            .OrderByDescending(c => c.TimeStamp)
             .ToList();
-        SortByTime(result);
-        return result;
     }
+
 
 
     public async Task<int> GetCheepCount() // Query
@@ -119,7 +93,7 @@ public class CheepRepository : ICheepRepository
         
         var author = await _userManager.FindByEmailAsync(email);
         if (author == null) throw new ArgumentNullException("Email can't be null");
-        if (author.FirstName.IsNullOrEmpty())
+        if (string.IsNullOrEmpty(author.FirstName))
         {
             author.FirstName = email;
             Console.WriteLine("Bro didn't have a name so I named him " + author.FirstName + " myself!");
@@ -134,7 +108,7 @@ public class CheepRepository : ICheepRepository
         var result =  _context.Authors
             .Where(x => x.UserName == email);
 
-        if (result.IsNullOrEmpty())
+        if (!result.Any())
         {
             return null;
         }
@@ -161,31 +135,27 @@ public class CheepRepository : ICheepRepository
 
     }
 
-    public async void CreateCheep(String message, String email) // Command
+// CheepRepository.cs
+public async Task CreateCheep(string message, string? name)
+{
+    var author = await _context.Authors
+        .SingleOrDefaultAsync(a => a.UserName == name);
+
+    if (author == null)
+        throw new InvalidOperationException("Author not found.");
+
+    var cheep = new Cheep
     {
-        if (message != "")
-        {
-            
+        Text = message,
+        TimeStamp = DateTime.UtcNow,
+        Author = author
+    };
 
-            var author = await FindAuthorByEmail(email);
-            
-            if (author == null) throw new InvalidOperationException("Author not found.");
+    _context.Cheeps.Add(cheep);
+    await _context.SaveChangesAsync();
+}
 
-            int uniqueID = Guid.NewGuid().GetHashCode(); // Unique ID generation. (Hopefully)
 
-            var cheep = new Cheep
-            {
-                Text = message.Trim(),
-                TimeStamp = DateTime.Now,
-                Author = author,
-                CheepId = uniqueID,
-            };
-            
-            _context.Cheeps.Add(cheep);
-            _context.SaveChanges();
-        }
-
-    }
 
 
 }

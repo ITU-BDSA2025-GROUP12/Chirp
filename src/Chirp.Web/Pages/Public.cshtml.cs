@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Chirp.Core1;
+using Chirp.Infrastructure.Repositories;
+
 
 namespace Chirp.Web.Pages;
 
@@ -24,11 +27,21 @@ public class PublicModel : PageModel
         return Page();
     }
 
-    public ActionResult OnPost()
+    public async Task<IActionResult> OnPost()
     {
-        _repo.CreateCheep(Message, User.Identity.Name);
+        var userName = User?.Identity?.Name;
+
+        if (string.IsNullOrEmpty(userName))
+        {
+            // If not logged in -> go to login page
+            return RedirectToPage("/Account/Login", new { area = "Identity" });
+        }
+
+        await _repo.CreateCheep(Message, userName);
         return RedirectToPage("Public");
     }
+
+
     
    // public ActionResult OnGet()
     //{
