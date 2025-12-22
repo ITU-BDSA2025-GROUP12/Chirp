@@ -13,24 +13,27 @@ namespace Chirp.Infrastructure.Tests.Repositories;
 
 public class CheepRepositoryTests
 {
-	private readonly DbConnection connection;
-	private readonly DbContextOptions<ChirpDBContext> options;
+	private DbConnection connection;
+	private DbContextOptions<ChirpDBContext> options;
+	
+	public ChirpDBContext CreateInMemoryDatabase(){
+		var connection = new SqliteConnection("DataSource=:memory:");
+		connection.Open();
 
-
-	public CheepRepositoryTests(){
-	connection = new SqliteConnection("Filename=:memory:");
-		connection.Open(); 
-		options = new DbContextOptionsBuilder<ChirpDBContext>()
-			.UseSqlite(connection)
-			.Options;
+		var options = new DbContextOptionsBuilder<ChirpDBContext>().UseSqlite(connection).Options;
+		var context = new ChirpDBContext(options);
+		context.Database.EnsureCreated();
+		return context;
 	}
 	
-
     private CheepRepository GetRepositoryWithData()
     {
-	
-        //var options = new DbContextOptionsBuilder<ChirpDBContext>().UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
-        //    .Options;
+	    connection = new SqliteConnection("Filename=:memory:");
+	    connection.Open(); 
+	    options = new DbContextOptionsBuilder<ChirpDBContext>()
+	              .UseSqlite(connection)
+	              .Options;
+	    
    		var context = new ChirpDBContext(options);
 		context.Database.EnsureCreated();
         var author = new Author { Id = 1, FirstName = "Name", Email = "name@example.com" };
@@ -63,21 +66,116 @@ public class CheepRepositoryTests
 
     [Fact]
     public void CreateCheep_Throws_IfNoAuthor() {
-        //var options = new DbContextOptionsBuilder<ChirpDBContext>().UseInMemoryDatabase(databaseName: "NoAuthor").Options;
-
-        var context = new ChirpDBContext(options);
-		
+        using var context = CreateInMemoryDatabase();
         var repo = new CheepRepository(context);
+        
+        
         var cheep = new Cheep {
             CheepId = 1,
             Text = "This should fail because there is no author",
             TimeStamp = DateTime.UtcNow,
-            Author = null
         };
 
         Assert.Throws<NullReferenceException>(() => repo.CreateCheep(cheep.Text, cheep.Author.Email));
     }
-    
-    
-    
+
+    [Fact]
+    public void SortByTimeTest() {
+	    var repo = new CheepRepository(null); 
+	    List<Cheep> list = new List<Cheep>();
+
+	    var author = new Author
+	    {
+		    Id = 0,
+		    FirstName = "John",
+		    Email = "test@itu.dk"
+	    };
+
+	    var oldCheep = new Cheep
+	    {
+		    CheepId = 0,
+		    Author = author,
+		    Id = 0,
+		    Text = "this is the oldest cheep",
+		    TimeStamp = DateTime.Now
+	    };
+
+	    var newCheep = new Cheep
+	    {
+		    CheepId = 1,
+		    Author = author,
+		    Id = 0,
+		    Text = "this is the newest cheep",
+		    TimeStamp = DateTime.Now.AddMinutes(10)
+	    };
+	    
+	    list.Add(oldCheep);
+	    list.Add(newCheep);
+	    
+	    //asserts that the list is not sortet correctly yet
+		Assert.True(list[0] == oldCheep);
+		Assert.True(list[1] == newCheep);
+		
+		//sort the list so the newest cheeps are at the top of the list
+	    repo.SortByTime(list);
+	    
+	    //assert that the list is now in the correct order
+	    Assert.True(list[0] == newCheep);
+	    Assert.True(list[1] == oldCheep);
+    }
+
+    [Fact]
+    public void getCheepsTest() {
+	    var repo = GetRepositoryWithData();
+
+	    List<Cheep> list = new List<Cheep>(); //empty list
+	    
+	    Assert.Empty(list);
+
+	    //use the GetCheeps to add cheeps to the list
+	    list = repo.GetCheeps(0);
+		
+	    //assert the list is no longer empty
+	    Assert.NotEmpty(list);
+    }
+
+    [Fact]
+    public void GetCheepsByAuthorTets() {
+	    using var context = CreateInMemoryDatabase();
+	    var repo = new CheepRepository(context);
+	    List<Cheep> list = new List<Cheep>();//empty list
+
+	    var author1 = new Author
+	    {
+		    FirstName = "John",
+		    Email = "example1@itu.dk"
+	    };
+	    var author2 = new Author
+	    {
+		    FirstName = "Bob",
+		    Email = "example2@itu.dk"
+	    };
+	    var cheep1 = new Cheep
+	    {
+		    CheepId = 1,
+		    Author = author1,
+		    Text = "this is author 1's cheep",
+		    TimeStamp = DateTime.Now,
+	    };
+	    var cheep2 = new Cheep
+	    {
+		    CheepId = 2,
+		    Author = author2,
+		    Text = "this is author 2's cheep",
+		    TimeStamp = DateTime.Now,
+	    };
+	    
+	    context.Cheeps.AddRange(cheep1, cheep2);
+	    context.SaveChanges();
+
+	    list = repo.GetCheepsFromAuthor("John", 0);
+	    Assert.NotEmpty(list);
+	    Assert.All(list, c => Assert.Equal(c.Author.FirstName, "John"));
+    }
+
 }
