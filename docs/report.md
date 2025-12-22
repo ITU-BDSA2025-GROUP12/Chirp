@@ -63,8 +63,11 @@ Insert a screenshot of your project board before hand-in:
 
 Briefly describe:
 
-- Which tasks are unresolved  
-- What features are missing  
+- Which tasks are unresolved
+
+- What features are missing
+We do not have any of the wild-style features. We would have liked to implement the "like" button. First we would have added a way to store likes in our database, and then make sure a user only can like a cheep once, by storing which user liked the cheep. The button itself would be added next to each cheep in the webpage, and when a user clicks it, the page sends a POST request to the server. The server sees who is logged-in and which cheep is liked, then saces it in the database. The page should reload then and show the "like".
+
 - Your workflow from issue creation → development → review → merge  
 
 ## How to Make Chirp! Work Locally
