@@ -25,8 +25,43 @@ public class CheepRepositoryTests
 		context.Database.EnsureCreated();
 		return context;
 	}
-	
-    private CheepRepository GetRepositoryWithData()
+
+	public ChirpDBContext GetContextWithData() {
+		var context = CreateInMemoryDatabase();
+		
+		var author1 = new Author
+		{
+			FirstName = "John",
+			Email = "example1@itu.dk",
+			UserName = "Johnyboi"
+		};
+		var author2 = new Author
+		{
+			FirstName = "Bob",
+			Email = "example2@itu.dk",
+			UserName = "Bobby"
+		};
+		var cheep1 = new Cheep
+		{
+			CheepId = 1,
+			Author = author1,
+			Text = "this is author 1's cheep",
+			TimeStamp = DateTime.Now,
+		};
+		var cheep2 = new Cheep
+		{
+			CheepId = 2,
+			Author = author2,
+			Text = "this is author 2's cheep",
+			TimeStamp = DateTime.Now,
+		};
+	    
+		context.Cheeps.AddRange(cheep1, cheep2);
+		context.SaveChanges();
+		return context;
+	}
+
+	private CheepRepository GetRepositoryWithData()
     {
 	    connection = new SqliteConnection("Filename=:memory:");
 	    connection.Open(); 
@@ -140,42 +175,74 @@ public class CheepRepositoryTests
     }
 
     [Fact]
-    public void GetCheepsByAuthorTets() {
-	    using var context = CreateInMemoryDatabase();
+    public void GetCheepsFromAuthorTets() {
+	    using var context = GetContextWithData();
 	    var repo = new CheepRepository(context);
 	    List<Cheep> list = new List<Cheep>();//empty list
-
-	    var author1 = new Author
-	    {
-		    FirstName = "John",
-		    Email = "example1@itu.dk"
-	    };
-	    var author2 = new Author
-	    {
-		    FirstName = "Bob",
-		    Email = "example2@itu.dk"
-	    };
-	    var cheep1 = new Cheep
-	    {
-		    CheepId = 1,
-		    Author = author1,
-		    Text = "this is author 1's cheep",
-		    TimeStamp = DateTime.Now,
-	    };
-	    var cheep2 = new Cheep
-	    {
-		    CheepId = 2,
-		    Author = author2,
-		    Text = "this is author 2's cheep",
-		    TimeStamp = DateTime.Now,
-	    };
 	    
-	    context.Cheeps.AddRange(cheep1, cheep2);
-	    context.SaveChanges();
 
 	    list = repo.GetCheepsFromAuthor("John", 0);
-	    Assert.NotEmpty(list);
-	    Assert.All(list, c => Assert.Equal(c.Author.FirstName, "John"));
+	    Assert.NotEmpty(list); //the list should now not be empty
+	    Assert.All(list, c => Assert.Equal(c.Author.FirstName, "John")); //Only Johns Cheeps should be in the the list
     }
+
+    [Fact]
+    public void GetCheepsFromEmailTest() {
+	    using var context = GetContextWithData();
+	    var repo = new CheepRepository(context);
+	    List<Cheep> list = new List<Cheep>();
+
+	    list = repo.GetCheepsFromEmail("example1@itu.dk", 0);
+	    Assert.NotEmpty(list);
+	    Assert.All(list, c => Assert.Equal(c.Author.Email, "example1@itu.dk"));
+    }
+    
+    [Fact]
+    //denne test er async og returner en task fordi metoden der testes også gør
+    public async Task GetCheepCountTest() { 
+	    using var context = GetContextWithData();
+	    var repo = new CheepRepository(context);
+
+	    var count = await repo.GetCheepCount();
+	    Assert.Equal(2, count);
+    }
+    
+    [Fact]
+    public async Task FindAuthorByUserNameTest() {
+	    using var context = GetContextWithData();
+	    var repo = new CheepRepository(context);
+	    
+	    var author = await repo.FindAuthorByUserName("Johnyboi");
+	    
+	    Assert.NotNull(author);
+	    Assert.Equal("example1@itu.dk", author.Email);
+    }
+
+    [Fact]
+    public void CreateAuthorTest() {
+	    using var context = GetContextWithData();
+	    var repo = new CheepRepository(context);
+	    
+	    var newAuthor = new Author{
+		    FirstName = "Ida",
+		    Email = "idaExample@test.dk",
+		    UserName = "o3bida"
+	    };
+		repo.CreateAuthor(newAuthor);
+
+		Assert.Contains(newAuthor, context.Authors.ToList());
+    }
+/*
+    [Fact]
+    public void CreateCheepTest() {
+	    using var context = GetContextWithData();
+	    var repo = new CheepRepository(context);
+	    
+	    repo.CreateCheep("this is a new cheep!", "johnyboi");
+	    
+	    Assert.Contains(context.Cheeps, c => c.Text == "this is a new cheep!");
+    }
+    
+*/
 
 }

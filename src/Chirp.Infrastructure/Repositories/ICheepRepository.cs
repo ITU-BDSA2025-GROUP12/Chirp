@@ -9,7 +9,7 @@ public interface ICheepRepository
     //Task<int> GetCheepCount();
     Task<int> GetCheepCountFromAuthor(string author);
     Task<string> FindAuthorNameByEmail(string name);
-    Task<Author?> FindAuthorByEmail(string email);
+    Task<Author?> FindAuthorByUserName(string userName);
     Task CreateAuthor(Author author);
     void CreateCheep(String message, String name);
 
