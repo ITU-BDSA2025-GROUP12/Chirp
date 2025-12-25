@@ -89,7 +89,7 @@ namespace Chirp.Web.Pages.Account
             if (ModelState.IsValid)
             {
 
-                var a = await _cheepRepository.FindAuthorByEmail(Input.Email);
+                var a = await _cheepRepository.FindAuthorByUserName(Input.Email);
                 if (a != null)
                 {
                     ModelState.AddModelError(string.Empty, "Email is in use.");
