@@ -16,7 +16,22 @@ Make sure it is correct and complete.
 Illustrate the organization of your code base.  
 Explain which layers exist in your onion architecture and what belongs to each layer.
 
+## Onion Architecture
+This application was build according to the 'Onion Architecture' to increase maintanablity and testability. Below here is an illustration of the architecture.
+
 ![Architecture Small](Architecture-in-the-small.png)
+
+Domain Entities:
+The innermost circle of the model is Chirp.Core1, which is were the fundamental entities of the program lies; Author and Cheep. 
+
+Repository Layer:
+The next layer of the model is the Repository Layer, which is a part of Chirp.Infrastructure in the code. This layers contains the repositories and the repository interfaces. Chirp.Infrastructure also contains the ChirpDBContext class.
+
+Service Layer:
+Chirp.Infrastructure
+
+UI Layer:
+The last layer and the outermost circle of the model is the UI layer and is represented by Chirp.Web in the code. This Layer contains all the razor pages, the database, and Program.cs.
 
 ## Architecture of Deployed Application
 Illustrate the architecture of your deployed client-server application.  
