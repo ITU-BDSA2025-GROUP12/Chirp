@@ -12,6 +12,8 @@ public class CheepRepository : ICheepRepository
 {
     private readonly ChirpDBContext _context;
     private readonly UserManager<Author> _userManager;
+    private const int PageSize = 32;
+
 
 
    public CheepRepository(ChirpDBContext context, UserManager<Author> userManager)
@@ -28,13 +30,18 @@ public class CheepRepository : ICheepRepository
         cheeps.Sort((x, y) => DateTime.Compare(x.TimeStamp, y.TimeStamp));
         cheeps.Reverse(); // Reverses the list.
     }
-    public List<Cheep> GetCheeps(int page) //Query
+    public List<Cheep> GetCheeps(int page)
     {
+        int offset = (page - 1) * PageSize;
+
         return _context.Cheeps
             .Include(c => c.Author)
             .OrderByDescending(c => c.TimeStamp)
+            .Skip(offset)
+            .Take(PageSize)
             .ToList();
     }
+
 
 
    /* public List<Cheep> getCheeps(int page)
@@ -52,18 +59,21 @@ public class CheepRepository : ICheepRepository
         
     }*/
 
-   public List<Cheep> GetCheepsFromAuthor(string author, int page) //Query
-    {
-        var result = _context.Cheeps
-            .Include(c => c.Author)
-            .Where(c =>
-                c.Author.UserName == author ||
-                c.Author.FirstName == author)
-            .OrderByDescending(c => c.TimeStamp)
-            .ToList();
+   public List<Cheep> GetCheepsFromAuthor(string author, int page)
+   {
+       int offset = (page - 1) * PageSize;
 
-        return result;
-    }
+       return _context.Cheeps
+           .Include(c => c.Author)
+           .Where(c =>
+               c.Author.UserName == author ||
+               c.Author.FirstName == author)
+           .OrderByDescending(c => c.TimeStamp)
+           .Skip(offset)
+           .Take(PageSize)
+           .ToList();
+   }
+
 
 
    public List<Cheep> GetCheepsFromEmail(string email, int page) //Query
