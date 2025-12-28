@@ -17,5 +17,6 @@ public interface ICheepRepository
     Task CreateCheep(string message, string? name);
     public Task UnfollowAsync(int followerId, int followedId);
     public Task FollowAsync(int followerId, int followedId);
+    Task<List<Cheep>> GetTimelineCheeps(Author currentUser, int page);
 
 }

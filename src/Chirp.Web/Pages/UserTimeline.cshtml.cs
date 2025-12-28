@@ -10,27 +10,78 @@ public class UserTimelineModel : PageModel
     private readonly ICheepRepository _repo;
 
     public List<Cheep> Cheeps { get; set; } = new();
-    
+    public Author? CurrentUser { get; set; }
     [BindProperty] public string Message { get; set; }
 
 
     public UserTimelineModel(ICheepRepository repo)
     {
-        
         _repo = repo;
     }
     
-    public IActionResult OnGet(string author, [FromQuery] int page = 1)
+    /*public IActionResult OnGet(string author, [FromQuery] int page = 1)
     {
         if (string.IsNullOrWhiteSpace(author)) return NotFound();
         Cheeps = _repo.GetCheepsFromAuthor(author, page).ToList();
         return Page();
+    }*/
+    
+    public IActionResult OnGet(string author, [FromQuery] int page = 1)
+    {
+        if (string.IsNullOrWhiteSpace(author))
+            return NotFound();
+
+        // If user is not logged in → behave exactly like before
+        if (!User.Identity.IsAuthenticated)
+        {
+            Cheeps = _repo.GetCheepsFromAuthor(author, page).ToList();
+            return Page();
+        }
+
+        // Logged-in user
+        CurrentUser = _repo.FindAuthorByEmail(User.Identity.Name!).Result;
+
+        // Fallback safety (should not normally happen)
+        if (CurrentUser == null)
+        {
+            Cheeps = _repo.GetCheepsFromAuthor(author, page).ToList();
+            return Page();
+        }
+
+        // If viewing own timeline → show followed users too
+        if (CurrentUser.UserName == author || CurrentUser.FirstName == author)
+        {
+            Cheeps = _repo.GetTimelineCheeps(CurrentUser, page).Result;
+        }
+        else
+        {
+            // Viewing someone else → normal author timeline
+            Cheeps = _repo.GetCheepsFromAuthor(author, page).ToList();
+        }
+
+        return Page();
     }
+
     
    public async Task<IActionResult> OnPost(string author)
     {
         await _repo.CreateCheep(Message, User.Identity?.Name);
         return RedirectToPage("UserTimeline", new { author });
     }
+   
+    public async Task<IActionResult> OnPostFollowAsync(int authorId)
+    {
+        var me = await _repo.FindAuthorByEmail(User.Identity!.Name!);
+        await _repo.FollowAsync(me!.Id, authorId);
+        return RedirectToPage();
+    }
+
+    public async Task<IActionResult> OnPostUnfollowAsync(int authorId)
+    {
+        var me = await _repo.FindAuthorByEmail(User.Identity!.Name!);
+        await _repo.UnfollowAsync(me!.Id, authorId);
+        return RedirectToPage();
+    }
+
 
 }

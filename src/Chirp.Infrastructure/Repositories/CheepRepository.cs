@@ -143,8 +143,7 @@ public class CheepRepository : ICheepRepository
 
 
     }
-
-// CheepRepository.cs
+    
 public async Task CreateCheep(string message, string? name)
 {
     var author = await _context.Authors
@@ -203,6 +202,26 @@ public async Task UnfollowAsync(int followerId, int followingId)
         follower.Following.Remove(target);
         await _context.SaveChangesAsync();
     }
+}
+
+public async Task<List<Cheep>> GetTimelineCheeps(Author currentUser, int page)
+{
+    const int pageSize = 32;
+    int offset = (page - 1) * pageSize;
+
+    var followedIds = currentUser.Following
+        .Select(a => a.Id)
+        .ToList();
+
+    return await _context.Cheeps
+        .Include(c => c.Author)
+        .Where(c =>
+            c.AuthorId == currentUser.Id ||
+            followedIds.Contains(c.AuthorId))
+        .OrderByDescending(c => c.TimeStamp)
+        .Skip(offset)
+        .Take(pageSize)
+        .ToListAsync();
 }
 
 }
