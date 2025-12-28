@@ -31,31 +31,26 @@ public class UserTimelineModel : PageModel
         if (string.IsNullOrWhiteSpace(author))
             return NotFound();
 
-        // If user is not logged in → behave exactly like before
         if (!User.Identity.IsAuthenticated)
         {
             Cheeps = _repo.GetCheepsFromAuthor(author, page).ToList();
             return Page();
         }
-
-        // Logged-in user
+        
         CurrentUser = _repo.FindAuthorByEmail(User.Identity.Name!).Result;
-
-        // Fallback safety (should not normally happen)
+        
         if (CurrentUser == null)
         {
             Cheeps = _repo.GetCheepsFromAuthor(author, page).ToList();
             return Page();
         }
-
-        // If viewing own timeline → show followed users too
+        
         if (CurrentUser.UserName == author || CurrentUser.FirstName == author)
         {
             Cheeps = _repo.GetTimelineCheeps(CurrentUser, page).Result;
         }
         else
         {
-            // Viewing someone else → normal author timeline
             Cheeps = _repo.GetCheepsFromAuthor(author, page).ToList();
         }
 
@@ -82,6 +77,5 @@ public class UserTimelineModel : PageModel
         await _repo.UnfollowAsync(me!.Id, authorId);
         return RedirectToPage();
     }
-
-
+    
 }
