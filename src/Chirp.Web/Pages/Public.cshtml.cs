@@ -18,14 +18,32 @@ public class PublicModel : PageModel
     public PublicModel(ICheepRepository repo)
     {
         _repo = repo;
+        
     }
     
     // Jeg tror nok den her metode skal være async fordi getCheeps er det, men ikke sikker vv
-    public ActionResult OnGet([FromQuery] int page = 1)
+    /*public ActionResult OnGet([FromQuery] int page = 1)
     {
         Cheeps =  _repo.GetCheeps(page);
+        if (User.Identity?.IsAuthenticated == true)
+        {
+            CurrentUser = _repo.FindAuthorByEmail(User.Identity.Name ?? "");
+        }
+        return Page();
+    }*/
+    
+    public async Task<IActionResult> OnGetAsync([FromQuery] int page = 1)
+    {
+        Cheeps = _repo.GetCheeps(page);
+        
+        if (User.Identity?.IsAuthenticated == true)
+        {
+            CurrentUser = await _repo.FindAuthorByEmail(User.Identity.Name ?? "");
+        }
+
         return Page();
     }
+
 
     public async Task<IActionResult> OnPost()
     {

@@ -103,7 +103,7 @@ public class CheepRepository : ICheepRepository
     }
 
 
-    public async Task<Author?> FindAuthorByEmail(string email)
+    /*public async Task<Author?> FindAuthorByEmail(string email)
     {
         var result =  _context.Authors
             .Where(x => x.UserName == email);
@@ -114,7 +114,16 @@ public class CheepRepository : ICheepRepository
         }
 
         return result.First();
+    }*/
+    
+    public async Task<Author?> FindAuthorByEmail(string email)
+    {
+        return await _context.Authors
+            .Include(a => a.Following)
+            .SingleOrDefaultAsync(a => a.UserName == email);
     }
+
+
     public async Task CreateAuthor(Author author) // Command
     {
 
