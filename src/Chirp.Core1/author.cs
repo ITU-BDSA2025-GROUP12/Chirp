@@ -7,6 +7,10 @@ public class Author : IdentityUser<int>{
 	public ICollection<Cheep> Cheeps { get; } = new List<Cheep>();
 	public bool IsDeleted { get; set; }
 	public string? DisplayName { get; set; }
-
+	
+	public ICollection<Author>? Following { get; }
+	public ICollection<Author>? Followers { get; }
+	public bool IsFollowing(int authorId)
+		=> Following.Any(a => a.Id == authorId);
 	//public required String Email{ get; set; }
 }

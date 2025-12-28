@@ -10,8 +10,8 @@ public class PublicModel : PageModel
 {
     private readonly ICheepRepository _repo;
     public List<Cheep> Cheeps { get; set; } = new();
-    
-    
+    public Author? CurrentUser { get; private set; }
+    public HashSet<int> FollowingList { get; set; } = new();
     
     [BindProperty] public string Message { get; set; }
     
@@ -40,7 +40,19 @@ public class PublicModel : PageModel
         await _repo.CreateCheep(Message, userName);
         return RedirectToPage("Public");
     }
+    public async Task<IActionResult> OnPostFollowAsync(int authorId)
+    {
+        var me = await _repo.FindAuthorByEmail(User.Identity.Name);
+        await _repo.FollowAsync(me!.Id, authorId);
+        return RedirectToPage();
+    }
 
+    public async Task<IActionResult> OnPostUnfollowAsync(int authorId)
+    {
+        var me = await _repo.FindAuthorByEmail(User.Identity.Name);
+        await _repo.UnfollowAsync(me!.Id, authorId);
+        return RedirectToPage();
+    }
 
     
    // public ActionResult OnGet()

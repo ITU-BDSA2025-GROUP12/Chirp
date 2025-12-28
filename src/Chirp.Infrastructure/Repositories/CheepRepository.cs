@@ -155,7 +155,45 @@ public async Task CreateCheep(string message, string? name)
     await _context.SaveChangesAsync();
 }
 
+public async Task<Author?> GetAuthorWithFollowingByEmail(string email)
+{
+    return await _context.Authors
+        .Include(a => a.Following)
+        .SingleOrDefaultAsync(a => a.UserName == email);
+}
 
+public async Task FollowAsync(int followerId, int followingId)
+{
+    if (followerId == followingId) return;
 
+    var follower = await _context.Users
+        .Include(a => a.Following)
+        .SingleAsync(a => a.Id == followerId);
+
+    var target = await _context.Users
+        .SingleAsync(a => a.Id == followingId);
+
+    if (!follower.Following.Any(a => a.Id == followingId))
+    {
+        follower.Following.Add(target);
+        await _context.SaveChangesAsync();
+    }
+}
+
+public async Task UnfollowAsync(int followerId, int followingId)
+{
+    var follower = await _context.Users
+        .Include(a => a.Following)
+        .SingleAsync(a => a.Id == followerId);
+
+    var target = follower.Following
+        .SingleOrDefault(a => a.Id == followingId);
+
+    if (target != null)
+    {
+        follower.Following.Remove(target);
+        await _context.SaveChangesAsync();
+    }
+}
 
 }

@@ -15,5 +15,7 @@ public interface ICheepRepository
     Task<Author?> FindAuthorByEmail(string email);
     Task CreateAuthor(Author author);
     Task CreateCheep(string message, string? name);
+    public Task UnfollowAsync(int followerId, int followedId);
+    public Task FollowAsync(int followerId, int followedId);
 
 }
