@@ -89,7 +89,13 @@ Describe step-by-step how to clone and run the Chirp! application locally:
 - Clone instructions  
 - Commands to run  
 - Required tools or dependencies  
-- Expected output or behavior  
+- Expected output or behavior
+
+If you want to run the Chirp! application locally you will have to follow these steps.
+1. Clone the repository to your laptop by using the command **git clone https://github.com/ITU-BDSA2025-GROUP12/Chirp"**
+2. To run the program change your directory to "Chirp/Src/Chirp.Web" and write **dotnet run** in the command line.
+
+You should expect a localhost link to open up a webservice, where you can start cheeping!
 
 ## How to Run Test Suite Locally
 Describe how to run your test suites:
@@ -97,7 +103,7 @@ Describe how to run your test suites:
 - Required steps  
 - How to execute tests  
 - What types of tests you have (unit, integration, etc.)  
-- What they test  
+- What they test
 
 # Ethics
 
@@ -116,6 +122,8 @@ Describe:
 
 In our project we have used **DeepSeek** and **CoPilot**.
 
-DeepSeek has been used in our project for debugging and understanding tasks. In some cases it has been used to write code, however this has actually been less helpful as it has caused us to debug more than write code. It can be hard to understand some of the code DeepSeek produces as it can overcomplicate things or use packages we have not been introduced to. The person who produced this code may be able to understand it but it makes it harder for another member to refactor without removing function. This has all caused the development of our code to be slowed down. The book itself has been more helpful to developing the code than DeepSeek has. Using AI as a debugging tool has been helpful in some cases and done no improvement or change in others.
+DeepSeek has been used in our project for debugging and understanding tasks. It has been a helpful tool to understanding more about the weekly tasks and how to tackle them. While in the case of debugging it has been helpful at times and made no improvement or changes in others. 
+
+In some cases DeepSeek has been used to write code, however this has actually been less helpful than intended as it has caused us to debug more than write code. It can be hard to understand some of the code DeepSeek produces as it can overcomplicate things or use packages we have not been introduced to. The person who produced this code with a prompt may be able to understand it, but it makes it harder for another member to refactor as the code might not be similar to what was taught in the lecture. This has caused the development of our code to be slowed down. The book itself has been more helpful to developing code than DeepSeek has.
 
 CoPilot has been used for smaller things like assisting some commit messages, which can be quite helpful so that is not the place you get stuck. It has helped speed up the process a little more.
