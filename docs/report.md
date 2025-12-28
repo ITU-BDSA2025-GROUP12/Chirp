@@ -92,7 +92,7 @@ Describe step-by-step how to clone and run the Chirp! application locally:
 - Expected output or behavior
 
 If you want to run the Chirp! application locally you will have to follow these steps.
-1. Clone the repository to your laptop by using the command **git clone https://github.com/ITU-BDSA2025-GROUP12/Chirp"**
+1. Clone the repository to your laptop by using the command **git clone https://github.com/ITU-BDSA2025-GROUP12/Chirp**.
 2. To run the program change your directory to "Chirp/Src/Chirp.Web" and write **dotnet run** in the command line.
 
 You should expect a localhost link to open up a webservice, where you can start cheeping!
