@@ -108,22 +108,24 @@ Describe how to run your test suites:
 # Ethics
 
 ## License
-State the software license you chose for your application.
+~~State the software license you chose for your application.~~
 
 The software license we chose for our application is the **MIT License**. It is a license that .NET uses, so we chose it as well for our project.
 
 ## LLMs, ChatGPT, CoPilot, and Others
 Describe:
 
-- Which LLM(s) you used (if any)  
-- How and when you used them  
-- How helpful they were  
-- Whether they sped up or slowed down development
+~~- Which LLM(s) you used (if any)~~
+~~- How and when you used them~~  
+~~- How helpful they were~~
+~~- Whether they sped up or slowed down development~~
 
 In our project we have used **DeepSeek** and **CoPilot**.
 
 DeepSeek has been used in our project for debugging and understanding tasks. It has been a helpful tool to understanding more about the weekly tasks and how to tackle them. While in the case of debugging it has been helpful at times and made no improvement or changes in others. 
 
-In some cases DeepSeek has been used to write code, however this has actually been less helpful than intended as it has caused us to debug more than write code. It can be hard to understand some of the code DeepSeek produces as it can overcomplicate things or use packages we have not been introduced to. The person who produced this code with a prompt may be able to understand it, but it makes it harder for another member to refactor as the code might not be similar to what was taught in the lecture. This has caused the development of our code to be slowed down. The book itself has been more helpful to developing code than DeepSeek has.
+In some cases DeepSeek has been used to write code. DeepSeek would be shown the details of our program that it needs as well as the task at hand. Afterwards a prompt would be typed in requesting what specifically is difficult with the implementation. This has actually been less helpful than intended as it has caused us to debug more than write code. Some of the code it has produced has been faulty and the issues have been hard to spot.
+
+It can be hard to understand some of the code DeepSeek produces as it can overcomplicate things or use packages we have not been introduced to. The person who produced this code with a prompt may be able to understand it, but it makes it harder for another member to refactor as the code might not be similar to what was taught in the lecture. The development of our code has been slowed down due to these issues. The book itself has been more helpful to developing working code than DeepSeek has. However DeepSeek has been helpful to spar with.
 
 CoPilot has been used for smaller things like assisting some commit messages, which can be quite helpful so that is not the place you get stuck. It has helped speed up the process a little more.
