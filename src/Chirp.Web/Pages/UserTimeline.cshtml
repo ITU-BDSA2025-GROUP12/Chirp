@@ -32,6 +32,17 @@
                 }
                 <li>
                     <p>
+                        @if (Model.CurrentUser != null && Model.CurrentUser.Id != cheep.Author.Id)
+                        {
+                            <form method="post"
+                                  asp-page-handler="@(Model.CurrentUser.IsFollowing(cheep.Author.Id) ? "Unfollow" : "Follow")">
+                                <input type="hidden" name="authorId" value="@cheep.Author.Id" />
+                                <button type="submit">
+                                    @(Model.CurrentUser.IsFollowing(cheep.Author.Id) ? "Unfollow" : "Follow")
+                                </button>
+                            </form>
+                        }
+
                         <strong>
                             <a href="/@cheep.Author.UserName">@cheep.Author.UserName</a>
                         </strong>
@@ -46,4 +57,17 @@
     {
         <em>There are no cheeps so far.</em>
     }
+    <div class="pagination">
+        @if (Request.Query.ContainsKey("page") && int.Parse(Request.Query["page"]) > 1)
+        {
+            <a asp-route-page="@(int.Parse(Request.Query["page"]) - 1)">Previous</a>
+        }
+
+        <a asp-route-page="@(Request.Query.ContainsKey("page")
+                               ? int.Parse(Request.Query["page"]) + 1
+                               : 2)">
+            Next
+        </a>
+    </div>
+
 </div>
