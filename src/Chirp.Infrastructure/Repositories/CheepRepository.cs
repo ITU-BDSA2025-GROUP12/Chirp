@@ -7,13 +7,19 @@ using Chirp.Core1;
 namespace Chirp.Infrastructure.Repositories;
 
 
-
+/// <summary>
+/// Fetches and inserts data from and into the database
+/// </summary>
 public class CheepRepository : ICheepRepository
 {
     private readonly ChirpDBContext _context;
     private readonly UserManager<Author> _userManager;
 
-
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="context">Database-context - this one has talks directly with the database</param>
+    /// <param name="userManager">Keeps track of logged-in user</param>
    public CheepRepository(ChirpDBContext context, UserManager<Author> userManager)
 {
     _context = context;
