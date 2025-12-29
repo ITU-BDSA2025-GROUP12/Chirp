@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Chirp.Infrastructure.Data;
 
+namespace Test.CustomWebApplicationFactory;
+
 //source: https://github.com/dotnet/AspNetCore.Docs.Samples/blob/main/test/integration-tests/9.x/IntegrationTestsSample/tests/RazorPagesProject.Tests/CustomWebApplicationFactory.cs
 //used to be able to use in-memory SQLite database for testing
 

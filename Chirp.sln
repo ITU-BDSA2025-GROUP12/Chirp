@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{542B9611-939
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chirp.Razor.Tests", "test\Chirp.Razor.Tests\Chirp.Razor.Tests.csproj", "{1727E89E-B954-4EB7-8E5A-B9C1D67CA8CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chirp.Core1cd ", "src\Chirp.Core1\Chirp.Core1.csproj", "{883FA826-3128-46C4-9CA9-0213216977E8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chirp.Core1", "src\Chirp.Core1\Chirp.Core1.csproj", "{883FA826-3128-46C4-9CA9-0213216977E8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chirp.Infrastructure", "src\Chirp.Infrastructure\Chirp.Infrastructure.csproj", "{BE33E52B-98A7-4D20-8948-3D7EAA9E5752}"
 EndProject
@@ -18,6 +18,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chirp.Infrastructure.Tests", "test\Chirp.Infrastructure.Tests\Chirp.Infrastructure.Tests.csproj", "{B6A877BC-D94B-4BE9-B66D-EA871DD1D50F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chirp.Web.Tests", "test\Chirp.Web.Tests\Chirp.Web.Tests.csproj", "{8A673759-4E1F-4A62-9E56-8A5C9846F746}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayWrightTests", "test\PlayWrightTests\PlayWrightTests.csproj", "{5F61D633-2809-42EA-B062-288145A73D2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{8A673759-4E1F-4A62-9E56-8A5C9846F746}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A673759-4E1F-4A62-9E56-8A5C9846F746}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A673759-4E1F-4A62-9E56-8A5C9846F746}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F61D633-2809-42EA-B062-288145A73D2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F61D633-2809-42EA-B062-288145A73D2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F61D633-2809-42EA-B062-288145A73D2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F61D633-2809-42EA-B062-288145A73D2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,5 +71,6 @@ Global
 		{55CC14E4-14B7-4583-B4DB-956DDC11B81D} = {644BC1BD-28EA-488A-8724-6977DB862C35}
 		{B6A877BC-D94B-4BE9-B66D-EA871DD1D50F} = {644BC1BD-28EA-488A-8724-6977DB862C35}
 		{8A673759-4E1F-4A62-9E56-8A5C9846F746} = {644BC1BD-28EA-488A-8724-6977DB862C35}
+		{5F61D633-2809-42EA-B062-288145A73D2D} = {644BC1BD-28EA-488A-8724-6977DB862C35}
 	EndGlobalSection
 EndGlobal
