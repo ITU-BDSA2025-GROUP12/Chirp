@@ -70,7 +70,6 @@ Create a UML sequence diagram showing message flow:
 
 Include all relevant calls (HTTP, C#, etc.)
 
-Insert diagram here:
 ![Sequence Diagram](images/Sequence-of-functionality.png)
 
 # Process
