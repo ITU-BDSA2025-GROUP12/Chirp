@@ -10,7 +10,7 @@ date: "2025"
 Provide an illustration of your domain model.  
 Make sure it is correct and complete.
 
-![Domain Model](images/Domain-Model2.png)
+![Domain Model](images/Domain_Model2.png)
 
 ## Architecture — In the small
 Illustrate the organization of your code base.  
