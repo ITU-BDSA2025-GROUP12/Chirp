@@ -40,7 +40,7 @@ Illustrate the architecture of your deployed client-server application.
 Show where the server is deployed and how the client communicates with it.
 
 Insert diagram here:
-![Deployed Architecture](images/build-workflow.png)
+![Deployed Architecture](images/Deployed-Application.png)
 
 ## User Activities
 Illustrate typical user journeys:
