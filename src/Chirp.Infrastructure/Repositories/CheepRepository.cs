@@ -12,24 +12,22 @@ namespace Chirp.Infrastructure.Repositories;
 /// </summary>
 public class CheepRepository : ICheepRepository
 {
+    /// <summary>
+    /// DBContext to communicate changes to the database
+    /// </summary>
     private readonly ChirpDBContext _context;
-    private readonly UserManager<Author> _userManager;
+    /// <summary>
+    /// How many cheeps to display per page
+    /// </summary>
     private const int PageSize = 32;
-
-
     /// <summary>
     /// Constructor
     /// </summary>
     /// <param name="context">Database-context - this one has talks directly with the database</param>
-    /// <param name="userManager">Keeps track of logged-in user</param>
-   public CheepRepository(ChirpDBContext context, UserManager<Author> userManager)
+   public CheepRepository(ChirpDBContext context)
 {
     _context = context;
-    _userManager = userManager;
 }
-
-
-    
     // https://stackoverflow.com/questions/1618863/how-to-sort-a-collection-by-datetime-in-c-sharp
     /// <summary>
     /// Makes sure cheeps appear in order with newest cheeps first
@@ -115,8 +113,13 @@ public class CheepRepository : ICheepRepository
 
 
     }
-    
-public async Task CreateCheep(string message, string? name)
+    /// <summary>
+    /// Adds cheep to the database
+    /// </summary>
+    /// <param name="message">The user input text that makes up the cheep</param>
+    /// <param name="name">Name of the associated author</param>
+    /// <exception cref="InvalidOperationException"> Thrown if no author is submitted</exception>
+    public async Task CreateCheep(string message, string? name)
 {
     var author = await _context.Authors
         .SingleOrDefaultAsync(a => a.UserName == name);
@@ -135,13 +138,11 @@ public async Task CreateCheep(string message, string? name)
     await _context.SaveChangesAsync();
 }
 
-public async Task<Author?> GetAuthorWithFollowingByEmail(string email)
-{
-    return await _context.Authors
-        .Include(a => a.Following)
-        .SingleOrDefaultAsync(a => a.UserName == email);
-}
-
+    /// <summary>
+    /// Adds a follow relation to the database
+    /// </summary>
+    /// <param name="followerId">Id of the user who will follow another</param>
+    /// <param name="followingId">Id of the author who will be followed</param>
 public async Task FollowAsync(int followerId, int followingId)
 {
     if (followerId == followingId) return;
@@ -159,7 +160,11 @@ public async Task FollowAsync(int followerId, int followingId)
         await _context.SaveChangesAsync();
     }
 }
-
+    /// <summary>
+    /// Removes a follow relation to the database
+    /// </summary>
+    /// <param name="followerId">Id of the user who will unfollow another</param>
+    /// <param name="followingId">Id of the author who will be unfollowed</param>
 public async Task UnfollowAsync(int followerId, int followingId)
 {
     var follower = await _context.Users
@@ -175,8 +180,13 @@ public async Task UnfollowAsync(int followerId, int followingId)
         await _context.SaveChangesAsync();
     }
 }
-
-public async Task<List<Cheep>> GetTimelineCheeps(Author currentUser, int page)
+/// <summary>
+/// Gets a list of cheeps from the following list of a user
+/// </summary>
+/// <param name="currentUser">The user whose following-timeline will be displayed</param>
+/// <param name="page">The amount of pages to skip</param>
+/// <returns>The cheeps of every author on the users following-list</returns>
+    public async Task<List<Cheep>> GetTimelineCheeps(Author currentUser, int page)
 {
     const int pageSize = 32;
     int offset = (page - 1) * pageSize;

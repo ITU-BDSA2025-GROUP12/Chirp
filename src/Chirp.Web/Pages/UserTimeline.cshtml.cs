@@ -7,16 +7,23 @@ namespace Chirp.Web.Pages;
 
 public class UserTimelineModel : PageModel
 {
+    /// <summary>
+    /// CheepRepository to fetch the cheeps to display
+    /// </summary>
     private readonly ICheepRepository _repo;
-
+    /// <summary>
+    /// A list of cheeps to display
+    /// </summary>
     public List<Cheep> Cheeps { get; set; } = new();
     /// <summary>
     /// The user who is logged in on this instance of the application
     /// </summary>
     public Author? CurrentUser { get; set; }
     [BindProperty] public string Message { get; set; }
-
-
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="repo">CheepRepository to fetch the cheeps to display</param>
     public UserTimelineModel(ICheepRepository repo)
     {
         _repo = repo;

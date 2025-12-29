@@ -42,7 +42,7 @@ public class CheepRepositoryTests
 
         context.SaveChanges();
 
-        return new CheepRepository(context, null!);
+        return new CheepRepository(context);
     }
 
     [Fact]
@@ -64,7 +64,7 @@ public class CheepRepositoryTests
 
         var context = new ChirpDBContext(options);
 
-        var repo = new CheepRepository(context, null!);
+        var repo = new CheepRepository(context);
 
         await Assert.ThrowsAsync<InvalidOperationException>(async () =>
         {

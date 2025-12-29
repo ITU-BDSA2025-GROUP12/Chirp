@@ -4,7 +4,9 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 
 namespace Chirp.Infrastructure.Data;
-
+/// <summary>
+/// Makes sure ChirpDBContext gets constructed correctly
+/// </summary>
 public class ChirpDBContextFactory
     : IDesignTimeDbContextFactory<ChirpDBContext>
 {
