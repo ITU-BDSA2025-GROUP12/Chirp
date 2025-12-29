@@ -28,7 +28,7 @@ jobs:
       run: dotnet build src/Chirp.Web/Chirp.Web.csproj --configuration Release --no-restore
       
     - name: Install Playwright browsers
-      run: pwsh src/Chirp.Web/bin/Release/net8.0/playwright.ps1 install
+      run: pwsh -File test/PlayWrightTests/bin/Release/net8.0/playwright.ps1 install
       
     - name: Test
       run: |
