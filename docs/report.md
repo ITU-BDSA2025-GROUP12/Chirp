@@ -49,8 +49,11 @@ Illustrate typical user journeys:
 - What an unauthorized user can do  
 - What an authenticated user can do  
 
+## Follow-Unfollow 
 
 ![Follow-Unfollow-Diagram](images/Follow-User.png)
+
+## Forget Me Feature
 
 ![Forget-Me-Diagram](images/Forget-Me-Feature.png)
 
