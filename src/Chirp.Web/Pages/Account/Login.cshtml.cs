@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
+using Chirp.Core1;
 
 namespace Chirp.Web.Pages.Account
 {
@@ -92,7 +92,7 @@ namespace Chirp.Web.Pages.Account
                     return Page();
                 }
                 //If the author doesn't have a username or firstname we set them.
-                if (UserName.UserName.IsNullOrEmpty())
+                if (string.IsNullOrEmpty(UserName.UserName))
                 {
                     UserName.UserName = Input.Email;
                     UserName.FirstName = Input.Email;

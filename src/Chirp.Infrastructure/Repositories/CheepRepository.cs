@@ -1,21 +1,27 @@
 using Microsoft.EntityFrameworkCore;
 using Chirp.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Identity.Client;
-using Microsoft.IdentityModel.Tokens;
+using Chirp.Core1;
 
 
 namespace Chirp.Infrastructure.Repositories;
 
+
+
 public class CheepRepository : ICheepRepository
 {
     private readonly ChirpDBContext _context;
-    private UserManager<Author> _userManager;
+    private readonly UserManager<Author> _userManager;
+    private const int PageSize = 32;
 
-    public CheepRepository(ChirpDBContext context)
-    {
-        _context = context;
-    }
+
+
+   public CheepRepository(ChirpDBContext context, UserManager<Author> userManager)
+{
+    _context = context;
+    _userManager = userManager;
+}
+
 
     
     // https://stackoverflow.com/questions/1618863/how-to-sort-a-collection-by-datetime-in-c-sharp
@@ -24,26 +30,19 @@ public class CheepRepository : ICheepRepository
         cheeps.Sort((x, y) => DateTime.Compare(x.TimeStamp, y.TimeStamp));
         cheeps.Reverse(); // Reverses the list.
     }
-    public List<Cheep> GetCheeps(int page) // Query
+    public List<Cheep> GetCheeps(int page)
     {
-        var query = _context.Cheeps
-            .Join(_context.Authors,
-                cheep => cheep.Id,
-                author => author.Id,
-                (cheep, author) =>
-                new Cheep()
-                {
-                    Id = cheep.Id,
-                    CheepId = cheep.CheepId,
-                    Text = cheep.Text,
-                    TimeStamp = cheep.TimeStamp,
-                    Author = author
-                });
+        int offset = (page - 1) * PageSize;
 
-        var result = query.ToList();
-        SortByTime(result);
-        return result;
+        return _context.Cheeps
+            .Include(c => c.Author)
+            .OrderByDescending(c => c.TimeStamp)
+            .Skip(offset)
+            .Take(PageSize)
+            .ToList();
     }
+
+
 
    /* public List<Cheep> getCheeps(int page)
     {
@@ -60,47 +59,32 @@ public class CheepRepository : ICheepRepository
         
     }*/
 
-    public List<Cheep> GetCheepsFromAuthor(string author, int page) // Query
+   public List<Cheep> GetCheepsFromAuthor(string author, int page)
+   {
+       int offset = (page - 1) * PageSize;
+
+       return _context.Cheeps
+           .Include(c => c.Author)
+           .Where(c =>
+               c.Author.UserName == author ||
+               c.Author.FirstName == author)
+           .OrderByDescending(c => c.TimeStamp)
+           .Skip(offset)
+           .Take(PageSize)
+           .ToList();
+   }
+
+
+
+   public List<Cheep> GetCheepsFromEmail(string email, int page) //Query
     {
-        var result = _context.Cheeps
-            .Join(_context.Authors,
-                cheep => cheep.Id,
-                a => a.Id,
-                (cheep, a) => new { cheep, a })
-            .Where(x => x.a.FirstName == author || x.a.UserName == author)
-            .Select(x => new Cheep
-            {
-                Id = x.cheep.Id,
-                CheepId  = x.cheep.CheepId,
-                Text     = x.cheep.Text,
-                TimeStamp= x.cheep.TimeStamp,
-                Author   = x.a
-            })
+        return _context.Cheeps
+            .Include(c => c.Author)
+            .Where(c => c.Author.Email == email)
+            .OrderByDescending(c => c.TimeStamp)
             .ToList();
-        SortByTime(result);
-        return result;
     }
 
-    public List<Cheep> GetCheepsFromEmail(string email, int page) // Query
-    {
-        var result = _context.Cheeps
-            .Join(_context.Authors,
-                cheep => cheep.Id,
-                a => a.Id,
-                (cheep, a) => new { cheep, a })
-            .Where(x => x.a.Email == email)
-            .Select(x => new Cheep
-            {
-                Id = x.cheep.Id,
-                CheepId  = x.cheep.CheepId,
-                Text     = x.cheep.Text,
-                TimeStamp= x.cheep.TimeStamp,
-                Author   = x.a
-            })
-            .ToList();
-        SortByTime(result);
-        return result;
-    }
 
 
     public async Task<int> GetCheepCount() // Query
@@ -119,7 +103,7 @@ public class CheepRepository : ICheepRepository
         
         var author = await _userManager.FindByEmailAsync(email);
         if (author == null) throw new ArgumentNullException("Email can't be null");
-        if (author.FirstName.IsNullOrEmpty())
+        if (string.IsNullOrEmpty(author.FirstName))
         {
             author.FirstName = email;
             Console.WriteLine("Bro didn't have a name so I named him " + author.FirstName + " myself!");
@@ -129,18 +113,27 @@ public class CheepRepository : ICheepRepository
     }
 
 
-    public async Task<Author?> FindAuthorByUserName(string userName)
+    /*public async Task<Author?> FindAuthorByEmail(string email)
     {
         var result =  _context.Authors
-            .Where(x => x.UserName == userName);
+            .Where(x => x.UserName == email);
 
-        if (result.IsNullOrEmpty())
+        if (!result.Any())
         {
             return null;
         }
 
         return result.First();
+    }*/
+    
+    public async Task<Author?> FindAuthorByUserName(string userName)
+    {
+        return await _context.Authors
+            .Include(a => a.Following)
+            .SingleOrDefaultAsync(a => a.UserName == userName);
     }
+
+
     public async Task CreateAuthor(Author author) // Command
     {
 
@@ -160,32 +153,85 @@ public class CheepRepository : ICheepRepository
 
 
     }
+    
+public async Task CreateCheep(string message, string? name)
+{
+    var author = await _context.Authors
+        .SingleOrDefaultAsync(a => a.UserName == name);
 
-    public async void CreateCheep(String message, String userName) // Command
+    if (author == null)
+        throw new InvalidOperationException("Author not found.");
+
+    var cheep = new Cheep
     {
-        if (message != "")
-        {
-            
+        Text = message,
+        TimeStamp = DateTime.UtcNow,
+        Author = author
+    };
 
-            var author = await FindAuthorByUserName(userName);
-            
-            if (author == null) throw new InvalidOperationException("Author not found.");
+    _context.Cheeps.Add(cheep);
+    await _context.SaveChangesAsync();
+}
 
-            int uniqueID = Guid.NewGuid().GetHashCode(); // Unique ID generation. (Hopefully)
+public async Task<Author?> GetAuthorWithFollowingByEmail(string email)
+{
+    return await _context.Authors
+        .Include(a => a.Following)
+        .SingleOrDefaultAsync(a => a.UserName == email);
+}
 
-            var cheep = new Cheep
-            {
-                Text = message.Trim(),
-                TimeStamp = DateTime.Now,
-                Author = author,
-                CheepId = uniqueID,
-            };
-            
-            _context.Cheeps.Add(cheep);
-            _context.SaveChanges();
-        }
+public async Task FollowAsync(int followerId, int followingId)
+{
+    if (followerId == followingId) return;
 
+    var follower = await _context.Users
+        .Include(a => a.Following)
+        .SingleAsync(a => a.Id == followerId);
+
+    var target = await _context.Users
+        .SingleAsync(a => a.Id == followingId);
+
+    if (!follower.Following.Any(a => a.Id == followingId))
+    {
+        follower.Following.Add(target);
+        await _context.SaveChangesAsync();
     }
+}
 
+public async Task UnfollowAsync(int followerId, int followingId)
+{
+    var follower = await _context.Users
+        .Include(a => a.Following)
+        .SingleAsync(a => a.Id == followerId);
+
+    var target = follower.Following
+        .SingleOrDefault(a => a.Id == followingId);
+
+    if (target != null)
+    {
+        follower.Following.Remove(target);
+        await _context.SaveChangesAsync();
+    }
+}
+
+public async Task<List<Cheep>> GetTimelineCheeps(Author currentUser, int page)
+{
+    const int pageSize = 32;
+    int offset = (page - 1) * pageSize;
+
+    var followedIds = currentUser.Following
+        .Select(a => a.Id)
+        .ToList();
+
+    return await _context.Cheeps
+        .Include(c => c.Author)
+        .Where(c =>
+            c.AuthorId == currentUser.Id ||
+            followedIds.Contains(c.AuthorId))
+        .OrderByDescending(c => c.TimeStamp)
+        .Skip(offset)
+        .Take(pageSize)
+        .ToListAsync();
+}
 
 }

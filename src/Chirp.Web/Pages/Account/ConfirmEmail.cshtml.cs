@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Chirp.Core1;
 
 namespace Chirp.Web.Pages.Account{
     public class ConfirmEmailModel : PageModel

@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Chirp.Core1;
 
 namespace Chirp.Infrastructure.Repositories;
 
@@ -11,6 +14,9 @@ public interface ICheepRepository
     Task<string> FindAuthorNameByEmail(string name);
     Task<Author?> FindAuthorByUserName(string userName);
     Task CreateAuthor(Author author);
-    void CreateCheep(String message, String name);
+    Task CreateCheep(string message, string? name);
+    public Task UnfollowAsync(int followerId, int followedId);
+    public Task FollowAsync(int followerId, int followedId);
+    Task<List<Cheep>> GetTimelineCheeps(Author currentUser, int page);
 
 }
