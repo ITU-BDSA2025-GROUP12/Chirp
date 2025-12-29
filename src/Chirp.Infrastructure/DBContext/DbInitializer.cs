@@ -1,4 +1,3 @@
-
 using Chirp.Infrastructure;
 using Chirp.Core1;
 

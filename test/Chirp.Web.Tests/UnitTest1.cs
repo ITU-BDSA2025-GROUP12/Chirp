@@ -1,4 +1,4 @@
-namespace PlaywrightTests;
+namespace Chirp.Web.Tests;
 
 public class Tests
 {
