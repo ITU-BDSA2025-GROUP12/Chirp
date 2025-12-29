@@ -7,8 +7,10 @@ date: "2025"
 # Design and Architecture
 
 ## Domain Model
-Provide an illustration of your domain model.  
-Make sure it is correct and complete.
+~~Provide an illustration of your domain model.  
+Make sure it is correct and complete.~~
+
+Illustration of domain model of our program.
 
 ![Domain Model](images/Domain_Model2.png)
 
