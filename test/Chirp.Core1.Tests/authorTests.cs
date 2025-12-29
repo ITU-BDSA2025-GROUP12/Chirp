@@ -1,4 +1,5 @@
 using Xunit;
+using Chirp.Core1;
 
 
 namespace Chirp.Core1.Tests;
@@ -18,9 +19,9 @@ public class UnitTest1
         {
             Text = "I love Chirp!",
             TimeStamp = timeStamp,
-            Id = 0,
+            AuthorId = 0,
             Author = author,
-            CheepId = 0
+            Id = 0
         };
         author.Cheeps.Add(cheep);
 

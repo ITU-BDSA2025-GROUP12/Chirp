@@ -2,6 +2,7 @@ using Chirp.Infrastructure;
 using Chirp.Infrastructure.Data;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Chirp.Core1;
 
 namespace Chirp.Infrastructure.Tests;
 

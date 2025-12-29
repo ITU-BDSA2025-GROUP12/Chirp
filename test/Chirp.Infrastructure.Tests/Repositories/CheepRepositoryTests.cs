@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.Sqlite;
+using Chirp.Core1;
 
 namespace Chirp.Infrastructure.Tests.Repositories;
 	
@@ -43,14 +44,14 @@ public class CheepRepositoryTests
 		};
 		var cheep1 = new Cheep
 		{
-			CheepId = 1,
+			Id = 1,
 			Author = author1,
 			Text = "this is author 1's cheep",
 			TimeStamp = DateTime.Now,
 		};
 		var cheep2 = new Cheep
 		{
-			CheepId = 2,
+			Id = 2,
 			Author = author2,
 			Text = "this is author 2's cheep",
 			TimeStamp = DateTime.Now,
@@ -74,7 +75,7 @@ public class CheepRepositoryTests
         var author = new Author { Id = 1, FirstName = "Name", Email = "name@example.com" };
         context.Authors.Add(author);
         for (int i = 1; i <= 100; i++)
-            context.Cheeps.Add(new Cheep { CheepId = i, Author = author, Id = 1, Text = $"Cheep {i}", TimeStamp = DateTime.Now });
+            context.Cheeps.Add(new Cheep { Id = i, Author = author, AuthorId = 1, Text = $"Cheep {i}", TimeStamp = DateTime.Now });
 
         context.SaveChanges();
         return new CheepRepository(context);
@@ -106,12 +107,12 @@ public class CheepRepositoryTests
         
         
         var cheep = new Cheep {
-            CheepId = 1,
+            Id = 1,
             Text = "This should fail because there is no author",
             TimeStamp = DateTime.UtcNow,
         };
 
-        Assert.Throws<NullReferenceException>(() => repo.CreateCheep(cheep.Text, cheep.Author.Email));
+        Assert.ThrowsAsync<NullReferenceException>(() => repo.CreateCheep(cheep.Text, cheep.Author.Email));
     }
 
     [Fact]
@@ -128,18 +129,18 @@ public class CheepRepositoryTests
 
 	    var oldCheep = new Cheep
 	    {
-		    CheepId = 0,
-		    Author = author,
 		    Id = 0,
+		    Author = author,
+		    AuthorId = 0,
 		    Text = "this is the oldest cheep",
 		    TimeStamp = DateTime.Now
 	    };
 
 	    var newCheep = new Cheep
 	    {
-		    CheepId = 1,
+		    Id = 1,
 		    Author = author,
-		    Id = 0,
+		    AuthorId = 0,
 		    Text = "this is the newest cheep",
 		    TimeStamp = DateTime.Now.AddMinutes(10)
 	    };

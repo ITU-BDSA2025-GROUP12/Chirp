@@ -1,4 +1,5 @@
 using Xunit;
+using Chirp.Core1;
 
 namespace Chirp.Core1.Tests;
 
@@ -11,9 +12,9 @@ public class cheepTests {
 		{
 			Text = "This is a cheep!",
 			TimeStamp = timeStamp,
-			Id = 0,
+			AuthorId = 0,
 			Author = new Author{FirstName = "Brian"},
-			CheepId = 0	
+			Id = 0	
 		};
 		Assert.NotNull(cheep);
 		Assert.Equal("This is a cheep!", cheep.Text);
