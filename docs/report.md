@@ -61,6 +61,10 @@ Illustrate typical user journeys:
 
 ![Login Diagram](images/Login.png)
 
+## Reply
+
+![Reply Diagram](images/Reply.png)
+
 
 ## Sequence of Functionality / Calls Through Chirp!
 Create a UML sequence diagram showing message flow:
