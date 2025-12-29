@@ -7,10 +7,12 @@ date: "2025"
 # Design and Architecture
 
 ## Domain Model
-Provide an illustration of your domain model.  
-Make sure it is correct and complete.
+~~Provide an illustration of your domain model.  
+Make sure it is correct and complete.~~
 
-![Domain Model](images/Domain-Model.png)
+Illustration of domain model of our program.
+
+![Domain Model](images/Domain_Model2.png)
 
 ## Architecture — In the small
 Illustrate the organization of your code base.  
@@ -38,7 +40,7 @@ Illustrate the architecture of your deployed client-server application.
 Show where the server is deployed and how the client communicates with it.
 
 Insert diagram here:
-![Deployed Architecture](images/deployed-architecture.pdf)
+![Deployed Architecture](images/build-workflow.png)
 
 ## User Activities
 Illustrate typical user journeys:
