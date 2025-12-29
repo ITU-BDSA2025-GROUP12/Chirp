@@ -24,6 +24,9 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore src/Chirp.Web/Chirp.Web.csproj
       
+    - name: Restore dependencies for PlayWrightTest
+      run: dotnet restore test/PlayWrightTests/PlayWrightTests.csproj
+      
     - name: Build all projects
       run: dotnet build src/Chirp.Web/Chirp.Web.csproj --configuration Release --no-restore
       
