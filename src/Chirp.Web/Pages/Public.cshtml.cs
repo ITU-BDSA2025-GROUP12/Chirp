@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Chirp.Core1;
 using Chirp.Infrastructure.Repositories;
@@ -13,7 +14,9 @@ public class PublicModel : PageModel
     public Author? CurrentUser { get; private set; }
     public HashSet<int> FollowingList { get; set; } = new();
     
-    [BindProperty] public string Message { get; set; }
+    [BindProperty] 
+    [StringLength(160, ErrorMessage = "nah!")]
+    public string Message { get; set; }
     
     public PublicModel(ICheepRepository repo)
     {
