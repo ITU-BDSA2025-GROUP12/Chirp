@@ -52,6 +52,8 @@ Illustrate typical user journeys:
 
 ![Follow-Unfollow-Diagram](images/Follow-User.png)
 
+![Forget-Me-Diagram](images/Forget-Me-Feature.png)
+
 ## Sequence of Functionality / Calls Through Chirp!
 Create a UML sequence diagram showing message flow:
 
