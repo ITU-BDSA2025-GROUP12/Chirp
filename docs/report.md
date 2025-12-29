@@ -10,7 +10,7 @@ date: "2025"
 Provide an illustration of your domain model.  
 Make sure it is correct and complete.
 
-![Domain Model](Domain-Model.png)
+![Domain Model](images/Domain-Model.png)
 
 ## Architecture — In the small
 Illustrate the organization of your code base.  
@@ -19,7 +19,7 @@ Explain which layers exist in your onion architecture and what belongs to each l
 ## Onion Architecture
 This application was build according to the 'Onion Architecture' to increase maintanablity and testability. Below here is an illustration of the architecture.
 
-![Architecture Small](Architecture-in-the-small.png)
+![Architecture Small](images/Architecture-in-the-small.png)
 
 Domain Entities:
 The innermost circle of the model is Chirp.Core1, which is were the fundamental entities of the program lies; Author and Cheep. 
