@@ -78,18 +78,6 @@
     {
         <em>There are no cheeps so far.</em>
     }
-    <div class="pagination">
-        @if (Request.Query.ContainsKey("page") && int.Parse(Request.Query["page"]) > 1)
-        {
-            <a asp-route-page="@(int.Parse(Request.Query["page"]) - 1)">Previous</a>
-        }
-
-        <a asp-route-page="@(Request.Query.ContainsKey("page")
-                               ? int.Parse(Request.Query["page"]) + 1
-                               : 2)">
-            Next
-        </a>
-    </div>
 
 </div>
 
