@@ -12,7 +12,7 @@ Make sure it is correct and complete.~~
 
 Illustration of domain model of our program.
 
-![Domain Model](images/Domain_Model2.png)
+![Domain Model](images/DomainModel.png)
 
 ## Architecture — In the small
 Illustrate the organization of your code base.  
@@ -49,8 +49,13 @@ Illustrate typical user journeys:
 - What an unauthorized user can do  
 - What an authenticated user can do  
 
+## Follow-Unfollow 
 
 ![Follow-Unfollow-Diagram](images/Follow-User.png)
+
+## Forget Me Feature
+
+![Forget-Me-Diagram](images/Forget-Me-Feature.png)
 
 ## Sequence of Functionality / Calls Through Chirp!
 Create a UML sequence diagram showing message flow:
