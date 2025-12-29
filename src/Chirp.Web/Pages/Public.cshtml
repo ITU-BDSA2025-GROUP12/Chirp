@@ -3,18 +3,41 @@
 @{
     ViewData["Title"] = "Chirp!";
     Layout = "Shared/_Layout";
+    <link href="/css/style.css" rel="stylesheet" type="text/css"/>
 }
 
 <div>
     <h2> Public Timeline </h2>
-    @if(User.Identity.IsAuthenticated) {
+    @if (User.Identity.IsAuthenticated)
+    {
         <div class="cheepbox">
             <h3>Tell others what's on your mind @(User.Identity.Name)!</h3>
             <form method="post">
-                <input required type="text" asp-for="Message">
+                <input required type="text" id="input" asp-for="Message">
                 <input type="submit" value="Cheep">
+                <span class="word" id="word">160 characters left</span>
             </form>
         </div>
+        <script>
+            let word = document.getElementById("word"); // Word counter
+            let input = document.getElementById("input"); // Input written in the form
+            const maximumlen = 160; // Max length
+            
+            updatecount();
+            
+            input.addEventListener('input',updatecount);
+            
+            function updatecount() {
+                const nowlen = input.value.length; // Current length
+                const remaining = maximumlen - nowlen;
+                word.textContent = `${remaining} characters left`
+                
+                if(remaining == 0) {
+                    word.style.color = "red"
+                }
+            }
+            
+        </script>
     }
 
     @if (Model.Cheeps.Any())
@@ -22,17 +45,29 @@
         <ul id="messagelist" class="cheeps">
             @foreach (var cheep in Model.Cheeps)
             {
-                @if (cheep.Author != null) {
+                @if (cheep.Author != null)
+                {
                     //Github accounts only have UserName and not FirstName while the authors in the DBinitializer only have FirstName and not UserName.
                     @if (String.IsNullOrEmpty(cheep.Author.UserName) && !String.IsNullOrEmpty(cheep.Author.FirstName))
                     {
                         cheep.Author.UserName = cheep.Author.FirstName;
                     }
+
                     <li>
                         <p>
                             <a href="/@cheep.Author.UserName">@cheep.Author.UserName</a>
                             @cheep.Text
                             <small>&mdash; @cheep.TimeStamp.ToString("yyyy-MM-dd HH:mm")</small>
+                            @if (Model.CurrentUser != null && Model.CurrentUser.Id != cheep.Author.Id)
+                            {
+                                <form method="post"
+                                      asp-page-handler="@(Model.CurrentUser.IsFollowing(cheep.Author.Id) ? "Unfollow" : "Follow")">
+                                    <input type="hidden" name="authorId" value="@cheep.Author.Id" />
+                                    <button type="submit">
+                                        @(Model.CurrentUser.IsFollowing(cheep.Author.Id) ? "Unfollow" : "Follow")
+                                    </button>
+                                </form>
+                            }
                         </p>
                     </li>
                 }
@@ -43,5 +78,18 @@
     {
         <em>There are no cheeps so far.</em>
     }
+    <div class="pagination">
+        @if (Request.Query.ContainsKey("page") && int.Parse(Request.Query["page"]) > 1)
+        {
+            <a asp-route-page="@(int.Parse(Request.Query["page"]) - 1)">Previous</a>
+        }
+
+        <a asp-route-page="@(Request.Query.ContainsKey("page")
+                               ? int.Parse(Request.Query["page"]) + 1
+                               : 2)">
+            Next
+        </a>
+    </div>
+
 </div>
 

@@ -22,4 +22,20 @@ public class Author : IdentityUser<int>{
 	/// The name that appears to other users
 	/// </summary>
 	public string? DisplayName { get; set; }
+	/// <summary>
+	/// A collection of authors, this user follows
+	/// </summary>
+	public ICollection<Author>? Following { get; }
+	/// <summary>
+	/// A collection of users that follow this author
+	/// </summary>
+	public ICollection<Author>? Followers { get; }
+	/// <summary>
+	/// Checks whether this user follows a given author
+	/// </summary>
+	/// <param name="authorId">Id of the author who may or may not be followed</param>
+	/// <returns>true or false, depending on whether the author is followed</returns>
+	public bool IsFollowing(int authorId)
+		=> Following.Any(a => a.Id == authorId);
+	//public required String Email{ get; set; }
 }
