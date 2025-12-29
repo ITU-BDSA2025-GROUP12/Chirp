@@ -49,8 +49,8 @@ Illustrate typical user journeys:
 - What an unauthorized user can do  
 - What an authenticated user can do  
 
-Insert activity diagrams or screenshots here:
-![User Activities](images/user-activities.pdf)
+
+![Follow-Unfollow-Diagram](images/Follow-User.png)
 
 ## Sequence of Functionality / Calls Through Chirp!
 Create a UML sequence diagram showing message flow:
