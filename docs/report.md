@@ -12,7 +12,7 @@ Make sure it is correct and complete.~~
 
 Illustration of domain model of our program.
 
-![Domain Model](images/Domain_Model2.png)
+![Domain Model](images/DomainModel.png)
 
 ## Architecture — In the small
 Illustrate the organization of your code base.  
