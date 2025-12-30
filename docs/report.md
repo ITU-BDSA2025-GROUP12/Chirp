@@ -15,10 +15,6 @@ The two classes, Author and Cheep, are fundamental entities in our program as fe
 ![Domain Model](images/DomainModel.png)
 
 ## Architecture — In the small
-Illustrate the organization of your code base.  
-Explain which layers exist in your onion architecture and what belongs to each layer.
-
-## Onion Architecture
 This application was build according to the 'Onion Architecture' to increase maintanablity and testability. Below here is an illustration of the architecture.
 
 ![Architecture Small](images/Architecture-in-the-small.png)
