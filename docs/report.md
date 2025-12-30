@@ -69,7 +69,7 @@ The following diagram shows the state machine of the follow activity. The user s
 The above flow-chart shows the user journey when following or unfollowing a user. The follow button only appears to logged in users, and will display as "Unfollow" in the event that the user is already following the given author. Users can go to their user-timeline, which only displays cheeps from followed authors and themselves.
 
 ## Forget Me 
-A registered user of the application has the possibility of deleting their account at any moment. To do so the user must go to their **About Me** page, where the “Forget Me!”- button is located. When clicking the button, the user is redirected to the **Manage your account** page. At this page the user will need to enter their password and click “Delete data and close my account”. After deleting an account all cheeps from that account are deleted. 
+A registered user of the application has the possibility of deleting their account at any moment. To do so the user must go to their **About Me** page, where the “Forget Me!”- button is located. When clicking the button, the user is redirected to the **Manage your account** page. At this page the user will need to enter their password and click “Delete data and close my account”. After deleting an account, all cheeps will be displayed with an author "deleted-<id>", but their cheeps are still visible on **Public timeline**. 
 
 ![Forget-Me-Diagram](images/Forget-Me-Feature.png)
 
@@ -78,16 +78,16 @@ A registered user of the application has the possibility of deleting their accou
 ## Login 
 From the **Public Timeline**, which is the first page shown when opening the website, the user can choose to either register a new account or log in. A user must be registered before they can log in.
 
-When registering an account, the user can choose between **email registration** or **GitHub login**. If the user registers with email, they must confirm their email address as an extra security step.
+When registering an account, the user can choose between **Email registration** or **GitHub registration**. When the user registers, they must confirm their email or github to get authenticated.
 
-After a successful login, the user is still able to view the public timeline, but also gains access to their private timeline.
+After a successful login, the user is still able to view the **Public timeline**, but also gains access to their **Private timeline**.
 
 ![Login Diagram](images/Login.png)
 
 **Figure 8:** Activity diagram showing the flow of registering a user and logging in to the application.
 
 ## Sequence of Functionality / Calls Through Chirp!
-First, a user’s browser sends an HTTP GET request to Chirp.Web to load the public timeline. Chirp.Web asks Chirp.Infrastructure to get the needed data. Chirp.Infrastructure then fetches the public cheeps from the database using Entity Framework Core. The database sends the cheeps back, and they are passed to Chirp.Web as a list.
+First, a user’s browser sends an HTTP GET request to Chirp.Web to load the **Public timeline**. Chirp.Web asks Chirp.Infrastructure to get the needed data. Chirp.Infrastructure then fetches the public cheeps from the database using **Entity Framework Core**. The database sends the cheeps back, and they are passed to Chirp.Web as a list.
 
 Chirp.Web then uses this data to render the Public.cshtml page and sends the finished HTML back to the browser.
 
@@ -95,7 +95,7 @@ The diagram is kept simple and shows only the main parts of the system and how t
 
 ![Sequence Diagram](images/Sequence-of-functionality.png)
 
-**Figure 9:** The sequence diagram shows how the Chirp! application loads the public timeline. 
+**Figure 9:** The sequence diagram shows how the Chirp! application loads the *Public timeline*. 
 
 # Process
 
