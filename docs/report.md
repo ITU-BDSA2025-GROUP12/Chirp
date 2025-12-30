@@ -22,7 +22,9 @@ This application was build according to the 'Onion Architecture' to increase mai
 
 ![Architecture Small](images/Architecture-in-the-small.png)
 
-<font size="1"> **Figur 2:** Onion Architecture. From left to right: UI layer, Service layer, Repository layer, Domain entities. </font>
+<font size="1"> 
+**Figur 2:** Onion Architecture. From left to right: UI layer, Service layer, Repository layer, Domain entities. 
+</font>
 
 Onion Architecture divides our program into multiple layers. The outer layers depend on the layers under it. 
 
@@ -33,18 +35,6 @@ The next layer of the model is the **Repository Interface**. This layer contains
 Moving one more layer out is the **Service Interface**. This is where our services folder is located. Ideally it would contain a CheepService and/or an AuthorService. Instead our Domain Services layer has taken this responsibility.
 
 The last layer and the outermost circle of the model is the Infrastructure layer and here is the Chirp.Web folder. This layer contains all the razor pages, our database, UI and Program.cs. 
-
-Domain Entities:
-The innermost circle of the model is Chirp.Core1, which is were the fundamental entities of the program lies; Author and Cheep. 
-
-Repository Layer:
-The next layer of the model is the Repository Layer, which is a part of Chirp.Infrastructure in the code. This layers contains the repositories and the repository interfaces. Chirp.Infrastructure also contains the ChirpDBContext class.
-
-Service Layer:
-Chirp.Infrastructure
-
-UI Layer:
-The last layer and the outermost circle of the model is the UI layer and is represented by Chirp.Web in the code. This Layer contains all the razor pages, the database, and Program.cs.
 
 ## System Architecture Overview
 ------MANGLER-------
@@ -101,6 +91,7 @@ The activity diagram shows how our GitHub Actions workflow builds and deploys th
    **Which tasks are unresolved?**
    
 As a user you are able to download data about your account, however it is not completely resolved, as the user will not be able to download a list of their cheeps, who they follow and who follows them. We have created a CheepDTO class but it is not in use. 
+
 Our program has not been security hardened and is vulnerable to XSS and SQL injection attacks. Therefore, the program is not as secure as we would ideally like it to be. 
 
    **What features are missing?**
@@ -110,17 +101,13 @@ Additionally we are missing wild-style features. We would have liked to implemen
    **Your workflow from issue creation → development → review → merge**
    
 The way we would aim to work was by meeting and talking about the requirements of the current week. We would then randomly distribute tasks and each group member would be responsible for creating issues corresponding to their weekly task. 
+
 Some weeks we would meet to code together, depending on what the week required, where one person would host a Code With Me and everyone would join to code. Other weeks we worked separately where each member would do their assigned tasks. Since some weeks required everything to be done in order it would cause members to wait for each other to finish tasks. Later in the development a lot of meetings aimed to be online where members worked separately on features that were missing.
+
 When a new feature was made or a new bug was corrected, a pull request would be made. The team member, who opened it, would write in our group chat “I opened a pull request” and whoever would be available to review the code first would do it. In some instances multiple people have reviewed a code but in most cases only one reviewed before merging the pull request.
 
 
 ## How to Make Chirp! Work Locally
-**Describe step-by-step how to clone and run the Chirp! application locally:**
-
-   - Clone instructions
-   - Commands to run
-   - Required tools or dependencies
-   - Expected output or behavior
   
 **If you want to run the Chirp! application locally you will have to follow these steps:**
 
