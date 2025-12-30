@@ -64,6 +64,7 @@ builder.Services.Configure<EmailConfirmationTokenProviderOptions>(opt =>
      opt.TokenLifespan = TimeSpan.FromDays(3));
 
 
+
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {

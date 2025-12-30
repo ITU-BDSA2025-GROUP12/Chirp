@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Chirp.Infrastructure.Data;
-using Chirp.Core1;
 using Chirp.Infrastructure.Repositories;
+using Chirp.Core1;
 
 
 namespace newAppp.Areas.Identity.Pages.Account.Manage

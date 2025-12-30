@@ -79,13 +79,13 @@ public class CheepRepository : ICheepRepository
    /// <summary>
    /// Finds an author by their username
    /// </summary>
-   /// <param name="email">Username of the author we wish to find</param>
+   /// <param name="userName">Username of the author we wish to find</param>
    /// <returns>The author</returns>
-    public async Task<Author?> FindAuthorByEmail(string email)
+    public async Task<Author?> FindAuthorByUserName(string userName)
     {
         return await _context.Authors
             .Include(a => a.Following)
-            .SingleOrDefaultAsync(a => a.UserName == email);
+            .SingleOrDefaultAsync(a => a.UserName == userName);
     }
    /// <summary>
    /// Creates a new author to the database

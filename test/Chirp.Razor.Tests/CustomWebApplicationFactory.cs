@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
+namespace Test.CustomWebApplicationFactory;
+
 //source: https://github.com/dotnet/AspNetCore.Docs.Samples/blob/main/test/integration-tests/9.x/IntegrationTestsSample/tests/RazorPagesProject.Tests/CustomWebApplicationFactory.cs
 //used to be able to use in-memory SQLite database for testing
 
@@ -34,6 +36,6 @@ public class CustomWebApplicationFactory<TProgram>
             });
         });
 
-        builder.UseEnvironment("Development");
+        builder.UseEnvironment("Devolment");
     }
 }

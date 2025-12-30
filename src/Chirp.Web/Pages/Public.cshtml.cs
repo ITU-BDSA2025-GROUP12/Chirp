@@ -44,7 +44,7 @@ public class PublicModel : PageModel
         
         if (User.Identity?.IsAuthenticated == true)
         {
-            CurrentUser = await _repo.FindAuthorByEmail(User.Identity.Name ?? "");
+            CurrentUser = await _repo.FindAuthorByUserName(User.Identity.Name ?? "");
         }
 
         return Page();
@@ -73,7 +73,7 @@ public class PublicModel : PageModel
     /// <returns>Redirects to main page</returns>
     public async Task<IActionResult> OnPostFollowAsync(int authorId)
     {
-        var me = await _repo.FindAuthorByEmail(User.Identity.Name);
+        var me = await _repo.FindAuthorByUserName(User.Identity.Name);
         await _repo.FollowAsync(me!.Id, authorId);
         return RedirectToPage();
     }
@@ -84,7 +84,7 @@ public class PublicModel : PageModel
     /// <returns></returns>
     public async Task<IActionResult> OnPostUnfollowAsync(int authorId)
     {
-        var me = await _repo.FindAuthorByEmail(User.Identity.Name);
+        var me = await _repo.FindAuthorByUserName(User.Identity.Name);
         await _repo.UnfollowAsync(me!.Id, authorId);
         return RedirectToPage();
     }

@@ -24,8 +24,17 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore src/Chirp.Web/Chirp.Web.csproj
       
+    - name: Restore dependencies for PlayWrightTest
+      run: dotnet restore test/PlayWrightTests/PlayWrightTests.csproj
+      
     - name: Build all projects
       run: dotnet build src/Chirp.Web/Chirp.Web.csproj --configuration Release --no-restore
+      
+    - name: Build Playwright project
+      run: dotnet build test/PlayWrightTests/PlayWrightTests.csproj --configuration Release --no-restore
+      
+    - name: Install Playwright browsers
+      run: pwsh -File test/PlayWrightTests/bin/Release/net8.0/playwright.ps1 install
       
     - name: Test
       run: |

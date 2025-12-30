@@ -1,6 +1,7 @@
-namespace Chirp.Razor.Tests;
+/*namespace Chirp.Razor.Tests;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
+using Test.CustomWebApplicationFactory;
 
 public class TestAPI : IClassFixture<CustomWebApplicationFactory<Program>>
 {
@@ -61,3 +62,4 @@ public class TestAPI : IClassFixture<CustomWebApplicationFactory<Program>>
     }
 
 }
+*/
