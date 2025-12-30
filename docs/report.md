@@ -113,11 +113,15 @@ The workflow starts when code is pushed to the main branch or when it is started
 **Insert a screenshot of your project board before hand-in:**
 ![Project Board](images/project-board.png)
 
+**Figure 11:** Project-board.
+
    **Which tasks are unresolved?**
    
-As a user you are able to download data about your account, however it is not completely resolved, as the user will not be able to download a list of their cheeps, who they follow and who follows them. We have created a CheepDTO class but it is not in use. 
+Although we are mostly done with the project, there are still a few unresolved tasks and issues on our project board that we would have resolved had we had more time.
+As seen on board we are missing multiple test suites for the follow unfollow feature as well as end to end tests of the entire program. Under the in progress tab there are some tasks in progress. Some of the UI tests have been made but we would still have liked to have better test coverage.
 
-Our program has not been security hardened and is vulnerable to XSS and SQL injection attacks. Therefore, the program is not as secure as we would ideally like it to be. 
+There are two more tasks to do that are not shown on the figure. As a user you are able to download data about your account, however it is not completely resolved, as the user will not be able to download a list of their cheeps, who they follow and who follows them. We have created a CheepDTO class but it is not in use. 
+
 
    **What features are missing?**
    
