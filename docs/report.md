@@ -49,7 +49,7 @@ Authentication is handled using GitHub OAuth. When a user logs in, Chirp.Web com
 
 ![Deployed Architecture](images/Deployed-Application.png)
 
-**Figure 4**:Our Diagram shows how the Chirp! application is deployed in a running system.
+**Figure 4:** Our Diagram shows how the Chirp! application is deployed in a running system.
 
 ## User Activities
 The following diagram shows the different user activities that can be made for both authenticated and unauthorized users of the application. As the diagram suggests, a user who is not logged in can only access the Public Timeline page, the Register page and the Login page.
@@ -57,7 +57,7 @@ If a user successfully has logged into the application, they now get access to m
 
 ![UserActivities](images/UserActivities0.png)
 
-**Figure 5:**
+**Figure 5:** user activities for both authenticated and unauthorized users.
 
 ## Follow-Unfollow 
 The following diagram shows the state machine of the follow activity. The user starts at the Public Timeline page and can upon logging in successfully begin following other users.
@@ -73,7 +73,7 @@ A registered user of the application has the possibility of deleting their accou
 
 ![Forget-Me-Diagram](images/Forget-Me-Feature.png)
 
-**Figure 7:**
+**Figure 7:** Activiy diagram for deleting a user account.
 
 ## Login
 From the **Public Timeline**, which is the first page shown when opening the website, the user can choose to either register a new account or log in. A user must be registered before they can log in.
@@ -84,12 +84,10 @@ After a successful login, the user is still able to view the public timeline, bu
 
 ![Login Diagram](images/Login.png)
 
-**Figure 8:**
+**Figure 8:** Activity diagram showing the flow of registering a user and logging in to the application.
 
 ## Sequence of Functionality / Calls Through Chirp!
-The sequence diagram shows how the Chirp! application loads the public timeline. First, a user’s browser sends an HTTP GET request to Chirp.Web to load the public timeline.
-
-Chirp.Web asks Chirp.Infrastructure to get the needed data. Chirp.Infrastructure then fetches the public cheeps from the database using Entity Framework Core. The database sends the cheeps back, and they are passed to Chirp.Web as a list.
+First, a user’s browser sends an HTTP GET request to Chirp.Web to load the public timeline. Chirp.Web asks Chirp.Infrastructure to get the needed data. Chirp.Infrastructure then fetches the public cheeps from the database using Entity Framework Core. The database sends the cheeps back, and they are passed to Chirp.Web as a list.
 
 Chirp.Web then uses this data to render the Public.cshtml page and sends the finished HTML back to the browser.
 
@@ -97,7 +95,7 @@ The diagram is kept simple and shows only the main parts of the system and how t
 
 ![Sequence Diagram](images/Sequence-of-functionality.png)
 
-**Figure 9:**
+**Figure 9:** The sequence diagram shows how the Chirp! application loads the public timeline. 
 
 # Process
 
