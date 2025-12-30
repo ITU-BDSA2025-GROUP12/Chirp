@@ -51,7 +51,7 @@ Authentication is handled using **GitHub OAuth**. When a user logs in, Chirp.Web
 
 **Figure 4:** Illustration of how the Chirp! application is deployed in a running system.
 
-## User Activities
+# User Activities
 The following diagram shows the different user activities that can be made for both authenticated and unauthorized users of the application. As the diagram suggests, a user who is not logged in can only access the **Public Timeline** page, the **Register** page and the **Login** page.
 If a user successfully has logged into the application, they now get access to more pages and features such as the **Private Timeline** page, the **About Me** page, the follow/unfollow feature and lastly they gain the ability to post cheeps.
 
@@ -100,13 +100,13 @@ The diagram is kept simple and shows only the main parts of the system and how t
 # Process
 
 ## Build, Test, Release, and Deployment
-The Deployment diagram shows how our GitHub Actions workflow builds and deploys the Chirp! application. 
+The Deployment diagram shows how our GitHub Actions workflows builds and deploys the Chirp! application. 
 
 ![Build and Deploy Workflow](images/Deploy-Workflow.png)
 
-**Figure 10:** Activity diagram of Github Actions workflow building, testing, releasing and deploying our webservice.
+**Figure 10:** Activity diagram of Github Actions workflows building, testing, releasing and deploying our webservice.
 
-The workflow starts when code is pushed to the main branch or when it is started manually. First, the repository is checked out and the .NET environment is set up. Then the application is built and published in release mode, and the resulting files are saved so they can be used later during deployment. After that, the artifact is downloaded, the workflow logs in to Azure, and the application is deployed to the production Azure Web App.
+The workflows start when code is pushed to the main branch or when it is started manually. First, the repository is checked out and the .NET environment is set up. Then the application is built and published, and the resulting files are saved so they can be used later during deployment. After that, the artifact is downloaded, the workflow logs in to Azure, and the application is deployed to the production Azure Web App.
 
 
 ## Team Work
