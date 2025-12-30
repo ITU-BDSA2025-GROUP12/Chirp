@@ -1,7 +1,7 @@
+using System.Diagnostics;
 using Microsoft.EntityFrameworkCore;
-using Chirp.Infrastructure.Data;
-using Microsoft.AspNetCore.Identity;
 using Chirp.Core1;
+using Chirp.Infrastructure.DBContext;
 
 
 namespace Chirp.Infrastructure.Repositories;
@@ -154,7 +154,7 @@ public async Task FollowAsync(int followerId, int followingId)
     var target = await _context.Users
         .SingleAsync(a => a.Id == followingId);
 
-    if (!follower.Following.Any(a => a.Id == followingId))
+    if (follower.Following != null && !follower.Following.Any(a => a.Id == followingId))
     {
         follower.Following.Add(target);
         await _context.SaveChangesAsync();
@@ -171,13 +171,16 @@ public async Task UnfollowAsync(int followerId, int followingId)
         .Include(a => a.Following)
         .SingleAsync(a => a.Id == followerId);
 
-    var target = follower.Following
-        .SingleOrDefault(a => a.Id == followingId);
-
-    if (target != null)
+    if (follower.Following != null)
     {
-        follower.Following.Remove(target);
-        await _context.SaveChangesAsync();
+        var target = follower.Following
+            .SingleOrDefault(a => a.Id == followingId);
+
+        if (target != null)
+        {
+            follower.Following.Remove(target);
+            await _context.SaveChangesAsync();
+        }
     }
 }
 /// <summary>
@@ -191,6 +194,7 @@ public async Task UnfollowAsync(int followerId, int followingId)
     const int pageSize = 32;
     int offset = (page - 1) * pageSize;
 
+    Debug.Assert(currentUser.Following != null, "currentUser.Following != null");
     var followedIds = currentUser.Following
         .Select(a => a.Id)
         .ToList();

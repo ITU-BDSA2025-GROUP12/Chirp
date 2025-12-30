@@ -1,3 +1,5 @@
+using Chirp.Infrastructure.DBContext;
+
 namespace Chirp.Razor.Tests;
 
 using Chirp.Core1;

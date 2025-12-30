@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Chirp.Core1;
 
 namespace Chirp.Infrastructure.Repositories;

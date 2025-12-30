@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Chirp.Core1;
 
-namespace Chirp.Infrastructure.Data;
+namespace Chirp.Infrastructure.DBContext;
 /// <summary>
 /// This class defines the database
 /// </summary>
