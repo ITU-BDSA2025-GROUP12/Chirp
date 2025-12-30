@@ -1,6 +1,6 @@
 | title    | subtitle              | author 1 | author 2 | author 3 | author 4 | author 5 |
 |----------|-----------------------|----------|----------|----------|----------|----------|
-| _Chirp!_ | ITU BDSA 2025 Group 12 | Camille Holmskov Larsen <hocl@itu.dk> | Freja Skakke Jørgensen <frsj@itu.dk> | Anna Rasmusssen <annar@itu.dk> | Camilla Frøkjær Jørgensen <cfjo@itu.dk> | Ditte Astof Hansen <diah@itu.dk> |
+| _Chirp!_ | ITU BDSA 2025 Group 12 | Camille Holmskov Larsen <hocl@itu.dk> | Freja Skakke Jørgensen <frsj@itu.dk> | Anna Rasmussen <annar@itu.dk> | Camilla Frøkjær Jørgensen <cfjo@itu.dk> | Ditte Astof Hansen <diah@itu.dk> |
 
 
 # Design and Architecture
