@@ -41,7 +41,7 @@ The last layer and the outermost circle of the model is the Infrastructure layer
 **Figur 3:** Complete system architecture overview. This UML diagram shows the different classes, folders, pages and interfaces in our system, and how they relate to each other. For clarity, not every single cshtml razor page file has been included.
 
 ## Architecture of Deployed Application
-Our Diagram shows how the Chirp! application is deployed in a running system. Users access the system through a web browser, and all their requests are sent to the Chirp.Web application (which is hosted on Azure App Service).
+Users access the system through a web browser, and all their requests are sent to the Chirp.Web application (which is hosted on Azure App Service).
 
 The SQLite database is hosted together with the web application, and is only accessible through Chirp.Web. It stores application data such as users and cheeps. 
 
@@ -49,7 +49,7 @@ Authentication is handled using GitHub OAuth. When a user logs in, Chirp.Web com
 
 ![Deployed Architecture](images/Deployed-Application.png)
 
-**Figure 4:**
+**Figure 4**:Our Diagram shows how the Chirp! application is deployed in a running system.
 
 ## User Activities
 The following diagram shows the different user activities that can be made for both authenticated and unauthorized users of the application. As the diagram suggests, a user who is not logged in can only access the Public Timeline page, the Register page and the Login page.
