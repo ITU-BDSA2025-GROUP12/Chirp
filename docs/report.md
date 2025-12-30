@@ -110,7 +110,7 @@ The workflows start when code is pushed to the main branch or when it is started
 
 
 ## Team Work
-**Insert a screenshot of your project board before hand-in:**
+
 ![Project Board](images/project-board.png)
 
 **Figure 11:** Project-board.
@@ -118,20 +118,19 @@ The workflows start when code is pushed to the main branch or when it is started
    **Which tasks are unresolved?**
    
 Although we are mostly done with the project, there are still a few unresolved tasks and issues on our project board that we would have resolved had we had more time.
-As seen on board we are missing multiple test suites for the follow unfollow feature as well as end to end tests of the entire program. Under the in progress tab there are some tasks in progress. Some of the UI tests have been made but we would still have liked to have better test coverage.
+As seen on the project-board we are missing multiple test suites for the follow unfollow feature as well as end to end tests of the entire program. Under the in progress tab there are some tasks in progress. Some of the UI tests have been made but we would still have liked to have better test coverage.
 
-There are two more tasks to do that are not shown on the figure. As a user you are able to download data about your account, however it is not completely resolved, as the user will not be able to download a list of their cheeps, who they follow and who follows them. We have created a CheepDTO class but it is not in use. 
-
+There are two more tasks to do that are not shown on *figure 11*. As a user you are able to download data about your account, however it is not completely resolved, as the user will not be able to download a list of their cheeps, who they follow and who follows them. We have created a CheepDTO class but it is not in use. 
 
    **What features are missing?**
    
-Additionally we are missing wild-style features. We would have liked to implement the "like" button. First we would have added a way to store likes in our database, and then make sure a user only can like a cheep once, by storing which user liked the cheep. The button itself would be added next to each cheep in the webpage, and when a user clicks it, the page sends a POST request to the server. The server sees who is logged-in and which cheep is liked, then saves it in the database. The page should reload then and show the "like" on the cheep.
+Additionally we are missing wild-style features. We would have liked to implement the "like" button. First we would have added a way to store likes in our database, and then make sure a user can only like a cheep once, by storing which user liked the cheep. The button itself would be added next to the follow/unfollow button on each cheep in the webpage, and when a user clicks it, the page sends a POST request to the server. The server sees who is logged-in and which cheep is liked, then saves it in the database. The page should reload then and show the "like" on the cheep.
 
    **Your workflow from issue creation → development → review → merge**
    
 The way we would aim to work was by meeting and talking about the requirements of the current week. We would then randomly distribute tasks and each group member would be responsible for creating issues corresponding to their weekly task. 
 
-Some weeks we would meet to code together, depending on what the week required, where one person would host a Code With Me and everyone would join to code. Other weeks we worked separately where each member would do their assigned tasks. Since some weeks required everything to be done in order it would cause members to wait for each other to finish tasks. Later in the development a lot of meetings aimed to be online where members worked separately on features that were missing.
+Some weeks we would meet to code together, depending on what the week required, where one person would host a *Code With Me* and everyone would join to code. Other weeks we worked separately where each member would do their assigned tasks. Since some weeks required everything to be done in order it would cause members to wait for each other to finish tasks. Later in the development a lot of meetings aimed to be online where members worked separately on features that were missing.
 
 When a new feature was made or a new bug was corrected, a pull request would be made. The team member, who opened it, would write in our group chat “I opened a pull request” and whoever would be available to review the code first would do it. In some instances multiple people have reviewed a code but in most cases only one reviewed before merging the pull request.
 
@@ -141,10 +140,10 @@ At the end of our project work we wanted to clean up our code to make it clean a
   
 **If you want to run the Chirp! application locally you will have to follow these steps:**
 
-   1. Clone the repository to your laptop by using the command git clone https://github.com/ITU-BDSA2025-GROUP12/Chirp in your windows or 
+   1. Clone the repository to your laptop by using the command git clone https://github.com/ITU-BDSA2025-GROUP12/Chirp in your terminal
    2. You will need .NET version 8 installed on your device to run the program.
    3. To run the program change your directory to "Chirp/Src/Chirp.Web"
-   4. Write dotnet run in the command line.
+   4. Write *dotnet run* in the command line.
    
 You should expect a localhost link in your terminal. Press it to open up a webpage, where you can start making an account and send cheeps.
 
@@ -152,13 +151,14 @@ You should expect a localhost link in your terminal. Press it to open up a webpa
 ## How to Run Test Suite Locally
 To run the tests of our program follow these steps:
 1. Make sure you are at the solution root.
-2. Write dotnet test in the command line.
+2. Write *dotnet test* in the command line.
 3. Wait for all tests to pass.
-4. You should now see tests from Chirp.Core1.Tests, Chirp.Infrastructure.Test, and Chirp.Web.Tests and PlayWrightTests
+4. You should now see tests from Chirp.Core1.Tests, Chirp.Infrastructure.Test, and Chirp.Web.Tests and PlayWrightTests.
+
+   
 Our test directory roughly mirrors the src directory. Inside the test directory you find Chirp.Core1.Tests, Chirp.Infrastructure.Tests, Chirp.Web.Test and PlayWrightTest.
 For testing we focused on having the recommended distribution of tests. Our test suite therefore mostly consists of unit tests for relevant methods. We do have a few  UI tests where playwright is used to go to our azure web app and assert that everything looks as it's supposed to.
 Ideally, as stated in the Teamwork section of the report, more tests need to be added to have better test coverage. This includes End-to-End tests, integration tests and more unit tests for methods that were implemented later.
-
 
 
 
