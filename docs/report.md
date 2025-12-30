@@ -24,7 +24,7 @@ This application was build according to the 'Onion Architecture' to increase mai
 
 **Figure 2:** Onion Architecture. From left to right: Infrastructure layer, Service layer, Repository layer, Domain entities.
 
-Onion Architecture divides our program into multiple layers. The outer layers depend on the layers under it. 
+Onion Architecture divides our program into multiple layers. The outer layers depend on the layers to the right. 
 
 The innermost circle of the model is the **Domain Entities**. It contains the fundamental entities of our program; Author and Cheep. It has no external dependencies.
 
