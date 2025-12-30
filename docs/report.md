@@ -36,9 +36,10 @@ Moving one more layer out is the **Service Interface**. This is where our servic
 The last layer and the outermost circle of the model is the Infrastructure layer and here is the Chirp.Web folder. This layer contains all the razor pages, our database, UI and Program.cs. 
 
 ## System Architecture Overview
-**Figur 3:** Complete system architecture overview. This UML diagram shows the different classes, folders, pages and interfaces in our system, and how they relate to each other. For clarity, not every single cshtml razor page file has been included.
 
 ![System-Architecture](images/System-Architecture.png)
+
+**Figur 3:** Complete system architecture overview. This UML diagram shows the different classes, folders, pages and interfaces in our system, and how they relate to each other. For clarity, not every single cshtml razor page file has been included.
 
 ## Architecture of Deployed Application
 Our Diagram shows how the Chirp! application is deployed in a running system. Users access the system through a web browser, and all their requests are sent to the Chirp.Web application (which is hosted on Azure App Service).
@@ -49,20 +50,27 @@ Authentication is handled using GitHub OAuth. When a user logs in, Chirp.Web com
 
 ![Deployed Architecture](images/Deployed-Application.png)
 
+**Figure 4:**
+
 ## User Activities
 ------MANGLER-------
 
 ![Unauthorised/authorised-user](images/Unauthorised/authorised-user.png)
 
+**Figure 5:**
+
 ## Follow-Unfollow 
-**Figur 5:** Follow-feature. The below flow-chart shows the user journey when following or unfollowing a user. The follow button only appears to logged in users, and will display as "Unfollow" in the event that the user is already following the given author. Users can go to their user-timeline, which only displays cheeps from followed authors and themselves.
 
 ![Follow-Unfollow-Diagram](images/Follow-User.png)
+
+**Figur 6:** Follow-feature. The below flow-chart shows the user journey when following or unfollowing a user. The follow button only appears to logged in users, and will display as "Unfollow" in the event that the user is already following the given author. Users can go to their user-timeline, which only displays cheeps from followed authors and themselves.
 
 ## Forget Me Feature
 ------MANGLER-------
 
 ![Forget-Me-Diagram](images/Forget-Me-Feature.png)
+
+**Figure 7:**
 
 ## Login
 From the **Public Timeline**, which is the first page shown when opening the website, the user can choose to either register a new account or log in. A user must be registered before they can log in.
@@ -73,6 +81,7 @@ After a successful login, the user is still able to view the public timeline, bu
 
 ![Login Diagram](images/Login.png)
 
+**Figure 8:**
 
 ## Sequence of Functionality / Calls Through Chirp!
 The sequence diagram shows how the Chirp! application loads the public timeline. First, a user’s browser sends an HTTP GET request to Chirp.Web to load the public timeline.
@@ -85,12 +94,18 @@ The diagram is kept simple and shows only the main parts of the system and how t
 
 ![Sequence Diagram](images/Sequence-of-functionality.png)
 
+**Figure 9:**
+
 # Process
 
 ## Build, Test, Release, and Deployment
-The Deployment diagram shows how our GitHub Actions workflow builds and deploys the Chirp! application. The workflow starts when code is pushed to the main branch or when it is started manually. First, the repository is checked out and the .NET environment is set up. Then the application is built and published in release mode, and the resulting files are saved so they can be used later during deployment. After that, the artifact is downloaded, the workflow logs in to Azure, and the application is deployed to the production Azure Web App.
+The Deployment diagram shows how our GitHub Actions workflow builds and deploys the Chirp! application. 
 
 ![Build and Deploy Workflow](images/Deploy-Workflow.png)
+
+**Figure 10:** Activity diagram of Github Actions workflow building, testing, releasing and deploying our webservice.
+
+The workflow starts when code is pushed to the main branch or when it is started manually. First, the repository is checked out and the .NET environment is set up. Then the application is built and published in release mode, and the resulting files are saved so they can be used later during deployment. After that, the artifact is downloaded, the workflow logs in to Azure, and the application is deployed to the production Azure Web App.
 
 
 ## Team Work
