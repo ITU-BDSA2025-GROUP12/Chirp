@@ -39,15 +39,12 @@ The last layer and the outermost circle of the model is the UI layer and is repr
 Illustrate the architecture of your deployed client-server application.  
 Show where the server is deployed and how the client communicates with it.
 
-Insert diagram here:
 ![Deployed Architecture](images/Deployed-Application.png)
 
 ## User Activities
 Illustrate typical user journeys:
 
-- First page shown to an unauthorized user  
-- What an unauthorized user can do  
-- What an authenticated user can do  
+![Unauthorised/authorised-user](images/Unauthorised/authorised-user.png)
 
 ## Follow-Unfollow 
 
@@ -67,8 +64,6 @@ Create a UML sequence diagram showing message flow:
 
 - Start with an HTTP request from an unauthorized user  
 - End with the fully rendered web page returned  
-
-Include all relevant calls (HTTP, C#, etc.)
 
 ![Sequence Diagram](images/Sequence-of-functionality.png)
 

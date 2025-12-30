@@ -37,7 +37,7 @@ public class UserTimelineModel : PageModel
             return Page();
         }
         
-        CurrentUser = _repo.FindAuthorByEmail(User.Identity.Name!).Result;
+        CurrentUser = _repo.FindAuthorByUserName(User.Identity.Name!).Result;
         
         if (CurrentUser == null)
         {
@@ -66,14 +66,14 @@ public class UserTimelineModel : PageModel
    
     public async Task<IActionResult> OnPostFollowAsync(int authorId)
     {
-        var me = await _repo.FindAuthorByEmail(User.Identity!.Name!);
+        var me = await _repo.FindAuthorByUserName(User.Identity!.Name!);
         await _repo.FollowAsync(me!.Id, authorId);
         return RedirectToPage();
     }
 
     public async Task<IActionResult> OnPostUnfollowAsync(int authorId)
     {
-        var me = await _repo.FindAuthorByEmail(User.Identity!.Name!);
+        var me = await _repo.FindAuthorByUserName(User.Identity!.Name!);
         await _repo.UnfollowAsync(me!.Id, authorId);
         return RedirectToPage();
     }

@@ -16,10 +16,9 @@ public class CheepRepository : ICheepRepository
 
 
 
-   public CheepRepository(ChirpDBContext context, UserManager<Author> userManager)
+   public CheepRepository(ChirpDBContext context)
 {
     _context = context;
-    _userManager = userManager;
 }
 
 
@@ -126,11 +125,11 @@ public class CheepRepository : ICheepRepository
         return result.First();
     }*/
     
-    public async Task<Author?> FindAuthorByEmail(string email)
+    public async Task<Author?> FindAuthorByUserName(string userName)
     {
         return await _context.Authors
             .Include(a => a.Following)
-            .SingleOrDefaultAsync(a => a.UserName == email);
+            .SingleOrDefaultAsync(a => a.UserName == userName);
     }
 
 
