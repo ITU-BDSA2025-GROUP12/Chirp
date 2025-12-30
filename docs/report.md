@@ -9,6 +9,7 @@ date: "2025"
 ## Domain Model
 
 ![Domain Model](images/DomainModel.png)
+
 **Figure 1:** Class diagram. ASP.NET Identity package on the left side. It contains *IdentityUser*. On the right side is our program’s Chirp.Core1 folder. It contains the *Author* class and *Cheep* class.
 
 In **figure 1** it is shown that the Author class inherits from ASP.NET Identity’s class *IdentityUser*. Cheep has an association with the Author class as they both contain instances of each other.
