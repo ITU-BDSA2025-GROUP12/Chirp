@@ -65,7 +65,9 @@ The following diagram shows the state machine of the follow activity. The user s
 
 ![Follow-Unfollow-Diagram](images/Follow-User.png)
 
-**Figur 6:** Follow-feature. The below flow-chart shows the user journey when following or unfollowing a user. The follow button only appears to logged in users, and will display as "Unfollow" in the event that the user is already following the given author. Users can go to their user-timeline, which only displays cheeps from followed authors and themselves.
+**Figur 6:** Follow-feature. 
+
+The above flow-chart shows the user journey when following or unfollowing a user. The follow button only appears to logged in users, and will display as "Unfollow" in the event that the user is already following the given author. Users can go to their user-timeline, which only displays cheeps from followed authors and themselves.
 
 ## Forget Me Feature
 A registered user of the application has the possibility of deleting their account at any moment. To do so the user must go to their About Me page, where the “Forget Me!”- button is located. When clicking the button, the user is redirected to the Manage your account page. At this page the user will need to enter their password and click “Delete data and close my account”. After deleting an account all cheeps from that account are deleted. 
