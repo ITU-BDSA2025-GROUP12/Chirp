@@ -35,6 +35,10 @@ Chirp.Infrastructure
 UI Layer:
 The last layer and the outermost circle of the model is the UI layer and is represented by Chirp.Web in the code. This Layer contains all the razor pages, the database, and Program.cs.
 
+## System Architecture Overview
+
+![System-Architecture](images/System-Architecture.png)
+
 ## Architecture of Deployed Application
 Illustrate the architecture of your deployed client-server application.  
 Show where the server is deployed and how the client communicates with it.
