@@ -53,20 +53,22 @@ Authentication is handled using GitHub OAuth. When a user logs in, Chirp.Web com
 **Figure 4:**
 
 ## User Activities
-------MANGLER-------
+The following diagram shows the different user activities that can be made for both authenticated and unauthorized users of the application. As the diagram suggests, a user who is not logged in can only access the Public Timeline page, the Register page and the Login page.
+If a user successfully has logged into the application, they now get access to more pages and features such as the Private Timeline page, the About Me page, the follow/unfollow feature and lastly they gain the ability to post cheeps.
 
 ![Unauthorised/authorised-user](images/Unauthorised/authorised-user.png)
 
 **Figure 5:**
 
 ## Follow-Unfollow 
+The following diagram shows the state machine of the follow activity. The user starts at the Public Timeline page and can upon logging in successfully begin following other users.
 
 ![Follow-Unfollow-Diagram](images/Follow-User.png)
 
 **Figur 6:** Follow-feature. The below flow-chart shows the user journey when following or unfollowing a user. The follow button only appears to logged in users, and will display as "Unfollow" in the event that the user is already following the given author. Users can go to their user-timeline, which only displays cheeps from followed authors and themselves.
 
 ## Forget Me Feature
-------MANGLER-------
+A registered user of the application has the possibility of deleting their account at any moment. To do so the user must go to their About Me page, where the “Forget Me!”- button is located. When clicking the button, the user is redirected to the Manage your account page. At this page the user will need to enter their password and click “Delete data and close my account”. After deleting an account all cheeps from that account are deleted. 
 
 ![Forget-Me-Diagram](images/Forget-Me-Feature.png)
 
