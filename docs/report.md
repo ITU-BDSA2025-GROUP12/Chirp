@@ -55,7 +55,7 @@ Authentication is handled using GitHub OAuth. When a user logs in, Chirp.Web com
 ![Unauthorised/authorised-user](images/Unauthorised/authorised-user.png)
 
 ## Follow-Unfollow 
-------MANGLER-------
+**Figur 5:** Follow-feature. The below flow-chart shows the user journey when following or unfollowing a user. 
 
 ![Follow-Unfollow-Diagram](images/Follow-User.png)
 
