@@ -7,26 +7,32 @@ date: "2025"
 # Design and Architecture
 
 ## Domain Model
-**Figure 1:** Class diagram. ASP.NET Identity package on the left side. It contains IdentityUser. On the right side is our program’s Chirp.Core1 folder. It contains the Author class and Cheep class.
-In figure 1 it is shown that the Author class inherits from ASP.NET Identity’s class *IdentityUser* . Cheep has an association with the Author class as they both contain instances of each other.s
+
+![Domain Model](images/DomainModel.png)
+**Figure 1:** Class diagram. ASP.NET Identity package on the left side. It contains *IdentityUser*. On the right side is our program’s Chirp.Core1 folder. It contains the *Author* class and *Cheep* class.
+
+In **figure 1** it is shown that the Author class inherits from ASP.NET Identity’s class *IdentityUser*. Cheep has an association with the Author class as they both contain instances of each other.
 
 The two classes, Author and Cheep, are fundamental entities in our program as features build upon their attributes.
 
-![Domain Model](images/DomainModel.png)
-
 ## Architecture — In the small
-This application was build according to the 'Onion Architecture' to increase maintanablity and testability. Below here is an illustration of the architecture.
+This application was build according to the 'Onion Architecture' to increase maintanablity and testability. This architecture model helps separate concerns into layers. Each layer has their own responsibility.[^1]
+[^1]: https://dev.to/yasmine_ddec94f4d4/onion-architecture-in-domain-driven-design-ddd-35gn
 
 ![Architecture Small](images/Architecture-in-the-small.png)
 
-**Figur 2:** Onion Architecture. From left to right: UI layer, Service layer, Repository layer, Domain entities.
+<font size="1"> **Figur 2:** Onion Architecture. From left to right: UI layer, Service layer, Repository layer, Domain entities. </font>
 
 Onion Architecture divides our program into multiple layers. The outer layers depend on the layers under it. 
 
-The innermost circle of the model is the Domain Entities. It contains the fundamental entities of our program; Author and Cheep. It has no external dependencies.
-The next layer of the model is the Repository Interface. This layer contains our repository folder. ICheepRepository is an interface that CheepRepository implements. 
-Moving one more layer out is the Service Interface. This is where our services folder is located. Ideally it would contain a CheepService and/or an AuthorService. Instead our Domain Services layer has taken this responsibility.
+The innermost circle of the model is the **Domain Entities**. It contains the fundamental entities of our program; Author and Cheep. It has no external dependencies.
+
+The next layer of the model is the **Repository Interface**. This layer contains our repository folder. ICheepRepository is an interface that CheepRepository implements. 
+
+Moving one more layer out is the **Service Interface**. This is where our services folder is located. Ideally it would contain a CheepService and/or an AuthorService. Instead our Domain Services layer has taken this responsibility.
+
 The last layer and the outermost circle of the model is the Infrastructure layer and here is the Chirp.Web folder. This layer contains all the razor pages, our database, UI and Program.cs. 
+
 Domain Entities:
 The innermost circle of the model is Chirp.Core1, which is were the fundamental entities of the program lies; Author and Cheep. 
 
