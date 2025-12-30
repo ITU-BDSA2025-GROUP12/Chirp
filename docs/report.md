@@ -150,7 +150,17 @@ You should expect a localhost link in your terminal. Press it to open up a webpa
 
 
 ## How to Run Test Suite Locally
-----MANGLER-----
+To run the tests of our program follow these steps:
+1. Make sure you are at the solution root.
+2. Write dotnet test in the command line.
+3. Wait for all tests to pass.
+4. You should now see tests from Chirp.Core1.Tests, Chirp.Infrastructure.Test, and Chirp.Web.Tests and PlayWrightTests
+Our test directory roughly mirrors the src directory. Inside the test directory you find Chirp.Core1.Tests, Chirp.Infrastructure.Tests, Chirp.Web.Test and PlayWrightTest.
+For testing we focused on having the recommended distribution of tests. Our test suite therefore mostly consists of unit tests for relevant methods. We do have a few  UI tests where playwright is used to go to our azure web app and assert that everything looks as it's supposed to.
+Ideally, as stated in the Teamwork section of the report, more tests need to be added to have better test coverage. This includes End-to-End tests, integration tests and more unit tests for methods that were implemented later.
+
+
+
 
 # Ethics
 
