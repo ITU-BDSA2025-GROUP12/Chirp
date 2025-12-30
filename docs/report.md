@@ -22,7 +22,7 @@ This application was build according to the 'Onion Architecture' to increase mai
 ![Architecture Small](images/Architecture-in-the-small.png)
 
 
-**Figure 2:** Onion Architecture. From left to right: UI layer, Service layer, Repository layer, Domain entities.
+**Figure 2:** Onion Architecture. From left to right: Infrastructure layer, Service layer, Repository layer, Domain entities.
 
 Onion Architecture divides our program into multiple layers. The outer layers depend on the layers under it. 
 
