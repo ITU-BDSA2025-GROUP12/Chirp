@@ -22,60 +22,60 @@ This application was build according to the 'Onion Architecture' to increase mai
 ![Architecture Small](images/Architecture-in-the-small.png)
 
 
-**Figure 2:** Onion Architecture. From left to right: Infrastructure layer, Service layer, Repository layer, Domain entities.
+**Figure 2:** Onion Architecture. From left to right: UI layer, Service layer, Repository layer, Domain layer.
 
 Onion Architecture divides our program into multiple layers. The outer layers depend on the layers to the right. 
 
-The innermost circle of the model is the **Domain Entities**. It contains the fundamental entities of our program; Author and Cheep. It has no external dependencies.
+The innermost circle of the model is the **Domain Layer**. It contains the fundamental entities of our program; Author and Cheep. It has no external dependencies.
 
-The next layer of the model is the **Repository Interface**. This layer contains our repository folder. ICheepRepository is an interface that CheepRepository implements. 
+The next layer of the model is the **Repository Layer**. This layer contains our repository folder. ICheepRepository is an interface that CheepRepository implements. 
 
-Moving one more layer out is the **Service Interface**. This is where our services folder is located. Ideally it would contain a CheepService and/or an AuthorService. Instead our Domain Services layer has taken this responsibility.
+Moving one more layer out is the **Service Layer**. This is where our services folder is located. Ideally it would contain a CheepService and/or an AuthorService. Instead our Service layer has taken this responsibility.
 
-The last layer and the outermost circle of the model is the Infrastructure layer and here is the Chirp.Web folder. This layer contains all the razor pages, our database, UI and Program.cs. 
+The last layer and the outermost circle of the model is the **UI layer** and here is the Chirp.Web folder. This layer contains all the razor pages, our database, UI and Program.cs. 
 
 ## System Architecture Overview
 
 ![System-Architecture](images/System-Architecture.png)
 
-**Figur 3:** Complete system architecture overview. This UML diagram shows the different classes, folders, pages and interfaces in our system, and how they relate to each other. For clarity, not every single cshtml razor page file has been included.
+**Figure 3:** Complete system architecture overview. This UML diagram shows the different classes, folders, pages and interfaces in our system, and how they relate to each other. For clarity, not every single cshtml razor page file has been included.
 
 ## Architecture of Deployed Application
 Users access the system through a web browser, and all their requests are sent to the Chirp.Web application (which is hosted on Azure App Service).
 
-The SQLite database is hosted together with the web application, and is only accessible through Chirp.Web. It stores application data such as users and cheeps. 
+The **SQLite database** is hosted together with the web application, and is only accessible through Chirp.Web. It stores application data such as users and cheeps. 
 
-Authentication is handled using GitHub OAuth. When a user logs in, Chirp.Web communicates with GitHub Auth to authenticate the user and receive the necessary identity information.
+Authentication is handled using **GitHub OAuth**. When a user logs in, Chirp.Web communicates with **GitHub OAuth** to authenticate the user and receive the necessary identity information.
 
 ![Deployed Architecture](images/Deployed-Application.png)
 
-**Figure 4:** Our Diagram shows how the Chirp! application is deployed in a running system.
+**Figure 4:** Illustration of how the Chirp! application is deployed in a running system.
 
 ## User Activities
-The following diagram shows the different user activities that can be made for both authenticated and unauthorized users of the application. As the diagram suggests, a user who is not logged in can only access the Public Timeline page, the Register page and the Login page.
-If a user successfully has logged into the application, they now get access to more pages and features such as the Private Timeline page, the About Me page, the follow/unfollow feature and lastly they gain the ability to post cheeps.
+The following diagram shows the different user activities that can be made for both authenticated and unauthorized users of the application. As the diagram suggests, a user who is not logged in can only access the **Public Timeline** page, the **Register** page and the **Login** page.
+If a user successfully has logged into the application, they now get access to more pages and features such as the **Private Timeline** page, the **About Me** page, the follow/unfollow feature and lastly they gain the ability to post cheeps.
 
 ![UserActivities](images/UserActivities0.png)
 
-**Figure 5:** user activities for both authenticated and unauthorized users.
+**Figure 5:** User activities for both authenticated and unauthorized users.
 
 ## Follow-Unfollow 
-The following diagram shows the state machine of the follow activity. The user starts at the Public Timeline page and can upon logging in successfully begin following other users.
+The following diagram shows the state machine of the follow activity. The user starts at the **Public Timeline** page and can upon logging in successfully begin following other users.
 
 ![Follow-Unfollow-Diagram](images/Follow-User.png)
 
-**Figur 6:** Follow-feature. 
+**Figure 6:** Follow-feature. 
 
 The above flow-chart shows the user journey when following or unfollowing a user. The follow button only appears to logged in users, and will display as "Unfollow" in the event that the user is already following the given author. Users can go to their user-timeline, which only displays cheeps from followed authors and themselves.
 
-## Forget Me Feature
-A registered user of the application has the possibility of deleting their account at any moment. To do so the user must go to their About Me page, where the “Forget Me!”- button is located. When clicking the button, the user is redirected to the Manage your account page. At this page the user will need to enter their password and click “Delete data and close my account”. After deleting an account all cheeps from that account are deleted. 
+## Forget Me 
+A registered user of the application has the possibility of deleting their account at any moment. To do so the user must go to their **About Me** page, where the “Forget Me!”- button is located. When clicking the button, the user is redirected to the **Manage your account** page. At this page the user will need to enter their password and click “Delete data and close my account”. After deleting an account all cheeps from that account are deleted. 
 
 ![Forget-Me-Diagram](images/Forget-Me-Feature.png)
 
 **Figure 7:** Activiy diagram for deleting a user account.
 
-## Login
+## Login 
 From the **Public Timeline**, which is the first page shown when opening the website, the user can choose to either register a new account or log in. A user must be registered before they can log in.
 
 When registering an account, the user can choose between **email registration** or **GitHub login**. If the user registers with email, they must confirm their email address as an extra security step.
