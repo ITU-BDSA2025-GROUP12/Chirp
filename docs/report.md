@@ -71,7 +71,13 @@ Authentication is handled using GitHub OAuth. When a user logs in, Chirp.Web com
 
 
 ## Sequence of Functionality / Calls Through Chirp!
-------MANGLER-------
+The sequence diagram shows how the Chirp! application loads the public timeline. First, a user’s browser sends an HTTP GET request to Chirp.Web to load the public timeline.
+
+Chirp.Web asks Chirp.Infrastructure to get the needed data. Chirp.Infrastructure then fetches the public cheeps from the database using Entity Framework Core. The database sends the cheeps back, and they are passed to Chirp.Web as a list.
+
+Chirp.Web then uses this data to render the Public.cshtml page and sends the finished HTML back to the browser.
+
+The diagram is kept simple and shows only the main parts of the system and how they communicate. It does not show internal method details, but instead focuses on the overall flow of a request through the application.
 
 ![Sequence Diagram](images/Sequence-of-functionality.png)
 
