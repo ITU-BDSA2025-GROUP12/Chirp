@@ -81,16 +81,6 @@ public class CheepRepositoryTests
         context.SaveChanges();
         return new CheepRepository(context);
     }
-    
-    
-    //[Fact] //pagination test - vi har ikke genindført pagination endnu, but I am on it
-   /* public void GetCheeps_ReturnsPages() {
-        var repo = GetRepositoryWithData();
-
-        var result = repo.GetCheeps(page: 2);
-
-        Assert.Equal(32, result.Count);
-    }*/
 
     [Fact]
     public void GetCheepsFromAuthor_FiltersByName() {
@@ -223,7 +213,5 @@ public class CheepRepositoryTests
 	    
 	    Assert.Contains(context.Cheeps, c => c.Text == "this is a new cheep!");
     }
-    
-
 
 }
