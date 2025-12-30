@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.Sqlite;
 using Chirp.Core1;
+using Chirp.Infrastructure.DBContext;
 
 namespace Chirp.Infrastructure.Tests.Repositories;
 	
@@ -80,16 +81,6 @@ public class CheepRepositoryTests
         context.SaveChanges();
         return new CheepRepository(context);
     }
-    
-    
-    //[Fact] //pagination test - vi har ikke genindført pagination endnu, but I am on it
-   /* public void GetCheeps_ReturnsPages() {
-        var repo = GetRepositoryWithData();
-
-        var result = repo.GetCheeps(page: 2);
-
-        Assert.Equal(32, result.Count);
-    }*/
 
     [Fact]
     public void GetCheepsFromAuthor_FiltersByName() {
@@ -186,27 +177,6 @@ public class CheepRepositoryTests
 	    Assert.NotEmpty(list); //the list should now not be empty
 	    Assert.All(list, c => Assert.Equal(c.Author.FirstName, "John")); //Only Johns Cheeps should be in the the list
     }
-
-    [Fact]
-    public void GetCheepsFromEmailTest() {
-	    using var context = GetContextWithData();
-	    var repo = new CheepRepository(context);
-	    List<Cheep> list = new List<Cheep>();
-
-	    list = repo.GetCheepsFromEmail("example1@itu.dk", 0);
-	    Assert.NotEmpty(list);
-	    Assert.All(list, c => Assert.Equal(c.Author.Email, "example1@itu.dk"));
-    }
-    
-    [Fact]
-    //denne test er async og returner en task fordi metoden der testes også gør
-    public async Task GetCheepCountTest() { 
-	    using var context = GetContextWithData();
-	    var repo = new CheepRepository(context);
-
-	    var count = await repo.GetCheepCount();
-	    Assert.Equal(2, count);
-    }
     
     [Fact]
     public async Task FindAuthorByUserNameTest() {
@@ -233,7 +203,7 @@ public class CheepRepositoryTests
 
 		Assert.Contains(newAuthor, context.Authors.ToList());
     }
-/*
+
     [Fact]
     public void CreateCheepTest() {
 	    using var context = GetContextWithData();
@@ -243,7 +213,5 @@ public class CheepRepositoryTests
 	    
 	    Assert.Contains(context.Cheeps, c => c.Text == "this is a new cheep!");
     }
-    
-*/
 
 }

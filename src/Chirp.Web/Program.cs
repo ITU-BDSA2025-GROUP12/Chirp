@@ -9,6 +9,7 @@ using static Microsoft.AspNetCore.Http.StatusCodes;
 using CustomTokenProviders;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Chirp.Core1;
+using Chirp.Infrastructure.DBContext;
 
 
 var builder = WebApplication.CreateBuilder(args);

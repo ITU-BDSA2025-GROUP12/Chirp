@@ -1,11 +1,17 @@
-using Chirp.Infrastructure;
 using Chirp.Core1;
+using Chirp.Infrastructure.DBContext;
 
 
 namespace Chirp.Infrastructure.Data;
-
+/// <summary>
+/// Seeds the database with some pre-defined sample-data for demonstration purposes
+/// </summary>
 public static class DbInitializer
 {
+    /// <summary>
+    /// Instantiates a bunch of authors and cheeps to insert into the database
+    /// </summary>
+    /// <param name="chirpContext"></param>
     public static void SeedDatabase(ChirpDBContext chirpContext)
     {
         if (!(chirpContext.Authors.Any() && chirpContext.Cheeps.Any()))

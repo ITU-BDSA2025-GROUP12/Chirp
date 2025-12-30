@@ -1,28 +1,25 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
-
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
 using Chirp.Core1;
 
 
 namespace Chirp.Web.Pages.Account
 {
     [AllowAnonymous]
+    ///<summary>
+    ///Handles login when using an external identity provider like Github
+    ///<summary>
     public class ExternalLoginModel : PageModel
     {
         private readonly SignInManager<Author> _signInManager;
@@ -31,7 +28,14 @@ namespace Chirp.Web.Pages.Account
         private readonly IUserEmailStore<Author> _emailStore;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="signInManager">Provides the API for user login</param>
+        /// <param name="userManager">Keeps track of current user</param>
+        /// <param name="userStore">Used to set username and email on the author</param>
+        /// <param name="logger">Logs authentication events</param>
+        /// <param name="emailSender">Sends confirmation emails when a new account is created</param>
         public ExternalLoginModel(
             SignInManager<Author> signInManager,
             UserManager<Author> userManager,

@@ -3,6 +3,7 @@ using Chirp.Infrastructure.Data;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Chirp.Core1;
+using Chirp.Infrastructure.DBContext;
 
 namespace Chirp.Infrastructure.Tests;
 
@@ -24,8 +25,8 @@ public class DBInitializerTests
         
         DbInitializer.SeedDatabase(context);
         
-        Assert.True(context.Authors.Any()); //checks if there is at least 1 author
-        Assert.True(context.Cheeps.Any()); //checks if there is at least 1 cheep
+        Assert.True((bool)context.Authors.Any()); //checks if there is at least 1 author
+        Assert.True((bool)context.Cheeps.Any()); //checks if there is at least 1 cheep
     }
 
     [Fact]
@@ -35,11 +36,11 @@ public class DBInitializerTests
         DbInitializer.SeedDatabase(context);
         
         //checks context has specific authors 
-        Assert.True(context.Authors.Any(a => a.FirstName == "Helge"));
-        Assert.True(context.Authors.Any(a => a.FirstName == "Adrian"));
-        Assert.True(context.Authors.Any(a => a.FirstName == "Jacqualine Gilcoine"));
-        Assert.True(context.Authors.Any(a => a.FirstName == "Octavio Wagganer"));
-        Assert.True(context.Authors.Any(a => a.FirstName == "Quintin Sitts"));
+        Assert.True((bool)context.Authors.Any(a => a.FirstName == "Helge"));
+        Assert.True((bool)context.Authors.Any(a => a.FirstName == "Adrian"));
+        Assert.True((bool)context.Authors.Any(a => a.FirstName == "Jacqualine Gilcoine"));
+        Assert.True((bool)context.Authors.Any(a => a.FirstName == "Octavio Wagganer"));
+        Assert.True((bool)context.Authors.Any(a => a.FirstName == "Quintin Sitts"));
     }
 
     [Fact]
@@ -49,12 +50,12 @@ public class DBInitializerTests
         DbInitializer.SeedDatabase(context);
 
         //Checks context has specific cheeps
-        Assert.True(context.Cheeps.Any(c =>
+        Assert.True((bool)context.Cheeps.Any(c =>
             c.Text ==
             "They were married in Chicago, with old Smith, and was expected aboard every day; meantime, the two went past me."));
-        Assert.True(context.Cheeps.Any(c => c.Text == "Hej, velkommen til kurset."));
-        Assert.True(context.Cheeps.Any(c => c.Text == "Hello, BDSA students!"));
-        Assert.True(context.Cheeps.Any(c => c.Text == "Starbuck now is what we hear the worst."));
-        Assert.True(context.Cheeps.Any(c => c.Text == "It is he, then?"));
+        Assert.True((bool)context.Cheeps.Any(c => c.Text == "Hej, velkommen til kurset."));
+        Assert.True((bool)context.Cheeps.Any(c => c.Text == "Hello, BDSA students!"));
+        Assert.True((bool)context.Cheeps.Any(c => c.Text == "Starbuck now is what we hear the worst."));
+        Assert.True((bool)context.Cheeps.Any(c => c.Text == "It is he, then?"));
     }
 }

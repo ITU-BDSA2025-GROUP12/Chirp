@@ -3,17 +3,27 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Chirp.Core1;
 
-namespace Chirp.Infrastructure.Data;
-
-public class ChirpDBContext
-    : IdentityDbContext<Author, IdentityRole<int>, int>
+namespace Chirp.Infrastructure.DBContext;
+/// <summary>
+/// This class defines the database
+/// </summary>
+public class ChirpDBContext : IdentityDbContext<Author, IdentityRole<int>, int>
 {
-    public ChirpDBContext(DbContextOptions<ChirpDBContext> options)
-        : base(options) { }
-
-    public DbSet<Author> Authors { get; set; }
+    public ChirpDBContext(DbContextOptions<ChirpDBContext> options) : base(options)
+    {
+    }
+    /// <summary>
+    /// The set of every cheep in the database
+    /// </summary>
     public DbSet<Cheep> Cheeps { get; set; }
-
+    /// <summary>
+    /// The set of every author in the database
+    /// </summary>
+    public DbSet<Author> Authors { get; set; }
+    /// <summary>
+    /// Defines the entities and relationships in the database
+    /// </summary>
+    /// <param name="modelBuilder"></param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

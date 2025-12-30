@@ -16,7 +16,12 @@ namespace newAppp.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<Author> _userManager;
         private readonly ILogger<Disable2faModel> _logger;
-
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="userManager">Manages the users of our program</param>
+        /// <param name="logger">Controls logging</param>
         public Disable2faModel(
             UserManager<Author> userManager,
             ILogger<Disable2faModel> logger)
@@ -32,6 +37,11 @@ namespace newAppp.Areas.Identity.Pages.Account.Manage
         [TempData]
         public string StatusMessage { get; set; }
 
+        /// <summary>
+        /// Checks if user exists and if user has 2FA enabled.
+        /// </summary>
+        /// <returns>NotFound page or current page</returns>
+        /// <exception cref="InvalidOperationException">Throws if 2FA is not enabled for the current user</exception>
         public async Task<IActionResult> OnGet()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -48,6 +58,11 @@ namespace newAppp.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
+        /// <summary>
+        /// Disables 2FA if html button is clicked.
+        /// </summary>
+        /// <returns>NotFound page or redirects to TwoFactorAuthentication page</returns>
+        /// <exception cref="InvalidOperationException">Throws if disabling 2FA fails</exception>
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);

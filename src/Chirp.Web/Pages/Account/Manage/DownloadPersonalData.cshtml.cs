@@ -20,7 +20,12 @@ namespace newAppp.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<Author> _userManager;
         private readonly ILogger<DownloadPersonalDataModel> _logger;
-
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="userManager">Manages the users of our program</param>
+        /// <param name="logger">Controls logging</param>
         public DownloadPersonalDataModel(
             UserManager<Author> userManager,
             ILogger<DownloadPersonalDataModel> logger)

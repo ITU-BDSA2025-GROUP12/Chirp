@@ -2,11 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -16,8 +12,14 @@ using Chirp.Core1;
 namespace Chirp.Web.Pages.Account{
     public class ConfirmEmailModel : PageModel
     {
+        /// <summary>
+        /// Keeps track of current user
+        /// </summary>
         private readonly UserManager<Author> _userManager;
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="userManager">Keeps track of current user</param>
         public ConfirmEmailModel(UserManager<Author> userManager)
         {
             _userManager = userManager;
@@ -25,6 +27,12 @@ namespace Chirp.Web.Pages.Account{
 
         [TempData]
         public string StatusMessage { get; set; }
+        /// <summary>
+        /// Verifies the email of the current user
+        /// </summary>
+        /// <param name="userId">Id of the author whose email will be verified</param>
+        /// <param name="code">Encoded email</param>
+        /// <returns>Current page</returns>
         public async Task<IActionResult> OnGetAsync(string userId, string code)
         {
             if (userId == null || code == null)
