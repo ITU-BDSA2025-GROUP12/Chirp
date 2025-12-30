@@ -45,7 +45,11 @@ The last layer and the outermost circle of the model is the UI layer and is repr
 ![System-Architecture](images/System-Architecture.png)
 
 ## Architecture of Deployed Application
-------MANGLER-------
+Our Diagram shows how the Chirp! application is deployed in a running system. Users access the system through a web browser, and all their requests are sent to the Chirp.Web application (which is hosted on Azure App Service).
+
+The SQLite database is hosted together with the web application, and is only accessible through Chirp.Web. It stores application data such as users and cheeps. 
+
+Authentication is handled using GitHub OAuth. When a user logs in, Chirp.Web communicates with GitHub Auth to authenticate the user and receive the necessary identity information.
 
 ![Deployed Architecture](images/Deployed-Application.png)
 
