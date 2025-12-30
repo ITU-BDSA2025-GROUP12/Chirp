@@ -1,15 +1,7 @@
+| title | subtitle | author1 | numbersections |
+|------|----------|--------|----------------|
+| _Chirp!_ Project Report | ITU BDSA 2025 Group `12` | Camille Holmskov Larsen <hocl@itu.dk><br>Freja Skakke Jørgensen <frsj@itu.dk><br>Anna Rasmussen <annar@itu.dk><br>Camilla Frøkjær Jørgensen <cfjo@itu.dk><br>Ditte Astof Hansen <diah@itu.dk> | true |
 
----
-title: _Chirp!_ Project Report
-subtitle: ITU BDSA 2025 Group `12`
-author:
-- "Camille Holmskov Larsen <hocl@itu.dk>"
-- "Freja Skakke Jørgensen <frsj@itu.dk>"
-- "Anna Rasmussen <annar@itu.dk>"
-- "Camilla Frøkjær Jørgensen <cfjo@itu.dk>"
-- "Ditte Astof Hansen <diah@itu.dk>"
-numbersections: true
----
 
 
 # Design and Architecture
