@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Chirp.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using System.IO;
 
-namespace Chirp.Infrastructure.Data;
+namespace Chirp.Infrastructure.DBContext;
 /// <summary>
 /// Makes sure ChirpDBContext gets constructed correctly
 /// </summary>

@@ -1,6 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-
-using Microsoft.AspNetCore.Identity; 
 namespace Chirp.Core1;
 /// <summary>
 /// Represents a post made by a user

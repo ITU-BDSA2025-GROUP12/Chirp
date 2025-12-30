@@ -20,6 +20,12 @@ namespace Chirp.Web.Pages.Account.Manage
         private readonly SignInManager<Author> _signInManager;
         private readonly ILogger<DeletePersonalDataModel> _logger;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="userManager">Manages the users of our program</param>
+        /// <param name="signInManager">Manages sign in</param>
+        /// <param name="logger">Controls logging</param>
         public DeletePersonalDataModel(
             UserManager<Author> userManager,
             SignInManager<Author> signInManager,
@@ -70,6 +76,11 @@ namespace Chirp.Web.Pages.Account.Manage
             return Page();
         }
 
+        /// <summary>
+        /// Deletes user from database if the correct password is entered.
+        /// </summary>
+        /// <returns>Current page, NotFound page or redirects to public timeline</returns>
+        /// <exception cref="InvalidOperationException">Throws if user anonymisation goes wrong</exception>
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);

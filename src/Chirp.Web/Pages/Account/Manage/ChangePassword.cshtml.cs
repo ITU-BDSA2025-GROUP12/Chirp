@@ -18,7 +18,13 @@ namespace newAppp.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<Author> _userManager;
         private readonly SignInManager<Author> _signInManager;
         private readonly ILogger<ChangePasswordModel> _logger;
-
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="userManager">Manages the users of our program</param>
+        /// <param name="signInManager">Manages the sign in</param>
+        /// <param name="logger">Controls logging</param>
         public ChangePasswordModel(
             UserManager<Author> userManager,
             SignInManager<Author> signInManager,
@@ -78,6 +84,10 @@ namespace newAppp.Areas.Identity.Pages.Account.Manage
             public string ConfirmPassword { get; set; }
         }
 
+        /// <summary>
+        /// Checks the current user and if the user has a password.
+        /// </summary>
+        /// <returns>Current page, SetPassword page or NotFound page</returns>
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -94,7 +104,11 @@ namespace newAppp.Areas.Identity.Pages.Account.Manage
 
             return Page();
         }
-
+        
+        /// <summary>
+        /// Changes password if it succeeds
+        /// </summary>
+        /// <returns>Current page, NotFound page or redirects to a status message if it is a success</returns>
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
