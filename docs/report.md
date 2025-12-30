@@ -55,7 +55,7 @@ Authentication is handled using GitHub OAuth. When a user logs in, Chirp.Web com
 ![Unauthorised/authorised-user](images/Unauthorised/authorised-user.png)
 
 ## Follow-Unfollow 
-**Figur 5:** Follow-feature. The below flow-chart shows the user journey when following or unfollowing a user. 
+**Figur 5:** Follow-feature. The below flow-chart shows the user journey when following or unfollowing a user. The follow button only appears to logged in users, and will display as "Unfollow" in the event that the user is already following the given author. Users can go to their user-timeline, which only displays cheeps from followed authors and themselves.
 
 ![Follow-Unfollow-Diagram](images/Follow-User.png)
 
