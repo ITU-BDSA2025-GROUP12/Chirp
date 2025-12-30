@@ -65,7 +65,11 @@ Authentication is handled using GitHub OAuth. When a user logs in, Chirp.Web com
 ![Forget-Me-Diagram](images/Forget-Me-Feature.png)
 
 ## Login
-------MANGLER-------
+From the **Public Timeline**, which is the first page shown when opening the website, the user can choose to either register a new account or log in. A user must be registered before they can log in.
+
+When registering an account, the user can choose between **email registration** or **GitHub login**. If the user registers with email, they must confirm their email address as an extra security step.
+
+After a successful login, the user is still able to view the public timeline, but also gains access to their private timeline.
 
 ![Login Diagram](images/Login.png)
 
