@@ -36,7 +36,7 @@ Moving one more layer out is the **Service Interface**. This is where our servic
 The last layer and the outermost circle of the model is the Infrastructure layer and here is the Chirp.Web folder. This layer contains all the razor pages, our database, UI and Program.cs. 
 
 ## System Architecture Overview
-------MANGLER-------
+**Figur 3: Complete system architecture overview. This UML diagram shows the different classes, folders, pages and interfaces in our system, and how they relate to each other. 
 
 ![System-Architecture](images/System-Architecture.png)
 
