@@ -16,7 +16,7 @@ In **figure 1** it is shown that the Author class inherits from ASP.NET Identity
 The two classes, Author and Cheep, are fundamental entities in our program as features build upon their attributes.
 
 ## Architecture — In the small
-This application was build according to the 'Onion Architecture' to increase maintanablity and testability. This architecture model helps separate concerns into layers. Each layer has their own responsibility.[^1]
+This application was build according to the 'Onion Architecture' to increase maintainability and testability. This architecture model helps separate concerns into layers. Each layer has their own responsibility.[^1]
 [^1]: https://dev.to/yasmine_ddec94f4d4/onion-architecture-in-domain-driven-design-ddd-35gn
 
 ![Architecture Small](images/Architecture-in-the-small.png)
