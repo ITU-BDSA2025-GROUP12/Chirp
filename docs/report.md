@@ -111,6 +111,7 @@ Some weeks we would meet to code together, depending on what the week required, 
 
 When a new feature was made or a new bug was corrected, a pull request would be made. The team member, who opened it, would write in our group chat “I opened a pull request” and whoever would be available to review the code first would do it. In some instances multiple people have reviewed a code but in most cases only one reviewed before merging the pull request.
 
+At the end of our project work we wanted to clean up our code to make it clean and coherent. During the clean up we wanted to ensure we did not leave unused methods. This means we removed related tests. The group member that created some of our tests is no longer in our group. These tests stopped working due to an issue we could not resolve. Due to the member not being able to explain her tests to us anymore we decided to comment it out.
 
 ## How to Make Chirp! Work Locally
   
