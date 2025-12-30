@@ -56,7 +56,7 @@ Authentication is handled using GitHub OAuth. When a user logs in, Chirp.Web com
 The following diagram shows the different user activities that can be made for both authenticated and unauthorized users of the application. As the diagram suggests, a user who is not logged in can only access the Public Timeline page, the Register page and the Login page.
 If a user successfully has logged into the application, they now get access to more pages and features such as the Private Timeline page, the About Me page, the follow/unfollow feature and lastly they gain the ability to post cheeps.
 
-![Unauthorised/authorised-user](images/Unauthorised/authorised-user.png)
+![Unauthorised/authorised-user](images/UserActivities.pdf)
 
 **Figure 5:**
 
